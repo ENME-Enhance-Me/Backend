@@ -20,8 +20,8 @@ type Mutation {
 }
 
 type Query {
-  findAll: [User!]!
-  user(id: String!): User!
+  findAllUser: [User!]!
+  findOneUser(id: String!): User!
 }
 
 input UpdateUserInput {
