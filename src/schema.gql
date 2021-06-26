@@ -2,6 +2,22 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type Brand {
+  CNPJ_CPF: String!
+  Company_name: String!
+  id: String!
+  user: User!
+  userID: String!
+}
+
+input CreateBrandInput {
+  CNPJ_CPF: String!
+  Company_name: String!
+  Email: String!
+  Password: String!
+  UserName: String!
+}
+
 input CreateUserInput {
   Email: String!
   Password: String!
@@ -14,14 +30,27 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 scalar DateTime
 
 type Mutation {
+  createBrand(data: CreateBrandInput!): Brand!
   createUser(data: CreateUserInput!): User!
+  removeBrand(id: String!): Brand!
   removeUser(id: String!): User!
+  updateBrand(data: UpdateBrandInput!, id: String!): Brand!
   updateUser(id: String!, updateUserInput: UpdateUserInput!): User!
 }
 
 type Query {
+  findAllBrands: [Brand!]!
   findAllUser: [User!]!
   findOneUser(id: String!): User!
+  findOnebrand(id: String!): Brand!
+}
+
+input UpdateBrandInput {
+  CNPJ_CPF: String!
+  Company_name: String!
+  Email: String
+  Password: String
+  UserName: String
 }
 
 input UpdateUserInput {
