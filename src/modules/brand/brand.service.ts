@@ -14,7 +14,7 @@ export class BrandService {
     private readonly userService: UserService,
   ) {}
 
-  async create(data: CreateBrandInput) {
+  async create(data: CreateBrandInput): Promise<Brand>{
     const user = await this.userService.create({
       Email: data.Email,
       UserName: data.UserName,
@@ -34,19 +34,24 @@ export class BrandService {
     return BrandCreated;
   }
 
-  findAll() {
+  findAll(): Promise<Brand[]> {
     return this.BrandRepository.find();
   }
 
-  findOne(id: string) {
-    return `This action returns a #${id} brand`;
+  async findOne(id: string): Promise<Brand> {
+    return await this.BrandRepository.findOneOrFail(id);
   }
 
-  update(id: string, data: UpdateBrandInput) {
-    return `This action updates a #${data + id} brand`;
+  async update(id: string, data: UpdateBrandInput): Promise<Brand> {
+    const brand = await this.findOne(id);
+
+    await this.BrandRepository.merge(brand, { ...data });
+    const brandUpdated = this.BrandRepository.save(brand);
+    return brandUpdated;
   }
 
-  remove(id: string) {
-    return `This action removes a #${id} brand`;
+  async remove(id: string) {
+    const brand = await this.findOne(id);
+    return (await this.BrandRepository.remove(brand)) ? true : false;
   }
 }

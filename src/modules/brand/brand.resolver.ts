@@ -29,8 +29,8 @@ export class BrandResolver {
 
   @ResolveField()
   async user(@Parent() brand: Brand) {
-    const { userID } = brand;
-    return await this.userService.findOne(userID);
+    const { userId } = brand;
+    return await this.userService.findOne(userId);
   }
 
   @Mutation(() => Brand)
@@ -41,7 +41,7 @@ export class BrandResolver {
     return await this.brandService.update(id, data);
   }
 
-  @Mutation(() => Brand)
+  @Mutation(() => Boolean)
   async removeBrand(@Args('id') id: string) {
     return await this.brandService.remove(id);
   }

@@ -7,7 +7,7 @@ type Brand {
   Company_name: String!
   id: String!
   user: User!
-  userID: String!
+  userId: String!
 }
 
 input CreateBrandInput {
@@ -32,7 +32,7 @@ scalar DateTime
 type Mutation {
   createBrand(data: CreateBrandInput!): Brand!
   createUser(data: CreateUserInput!): User!
-  removeBrand(id: String!): Brand!
+  removeBrand(id: String!): Boolean!
   removeUser(id: String!): User!
   updateBrand(data: UpdateBrandInput!, id: String!): Brand!
   updateUser(id: String!, updateUserInput: UpdateUserInput!): User!
@@ -46,8 +46,8 @@ type Query {
 }
 
 input UpdateBrandInput {
-  CNPJ_CPF: String!
-  Company_name: String!
+  CNPJ_CPF: String
+  Company_name: String
   Email: String
   Password: String
   UserName: String

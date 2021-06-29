@@ -7,10 +7,10 @@ export class UpdateBrandInput extends UpdateUserInput {
   @IsString()
   @IsNotEmpty({ message: 'Este campo não pode estar vazio' })
   @IsOptional()
-  Company_name: string;
+  Company_name?: string;
 
   @IsString()
   @IsNotEmpty({ message: 'Este campo não pode estar vazio' })
   @IsOptional()
-  CNPJ_CPF: string;
+  CNPJ_CPF?: string;
 }
