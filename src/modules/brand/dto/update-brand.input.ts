@@ -1,6 +1,6 @@
 import { InputType } from '@nestjs/graphql';
 import { IsNotEmpty, IsOptional, IsString } from 'class-validator';
-import { UpdateUserInput } from 'src/user/dto/update-user.input';
+import { UpdateUserInput } from 'src/modules/user/dto/update-user.input';
 
 @InputType()
 export class UpdateBrandInput extends UpdateUserInput {

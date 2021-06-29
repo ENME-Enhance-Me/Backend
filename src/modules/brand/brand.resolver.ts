@@ -3,7 +3,7 @@ import { BrandService } from './brand.service';
 import { Brand } from './entities/brand.entity';
 import { CreateBrandInput } from './dto/create-brand.input';
 import { UpdateBrandInput } from './dto/update-brand.input';
-import { UserService } from 'src/user/user.service';
+import { UserService } from 'src/modules/user/user.service';
 
 @Resolver(() => Brand)
 export class BrandResolver {
