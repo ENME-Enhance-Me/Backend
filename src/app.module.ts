@@ -1,13 +1,10 @@
-/* eslint-disable prettier/prettier */
 import { Module } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { join } from 'path';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { UserModule } from './modules/user/user.module';
-import { BrandModule } from './modules/brand/brand.module';
-
+import { UserModule } from './user/user.module';
 
 @Module({
   imports: [
@@ -17,7 +14,6 @@ import { BrandModule } from './modules/brand/brand.module';
       sortSchema: true,
     }),
     UserModule,
-    BrandModule,
   ],
   controllers: [AppController],
   providers: [AppService],
