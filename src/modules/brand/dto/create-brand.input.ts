@@ -1,6 +1,6 @@
 import { InputType } from '@nestjs/graphql';
 import { IsNotEmpty, IsString } from 'class-validator';
-import { CreateUserInput } from 'src/user/dto/create-user.input';
+import { CreateUserInput } from 'src/modules/user/dto/create-user.input';
 
 @InputType()
 export class CreateBrandInput extends CreateUserInput {
