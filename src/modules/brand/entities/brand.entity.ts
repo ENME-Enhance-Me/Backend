@@ -9,7 +9,7 @@ import {
   RelationId,
 } from 'typeorm';
 
-@Entity()
+@Entity('brand')
 @ObjectType()
 export class Brand {
   @Field()
