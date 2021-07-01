@@ -10,10 +10,31 @@ type Brand {
   userId: String!
 }
 
+type Client {
+  BirthDate: DateTime!
+  FirstName: String!
+  Gender: String!
+  LastName: String!
+  Reputation: Float!
+  id: String!
+  user: User!
+  userId: String!
+}
+
 input CreateBrandInput {
   CNPJ_CPF: String!
   Company_name: String!
   Email: String!
+  Password: String!
+  UserName: String!
+}
+
+input CreateClientInput {
+  BirthDate: DateTime!
+  Email: String!
+  FirstName: String!
+  Gender: String!
+  LastName: String!
   Password: String!
   UserName: String!
 }
@@ -31,14 +52,19 @@ scalar DateTime
 
 type Mutation {
   createBrand(data: CreateBrandInput!): Brand!
+  createClient(createClientInput: CreateClientInput!): Client!
   createUser(data: CreateUserInput!): User!
   removeBrand(id: String!): Boolean!
+  removeClient(id: String!): Client!
   removeUser(id: String!): User!
   updateBrand(data: UpdateBrandInput!, id: String!): Brand!
+  updateClient(id: String!, updateClientInput: UpdateClientInput!): Client!
   updateUser(id: String!, updateUserInput: UpdateUserInput!): User!
 }
 
 type Query {
+  FindAllClients: [Client!]!
+  FindOneclient(id: String!): Client!
   findAllBrands: [Brand!]!
   findAllUser: [User!]!
   findOneUser(id: String!): User!
@@ -50,6 +76,17 @@ input UpdateBrandInput {
   Company_name: String
   Email: String
   Password: String
+  UserName: String
+}
+
+input UpdateClientInput {
+  BirthDate: DateTime
+  Email: String
+  FirstName: String
+  Gender: String
+  LastName: String
+  Password: String
+  Reputation: Float
   UserName: String
 }
 
