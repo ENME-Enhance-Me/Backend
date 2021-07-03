@@ -6,7 +6,8 @@
       {
         "name": "@nestjs/graphql/plugin",
         "options": {
-          "typeFileNameSufix": [".input.ts", ".args.ts", ".entity.ts", ".type.ts"]
+          "typeFileNameSufix": [".input.ts", ".args.ts", ".entity.ts", ".type.ts"],
+          "introspectComments": true
         }
       }
     ]
