@@ -6,6 +6,7 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import { Field, HideField, ObjectType } from '@nestjs/graphql';
+import { hashPasswordTransform } from 'src/helpers/crypto';
 
 @ObjectType()
 @Entity()
@@ -20,7 +21,9 @@ export class User {
   @Column()
   Email: string;
 
-  @Column()
+  @Column({
+    transformer: hashPasswordTransform
+  })
   @HideField()
   Password: string;
 
