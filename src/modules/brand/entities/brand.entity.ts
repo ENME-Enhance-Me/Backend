@@ -16,13 +16,14 @@ export class Brand {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
+
   @Column()
   Company_name: string;
 
   @Column()
   CNPJ_CPF: string;
 
-  @OneToOne(() => User, { onUpdate: 'CASCADE', onDelete: 'CASCADE'})
+  @OneToOne(() => User, { onUpdate: 'CASCADE', onDelete: 'CASCADE' })
   @JoinColumn()
   user: User;
 

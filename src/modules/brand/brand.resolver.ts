@@ -4,6 +4,7 @@ import { Brand } from './entities/brand.entity';
 import { CreateBrandInput } from './dto/create-brand.input';
 import { UpdateBrandInput } from './dto/update-brand.input';
 import { UserService } from 'src/modules/user/user.service';
+import { FindBrandInput } from './dto/find-brand.input';
 
 @Resolver(() => Brand)
 export class BrandResolver {
@@ -22,9 +23,14 @@ export class BrandResolver {
     return await this.brandService.findAll();
   }
 
-  @Query(() => Brand, { name: 'findOnebrand' })
-  async findOne(@Args('id') id: string) {
+  @Query(() => Brand, { name: 'findOnebrandbyId' })
+  async findOnebyId(@Args('id') id: string) {
     return await this.brandService.findOne(id);
+  }
+
+  @Query(() => Brand, { name: 'findOnebrand' })
+  async findOne(@Args('data') data: FindBrandInput) {
+    return await this.brandService.find(data);
   }
 
   @ResolveField()

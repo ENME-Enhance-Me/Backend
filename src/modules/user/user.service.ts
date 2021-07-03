@@ -2,6 +2,7 @@ import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreateUserInput } from './dto/create-user.input';
+import { FindUserInput } from './dto/find-user.input';
 import { UpdateUserInput } from './dto/update-user.input';
 import { User } from './entities/user.entity';
 
@@ -23,16 +24,25 @@ export class UserService {
     return userSaved;
   }
 
-  findAll() {
+  findAll(): Promise<User[]> {
     return this.userRepository.find();
   }
 
-  async findOne(_id: string) {
-    return await this.userRepository.findOneOrFail(_id);
+  async findOne(id: string): Promise<User> {
+    return await this.userRepository.findOneOrFail(id);
   }
 
-  async update(_id: string, data: UpdateUserInput) {
-    const user = await this.findOne(_id);
+  async find(data: FindUserInput): Promise<User> {
+    return await this.userRepository.findOneOrFail({
+      where: [
+        {Email: data.Email},
+        {UserName: data.UserName}
+      ]
+    });
+  }
+
+  async update(id: string, data: UpdateUserInput): Promise<User> {
+    const user = await this.findOne(id);
 
     await this.userRepository.update(user, { ...data });
     const userUpdated = this.userRepository.create({ ...user, ...data });
@@ -40,7 +50,7 @@ export class UserService {
     return userUpdated;
   }
 
-  async remove(id: string) {
+  async remove(id: string): Promise<boolean> {
     const user = await this.findOne(id);
     return (await this.userRepository.remove(user)) ? true : false;
   }
