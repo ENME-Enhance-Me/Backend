@@ -2,16 +2,6 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-input AuthInput {
-  Email: String!
-  Password: String!
-}
-
-type AuthType {
-  token: String!
-  user: User!
-}
-
 type Brand {
   CNPJ_CPF: String!
   Company_name: String!
@@ -60,23 +50,13 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 """
 scalar DateTime
 
-input FindBrandInput {
-  CNPJ_CPF: String
-  Company_name: String
-  Email: String
-  UserId: String
-  UserName: String
-  brandID: String
-}
-
 type Mutation {
-  Login(data: AuthInput!): AuthType!
   createBrand(data: CreateBrandInput!): Brand!
   createClient(createClientInput: CreateClientInput!): Client!
   createUser(data: CreateUserInput!): User!
   removeBrand(id: String!): Boolean!
   removeClient(id: String!): Client!
-  removeUser(id: String!): Boolean!
+  removeUser(id: String!): User!
   updateBrand(data: UpdateBrandInput!, id: String!): Brand!
   updateClient(id: String!, updateClientInput: UpdateClientInput!): Client!
   updateUser(id: String!, updateUserInput: UpdateUserInput!): User!
@@ -88,8 +68,7 @@ type Query {
   findAllBrands: [Brand!]!
   findAllUser: [User!]!
   findOneUser(id: String!): User!
-  findOnebrand(data: FindBrandInput!): Brand!
-  findOnebrandbyId(id: String!): Brand!
+  findOnebrand(id: String!): Brand!
 }
 
 input UpdateBrandInput {
