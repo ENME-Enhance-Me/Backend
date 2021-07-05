@@ -33,8 +33,8 @@ export class Brand {
   userID: string;
   
   @CreateDateColumn()
-  Created_at: Date;
+  created_at: Date;
 
   @UpdateDateColumn()
-  Updated_at: Date;
+  updated_at: Date;
 }
