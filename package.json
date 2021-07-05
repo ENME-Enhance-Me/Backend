@@ -8,7 +8,7 @@
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "nest build",
-    "heroku-postbuild": "npm run start && npm run typeorm:migration:run",
+    "heroku-postbuild": "npm run start:prod && npm run typeorm:migration:run",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "node dist/main",
     "start:dev": "nest start --watch",
