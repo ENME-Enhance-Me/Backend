@@ -17,7 +17,7 @@ export class AddUserIDFKtoClients1625167430520 implements MigrationInterface {
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {
-        await queryRunner.dropForeignKey('clients', 'userFK');
+        await queryRunner.dropForeignKey('clients', 'userFKClients');
     }
 
 }
