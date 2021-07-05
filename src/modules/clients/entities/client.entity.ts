@@ -29,7 +29,7 @@ export class Client {
   user: User;
 
   @RelationId((client: Client) => client.user)
-  userID: string;
+  userId: string;
 
   @CreateDateColumn()
   created_at: Date;
