@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-module.exports = [{
+module.exports = {
   type: 'mysql',
   host: 'localhost',
   port: process.env.PORTA_BANCO,
@@ -13,14 +13,4 @@ module.exports = [{
   cli: {
     "migrationsDir": "./src/shared/migration"
   }
-},
-{
-  URL: process.env.DATABASE_URL,
-  syncronize: true,
-  entities: ["dist/**/entities/*.entity.{ts,js}"],
-  migrations: ["./dist/shared/migration/*.{ts,js}"],
-  cli: {
-    "migrationsDir": "./src/shared/migration"
-  }
-}
-];
+};
