@@ -11,6 +11,8 @@ export class CreateClientTable1625165119182 implements MigrationInterface {
                         name: 'id',
                         type: 'varchar',
                         isPrimary: true,
+                        isGenerated: true,
+                        generationStrategy: 'uuid'
                     },
                     {
                         name: 'firstname',

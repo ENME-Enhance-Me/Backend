@@ -10,6 +10,8 @@ export class CreateUserTable1624683487485 implements MigrationInterface {
             name: 'id',
             type: 'varchar',
             isPrimary: true,
+            isGenerated: true,
+            generationStrategy: 'uuid'
           },
           {
             name: 'username',

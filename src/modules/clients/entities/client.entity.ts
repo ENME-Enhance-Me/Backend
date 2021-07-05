@@ -6,7 +6,7 @@ import { Column, CreateDateColumn, Entity, JoinColumn, OneToOne, PrimaryGenerate
 @ObjectType()
 export class Client {
   @Field()
-  @PrimaryGeneratedColumn('rowid')
+  @PrimaryGeneratedColumn('uuid')
   id: string;
 
   @Column()

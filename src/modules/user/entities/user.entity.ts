@@ -11,7 +11,7 @@ import { hashPasswordTransform } from 'src/helpers/crypto';
 @ObjectType()
 @Entity('user')
 export class User {
-  @PrimaryGeneratedColumn('rowid')
+  @PrimaryGeneratedColumn('uuid')
   @Field()
   id: string;
 
