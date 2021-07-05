@@ -10,7 +10,7 @@ export class AddUserIDFKtoBrand1624687727023 implements MigrationInterface {
     await queryRunner.addColumn(
       'brand',
       new TableColumn({
-        name: 'userId',
+        name: 'userID',
         type: 'varchar',
       }),
     );
@@ -18,7 +18,7 @@ export class AddUserIDFKtoBrand1624687727023 implements MigrationInterface {
       'brand',
       new TableForeignKey({
         name: 'userFK',
-        columnNames: ['userId'],
+        columnNames: ['userID'],
         referencedTableName: 'user',
         referencedColumnNames: ['id'],
         onDelete: 'CASCADE',

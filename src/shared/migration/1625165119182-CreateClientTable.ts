@@ -33,7 +33,7 @@ export class CreateClientTable1625165119182 implements MigrationInterface {
                         type: 'integer',
                     },
                     {
-                        name: 'userId',
+                        name: 'userID',
                         type: 'varchar',
                     },
                     {

@@ -7,7 +7,7 @@ export class AddUserIDFKtoClients1625167430520 implements MigrationInterface {
             'client',
             new TableForeignKey({
               name: 'userFKClients',
-              columnNames: ['userId'],
+              columnNames: ['userID'],
               referencedTableName: 'user',
               referencedColumnNames: ['id'],
               onDelete: 'CASCADE',
