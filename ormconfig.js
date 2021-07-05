@@ -1,7 +1,7 @@
 /* eslint-disable prettier/prettier */
 module.exports = {
-  type: 'mysql',
-  host: 'localhost',
+  type: process.env.BANCO,
+  host: process.env.HOST_BANCO,
   port: process.env.PORTA_BANCO,
   username: process.env.USUARIO_BANCO,
   password: process.env.SENHA_BANCO,
