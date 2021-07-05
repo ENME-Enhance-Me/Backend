@@ -16,8 +16,9 @@ import { AuthModule } from './modules/auth/auth.module';
     TypeOrmModule.forRoot(),
     GraphQLModule.forRoot({
       context: ({ req }) => ({ req }),
-      autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
+      autoSchemaFile: join(process.cwd(), 'src/schema.gql', 'dist/schema.gql'),
       sortSchema: true,
+      playground: true,
     }),
     UserModule,
     BrandModule,
