@@ -10,8 +10,8 @@ export class CreateBrandTable1624686351188 implements MigrationInterface {
             name: 'id',
             type: 'varchar',
             isPrimary: true,
-            isGenerated: true,
-            generationStrategy: 'uuid'
+            generationStrategy: 'uuid',
+            default: 'uuid_generate_v4()',
           },
           {
             name: 'company_name',
