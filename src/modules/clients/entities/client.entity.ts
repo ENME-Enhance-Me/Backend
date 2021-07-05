@@ -2,7 +2,7 @@ import { ObjectType, Field, Int } from '@nestjs/graphql';
 import { User } from 'src/modules/user/entities/user.entity';
 import { Column, CreateDateColumn, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn, RelationId, UpdateDateColumn } from 'typeorm';
 
-@Entity('clients')
+@Entity('client')
 @ObjectType()
 export class Client {
   @Field()
@@ -29,7 +29,7 @@ export class Client {
   user: User;
 
   @RelationId((client: Client) => client.user)
-  userId: string;
+  userID: string;
 
   @CreateDateColumn()
   created_at: Date;

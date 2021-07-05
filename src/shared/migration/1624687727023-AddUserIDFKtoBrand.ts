@@ -29,6 +29,6 @@ export class AddUserIDFKtoBrand1624687727023 implements MigrationInterface {
 
   public async down(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.dropForeignKey('brand', 'userFK');
-    await queryRunner.dropColumn('brand', 'userId');
+    await queryRunner.dropColumn('brand', 'userID');
   }
 }
