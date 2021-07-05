@@ -29,8 +29,8 @@ export class ClientsResolver {
 
   @ResolveField()
   async user(@Parent() client: Client) {
-    const { userID } = client;
-    return await this.userService.findOne(userID);
+    const { userId } = client;
+    return await this.userService.findOne(userId);
   }
 
   @Mutation(() => Client)
