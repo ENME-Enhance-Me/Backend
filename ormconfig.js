@@ -4,6 +4,12 @@ module.exports = {
   url: process.env.DATABASE_URL,
   logging: true,
   syncronize: true,
+  ssl: true,
+  extra: {
+    ssl: {
+      rejectUnauthorized: false
+    }
+  },
   entities: ["dist/**/entities/*.entity.{ts,js}"],
   migrations: ["./dist/shared/migration/*.{ts,js}"],
   cli: {
