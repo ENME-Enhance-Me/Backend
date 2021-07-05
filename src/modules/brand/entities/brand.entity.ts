@@ -26,7 +26,7 @@ export class Brand {
   CNPJ_CPF: string;
 
   @OneToOne(() => User, { onUpdate: 'CASCADE', onDelete: 'CASCADE' })
-  @JoinColumn()
+  @JoinColumn({name: "userID"})
   user: User;
 
   @RelationId((brand: Brand) => brand.user)

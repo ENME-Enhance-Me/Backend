@@ -23,12 +23,12 @@ export class BrandResolver {
     return await this.brandService.findAll();
   }
 
-  @Query(() => Brand, { name: 'findOnebrandbyId' })
+  @Query(() => Brand, { name: 'findOneBrandById' })
   async findOnebyId(@Args('id') id: string) {
     return await this.brandService.findOne(id);
   }
 
-  @Query(() => Brand, { name: 'findOnebrand' })
+  @Query(() => Brand, { name: 'findOneBrand' })
   async findOne(@Args('data') data: FindBrandInput) {
     return await this.brandService.find(data);
   }
