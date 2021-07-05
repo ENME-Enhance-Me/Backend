@@ -30,7 +30,7 @@ export class Brand {
   user: User;
 
   @RelationId((brand: Brand) => brand.user)
-  userId: string;
+  userID: string;
   
   @CreateDateColumn()
   created_at: Date;
