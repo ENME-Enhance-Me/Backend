@@ -1,11 +1,7 @@
 /* eslint-disable prettier/prettier */
 module.exports = {
   type: process.env.BANCO,
-  host: process.env.HOST_BANCO,
-  port: process.env.PORTA_BANCO,
-  username: process.env.USUARIO_BANCO,
-  password: process.env.SENHA_BANCO,
-  database: process.env.DATABASE,
+  url: process.env.DATABASE_URL,
   logging: true,
   syncronize: true,
   entities: ["dist/**/entities/*.entity.{ts,js}"],
