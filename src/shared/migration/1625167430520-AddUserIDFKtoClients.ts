@@ -4,10 +4,10 @@ export class AddUserIDFKtoClients1625167430520 implements MigrationInterface {
 
     public async up(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.createForeignKey(
-            'clients',
+            'client',
             new TableForeignKey({
               name: 'userFKClients',
-              columnNames: ['userID'],
+              columnNames: ['userId'],
               referencedTableName: 'user',
               referencedColumnNames: ['id'],
               onDelete: 'CASCADE',
@@ -17,7 +17,7 @@ export class AddUserIDFKtoClients1625167430520 implements MigrationInterface {
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {
-        await queryRunner.dropForeignKey('clients', 'userFKClients');
+        await queryRunner.dropForeignKey('client', 'userFKClients');
     }
 
 }

@@ -5,7 +5,7 @@ export class CreateClientTable1625165119182 implements MigrationInterface {
     public async up(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.createTable(
             new Table({
-                name: 'clients',
+                name: 'client',
                 columns: [
                     {
                         name: 'id',
@@ -13,36 +13,36 @@ export class CreateClientTable1625165119182 implements MigrationInterface {
                         isPrimary: true,
                     },
                     {
-                        name: 'FirstName',
+                        name: 'firstname',
                         type: 'varchar',
                     },
                     {
-                        name: 'LastName',
+                        name: 'lastname',
                         type: 'varchar',
                     },
                     {
-                        name: 'BirthDate',
+                        name: 'birthdate',
                         type: 'timestamp',
                     },
                     {
-                        name: 'Gender',
+                        name: 'gender',
                         type: 'varchar',
                     },
                     {
-                        name: 'Reputation',
+                        name: 'reputation',
                         type: 'integer',
                     },
                     {
-                        name: 'userID',
+                        name: 'userId',
                         type: 'varchar',
                     },
                     {
-                        name: 'Created_at',
+                        name: 'created_at',
                         type: 'timestamp',
                         default: 'now()',
                     },
                     {
-                        name: 'Updated_at',
+                        name: 'updated_at',
                         type: 'timestamp',
                         default: 'now()',
                     },
@@ -52,7 +52,7 @@ export class CreateClientTable1625165119182 implements MigrationInterface {
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {
-        await queryRunner.dropTable('clients');
+        await queryRunner.dropTable('client');
     }
 
 }
