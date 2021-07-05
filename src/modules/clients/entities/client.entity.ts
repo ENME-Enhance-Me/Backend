@@ -10,19 +10,19 @@ export class Client {
   id: string;
 
   @Column()
-  FirstName: string;
+  firstname: string;
 
   @Column()
-  LastName: string;
+  lastname: string;
 
   @Column()
-  Gender: string;
+  gender: string;
 
   @Column()
-  BirthDate: Date;
+  birthdate: Date;
 
   @Column()
-  Reputation: number;
+  reputation: number;
 
   @OneToOne(() => User, { onUpdate: 'CASCADE', onDelete: 'CASCADE'})
   @JoinColumn()

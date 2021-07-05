@@ -6,15 +6,15 @@ export class FindUserInput {
     @IsString()
     @IsNotEmpty({ message: 'Este campo não pode estar vazio' })
     @IsOptional()
-    UserId?: string;
+    userID?: string;
 
     @IsString()
     @IsNotEmpty({ message: 'Este campo não pode estar vazio' })
     @IsOptional()
-    UserName?: string;
+    username?: string;
 
     @IsEmail()
     @IsNotEmpty({ message: 'Este campo não pode estar vazio' })
     @IsOptional()
-    Email?: string;
+    email?: string;
 }

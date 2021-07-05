@@ -17,13 +17,13 @@ export class BrandService {
 
   async create(data: CreateBrandInput): Promise<Brand> {
     const user = await this.userService.create({
-      Email: data.Email,
-      UserName: data.UserName,
-      Password: data.Password,
+      email: data.email,
+      username: data.username,
+      password: data.password,
     });
 
     const Brand = this.BrandRepository.create({
-      Company_name: data.Company_name,
+      company_name: data.company_name,
       CNPJ_CPF: data.CNPJ_CPF,
       user: user,
     });
@@ -41,18 +41,18 @@ export class BrandService {
 
   async find(data: FindBrandInput): Promise<Brand> {
     let user = undefined;
-    if (data.UserId ||data.Email || data.UserName) {
+    if (data.userID ||data.email || data.username) {
       user = await this.userService.find({ 
-        UserId: data.UserId, 
-        Email: data.Email, 
-        UserName: data.UserName 
+        userID: data.userID, 
+        email: data.email, 
+        username: data.username 
       });
     }
     return this.BrandRepository.findOne({
       where: [
         { id: data.brandID },
         { CNPJ_CPF: data.CNPJ_CPF },
-        { Company_name: data.Company_name },
+        { company_name: data.company_name },
         { user: user }
       ]
     });

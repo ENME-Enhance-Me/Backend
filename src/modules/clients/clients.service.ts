@@ -15,17 +15,17 @@ export class ClientsService {
   ) {}
   async create(data: CreateClientInput) {
     const user = await this.userService.create({
-      Email: data.Email,
-      UserName: data.UserName,
-      Password: data.Password,
+      email: data.email,
+      username: data.username,
+      password: data.password,
     });
 
     const client = this.clientRepository.create({
-      FirstName: data.FirstName,
-      LastName: data.LastName,
-      BirthDate: data.BirthDate,
-      Gender: data.Gender,
-      Reputation: 0,
+      firstname: data.firstname,
+      lastname: data.lastname,
+      birthdate: data.birthdate,
+      gender: data.gender,
+      reputation: 0,
       user: user,
     });
     const clientCreated = await this.clientRepository.save(client);

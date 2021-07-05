@@ -20,7 +20,7 @@ export class Brand {
 
 
   @Column()
-  Company_name: string;
+  company_name: string;
 
   @Column()
   CNPJ_CPF: string;

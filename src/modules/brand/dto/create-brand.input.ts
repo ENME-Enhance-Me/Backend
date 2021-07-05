@@ -6,7 +6,7 @@ import { CreateUserInput } from 'src/modules/user/dto/create-user.input';
 export class CreateBrandInput extends CreateUserInput {
   @IsString()
   @IsNotEmpty({ message: 'Este campo não pode estar vazio' })
-  Company_name: string;
+  company_name: string;
 
   @IsString()
   @IsNotEmpty({ message: 'Este campo não pode estar vazio' })

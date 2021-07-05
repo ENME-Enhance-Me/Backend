@@ -9,25 +9,25 @@ export class UpdateClientInput extends UpdateUserInput {
   @IsString()
   @IsNotEmpty({ message: 'Campo nome não pode estar vazio' })
   @IsOptional()
-  FirstName?: string;
+  firstname?: string;
 
   @IsString()
   @IsNotEmpty({ message: 'Campo nome não pode estar vazio' })
   @IsOptional()
-  LastName?: string;
+  lastname?: string;
 
   @IsString()
   @IsNotEmpty({ message: 'Campo Gênero não pode estar vazio' })
   @IsOptional()
-  Gender?: string;
+  gender?: string;
 
   @IsDate()
   @IsNotEmpty({ message: 'Campo  data de nascimento não pode estar vazio' })
   @IsOptional()
-  BirthDate?: Date;
+  birthdate?: Date;
 
   @IsNumber()
   @IsNotEmpty({ message: 'Campo Reputação não pode estar vazio' })
   @IsOptional()
-  Reputation?: number;
+  reputation?: number;
 }

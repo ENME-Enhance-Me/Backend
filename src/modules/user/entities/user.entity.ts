@@ -16,20 +16,20 @@ export class User {
   id: string;
 
   @Column()
-  UserName: string;
+  username: string;
 
   @Column()
-  Email: string;
+  email: string;
 
   @Column({
     transformer: hashPasswordTransform
   })
   @HideField()
-  Password: string;
+  password: string;
 
   @CreateDateColumn()
-  Created_at: Date;
+  created_at: Date;
 
   @UpdateDateColumn()
-  Updated_at: Date;
+  updated_at: Date;
 }

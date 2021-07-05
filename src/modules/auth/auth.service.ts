@@ -14,9 +14,9 @@ export class AuthService {
         ) {}
 
     async validateUser(data: AuthInput): Promise<AuthType> {
-        const user = await this.userService.find({Email: data.Email});
+        const user = await this.userService.find({email: data.Email});
 
-        const validPassword = compareSync(data.Password, user.Password);
+        const validPassword = compareSync(data.Password, user.password);
 
         if(!validPassword) {
             throw new UnauthorizedException('Senha incorreta');
@@ -29,7 +29,7 @@ export class AuthService {
     }
 
     private async jwtToken(user: User): Promise<string> {
-        const payload = { UserName: user.UserName, sub: user.id };
+        const payload = { UserName: user.username, sub: user.id };
         return await this.jwtService.signAsync(payload);
     }
 }

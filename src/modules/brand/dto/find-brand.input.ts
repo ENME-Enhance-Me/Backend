@@ -13,7 +13,7 @@ export class FindBrandInput extends FindUserInput {
     @IsString()
     @IsNotEmpty({ message: 'Este campo não pode estar vazio' })
     @IsOptional()
-    Company_name?: string;
+    company_name?: string;
 
     @IsString()
     @IsNotEmpty({ message: 'Este campo não pode estar vazio' })
