@@ -13,23 +13,23 @@ export class CreateClientTable1625165119182 implements MigrationInterface {
                         isPrimary: true,
                     },
                     {
-                        name: 'firstname',
+                        name: 'FirstName',
                         type: 'varchar',
                     },
                     {
-                        name: 'lastname',
+                        name: 'LastName',
                         type: 'varchar',
                     },
                     {
-                        name: 'birthdate',
+                        name: 'BirthDate',
                         type: 'timestamp',
                     },
                     {
-                        name: 'gender',
+                        name: 'Gender',
                         type: 'varchar',
                     },
                     {
-                        name: 'reputation',
+                        name: 'Reputation',
                         type: 'integer',
                     },
                     {
@@ -37,12 +37,12 @@ export class CreateClientTable1625165119182 implements MigrationInterface {
                         type: 'varchar',
                     },
                     {
-                        name: 'created_at',
+                        name: 'Created_at',
                         type: 'timestamp',
                         default: 'now()',
                     },
                     {
-                        name: 'updated_at',
+                        name: 'Updated_at',
                         type: 'timestamp',
                         default: 'now()',
                     },

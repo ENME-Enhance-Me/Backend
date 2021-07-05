@@ -9,7 +9,7 @@ import { Field, HideField, ObjectType } from '@nestjs/graphql';
 import { hashPasswordTransform } from 'src/helpers/crypto';
 
 @ObjectType()
-@Entity()
+@Entity('user')
 export class User {
   @PrimaryGeneratedColumn('uuid')
   @Field()
@@ -28,8 +28,8 @@ export class User {
   Password: string;
 
   @CreateDateColumn()
-  created_at: Date;
+  Created_at: Date;
 
   @UpdateDateColumn()
-  updated_at: Date;
+  Updated_at: Date;
 }

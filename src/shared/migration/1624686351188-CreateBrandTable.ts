@@ -12,7 +12,7 @@ export class CreateBrandTable1624686351188 implements MigrationInterface {
             isPrimary: true,
           },
           {
-            name: 'company_name',
+            name: 'Company_name',
             type: 'varchar',
           },
           {
@@ -20,12 +20,12 @@ export class CreateBrandTable1624686351188 implements MigrationInterface {
             type: 'varchar',
           },
           {
-            name: 'created_at',
+            name: 'Created_at',
             type: 'timestamp',
             default: 'now()',
           },
           {
-            name: 'updated_at',
+            name: 'Updated_at',
             type: 'timestamp',
             default: 'now()',
           },

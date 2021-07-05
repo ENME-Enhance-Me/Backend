@@ -12,25 +12,25 @@ export class CreateUserTable1624683487485 implements MigrationInterface {
             isPrimary: true,
           },
           {
-            name: 'userName',
+            name: 'UserName',
             type: 'varchar',
           },
           {
-            name: 'email',
+            name: 'Email',
             type: 'varchar',
             isUnique: true
           },
           {
-            name: 'password',
+            name: 'Password',
             type: 'varchar',
           },
           {
-            name: 'created_at',
+            name: 'Created_at',
             type: 'timestamp',
             default: 'now()',
           },
           {
-            name: 'updated_at',
+            name: 'Updated_at',
             type: 'timestamp',
             default: 'now()',
           },
