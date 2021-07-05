@@ -18,7 +18,8 @@ import { AuthModule } from './modules/auth/auth.module';
       context: ({ req }) => ({ req }),
       autoSchemaFile: join(process.cwd(), 'dist/schema.gql'),
       sortSchema: true,
-      playground: true
+      playground: true,
+      introspection: true
     }),
     UserModule,
     BrandModule,
