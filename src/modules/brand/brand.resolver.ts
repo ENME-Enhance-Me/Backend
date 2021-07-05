@@ -35,8 +35,8 @@ export class BrandResolver {
 
   @ResolveField()
   async user(@Parent() brand: Brand) {
-    const { userId } = brand;
-    return await this.userService.findOne(userId);
+    const { userID } = brand;
+    return await this.userService.findOne(userID);
   }
 
   @Mutation(() => Brand)

@@ -72,7 +72,7 @@ export class BrandService {
 
   async remove(id: string) {
     const brand = await this.findOne(id);
-    const user = await this.userService.remove(brand.userId);
+    const user = await this.userService.remove(brand.userID);
     return (await this.BrandRepository.remove(brand)) ? true : false;
   }
 }
