@@ -15,7 +15,7 @@ import {
 @ObjectType()
 export class Brand {
   @Field()
-  @PrimaryGeneratedColumn('uuid')
+  @PrimaryGeneratedColumn('rowid')
   id: string;
 
 

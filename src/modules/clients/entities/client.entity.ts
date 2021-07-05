@@ -6,7 +6,7 @@ import { Column, CreateDateColumn, Entity, JoinColumn, OneToOne, PrimaryGenerate
 @ObjectType()
 export class Client {
   @Field()
-  @PrimaryGeneratedColumn('uuid')
+  @PrimaryGeneratedColumn('rowid')
   id: string;
 
   @Column()
@@ -25,7 +25,7 @@ export class Client {
   reputation: number;
 
   @OneToOne(() => User, { onUpdate: 'CASCADE', onDelete: 'CASCADE'})
-  @JoinColumn()
+  @JoinColumn({name: "userID"})
   user: User;
 
   @RelationId((client: Client) => client.user)
