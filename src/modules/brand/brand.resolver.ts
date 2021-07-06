@@ -11,24 +11,35 @@ export class BrandResolver {
   constructor(
     private readonly brandService: BrandService,
     private readonly userService: UserService,
-  ) {}
+  ) { }
 
-  @Mutation(() => Brand)
+  @Mutation(() => Brand, {
+    description: 'Cria uma marca e um usuário vinculados'
+  })
   async createBrand(@Args('data') data: CreateBrandInput) {
     return await this.brandService.create(data);
   }
 
-  @Query(() => [Brand], { name: 'findAllBrands' })
+  @Query(() => [Brand], {
+    name: 'findAllBrands',
+    description: 'Busca todas as marcas'
+  })
   async findAll() {
     return await this.brandService.findAll();
   }
 
-  @Query(() => Brand, { name: 'findOneBrandById' })
+  @Query(() => Brand, {
+    name: 'findOneBrandById',
+    description: 'Retorna uma marca através da busca por um id'
+  })
   async findOnebyId(@Args('id') id: string) {
     return await this.brandService.findOne(id);
   }
 
-  @Query(() => Brand, { name: 'findOneBrand' })
+  @Query(() => Brand, { 
+    name: 'findOneBrand',
+    description: 'Retorna uma marca pela busca de qualquer campo'
+  })
   async findOne(@Args('data') data: FindBrandInput) {
     return await this.brandService.find(data);
   }
@@ -39,7 +50,9 @@ export class BrandResolver {
     return await this.userService.findOne(userID);
   }
 
-  @Mutation(() => Brand)
+  @Mutation(() => Brand, {
+    description: 'Atualiza uma marca e um usuário vinculado a ela'
+  })
   async updateBrand(
     @Args('id') id: string,
     @Args('data') data: UpdateBrandInput,
@@ -47,7 +60,9 @@ export class BrandResolver {
     return await this.brandService.update(id, data);
   }
 
-  @Mutation(() => Boolean)
+  @Mutation(() => Boolean, {
+    description: 'Remove uma marca e o usuário vinculado'
+  })
   async removeBrand(@Args('id') id: string) {
     return await this.brandService.remove(id);
   }
