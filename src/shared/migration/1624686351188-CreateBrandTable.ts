@@ -16,10 +16,12 @@ export class CreateBrandTable1624686351188 implements MigrationInterface {
           {
             name: 'company_name',
             type: 'varchar',
+            isUnique: true
           },
           {
             name: 'CNPJ_CPF',
             type: 'varchar',
+            isUnique: true
           },
           {
             name: 'created_at',
