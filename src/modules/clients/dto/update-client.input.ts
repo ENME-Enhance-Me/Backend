@@ -2,6 +2,7 @@ import { CreateClientInput } from './create-client.input';
 import { InputType, Field } from '@nestjs/graphql';
 import { UpdateUserInput } from 'src/modules/user/dto/update-user.input';
 import { IsDate, IsNotEmpty, IsNumber, IsOptional, IsString } from 'class-validator';
+import { gender } from '../entities/client.entity';
 
 @InputType()
 export class UpdateClientInput extends UpdateUserInput {
@@ -19,7 +20,7 @@ export class UpdateClientInput extends UpdateUserInput {
   @IsString()
   @IsNotEmpty({ message: 'Campo Gênero não pode estar vazio' })
   @IsOptional()
-  gender?: string;
+  gender?: gender;
 
   @IsDate()
   @IsNotEmpty({ message: 'Campo  data de nascimento não pode estar vazio' })

@@ -42,7 +42,10 @@ export class ClientsService {
   }
 
   async findOne(id: string): Promise<Client> {
-    const client = await this.clientRepository.findOne(id);
+    const client = await this.clientRepository.findOne(id,
+      {
+       relations: ['user']  
+      });
     if (!client) {
       throw new NotFoundException('cliente não encontrado');
     }

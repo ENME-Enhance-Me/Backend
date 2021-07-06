@@ -28,7 +28,7 @@ export class CreateClientTable1625165119182 implements MigrationInterface {
           },
           {
             name: 'gender',
-            type: 'varchar',
+            type: 'integer',
           },
           {
             name: 'reputation',

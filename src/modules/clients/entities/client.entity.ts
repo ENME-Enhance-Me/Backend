@@ -1,6 +1,15 @@
-import { ObjectType, Field, Int, HideField } from '@nestjs/graphql';
+import { ObjectType, Field, Int, HideField, registerEnumType } from '@nestjs/graphql';
 import { User } from 'src/modules/user/entities/user.entity';
 import { Column, CreateDateColumn, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn, RelationId, UpdateDateColumn } from 'typeorm';
+
+export enum gender{
+  Masculino,
+  Feminino,
+  Nao_Binario
+}
+registerEnumType(gender, {
+  name: 'Gender',
+});
 
 @Entity('client')
 @ObjectType()
@@ -16,7 +25,8 @@ export class Client {
   lastname: string;
 
   @Column()
-  gender: string;
+  @Field(()=> gender)
+  gender: gender;
 
   @Column()
   birthdate: Date;

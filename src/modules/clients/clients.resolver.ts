@@ -60,7 +60,7 @@ export class ClientsResolver {
     return this.clientsService.update(id, data);
   }
 
-  @Mutation(() => Client, {
+  @Mutation(() => Boolean, {
     description:'Remove um cliente e o usuário relacionado'
   })
   removeClient(@Args('id') id: string) {
