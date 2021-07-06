@@ -1,4 +1,4 @@
-import { Injectable, InternalServerErrorException } from '@nestjs/common';
+import { Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { UserService } from '../user/user.service';
@@ -42,7 +42,11 @@ export class ClientsService {
   }
 
   async findOne(id: string): Promise<Client> {
-    return await this.clientRepository.findOneOrFail(id);
+    const client = await this.clientRepository.findOne(id);
+    if (!client) {
+      throw new NotFoundException('cliente não encontrado');
+    }
+    return client;
   }
   /*
   *   encontra um cliente pelos campos de usuario ou id de cliente ou firstName e LastName juntos
@@ -56,7 +60,7 @@ export class ClientsService {
         username: data.username
       });
     }
-    return this.clientRepository.findOne({
+    const client = await this.clientRepository.findOne({
       where: [
         { id: data.clientID },
         {
@@ -64,8 +68,15 @@ export class ClientsService {
           lastname: data.lastname
         },
         { user: user }
-      ]
+      ],
+      relations: ['user']
     });
+
+    if (!client) {
+      throw new NotFoundException('Cliente não encontrado');
+    }
+
+    return client;
   }
 
   async update(id: string, data: UpdateClientInput): Promise<Client> {

@@ -1,4 +1,4 @@
-import { Injectable, InternalServerErrorException } from '@nestjs/common';
+import { HttpException, Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UserService } from 'src/modules/user/user.service';
 import { Repository } from 'typeorm';
@@ -30,6 +30,7 @@ export class BrandService {
     const BrandCreated = await this.BrandRepository.save(Brand);
 
     if (!BrandCreated) {
+      await this.userService.remove(user.id);
       throw new InternalServerErrorException('Problemas ao criar uma marca');
     }
     return BrandCreated;
@@ -48,18 +49,27 @@ export class BrandService {
         username: data.username
       });
     }
-    return this.BrandRepository.findOne({
+    const brand = this.BrandRepository.findOne({
       where: [
         { id: data.brandID },
         { CNPJ_CPF: data.CNPJ_CPF },
         { company_name: data.company_name },
         { user: user }
-      ]
+      ],
+      relations: ['user']
     });
+    if (!brand) {
+      throw new NotFoundException('Marca não encontrada');
+    }
+    return brand;
   }
 
   async findOne(id: string): Promise<Brand> {
-    return await this.BrandRepository.findOneOrFail(id);
+    const brand = await this.BrandRepository.findOne(id);
+    if (!brand) {
+      throw new NotFoundException('Marca não encontrada');
+    }
+    return brand;
   }
 
   async update(id: string, data: UpdateBrandInput): Promise<Brand> {
