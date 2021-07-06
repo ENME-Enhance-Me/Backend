@@ -16,7 +16,7 @@ export class ClientsResolver {
   @Mutation(() => Client, {
     description: 'Cria um usuário e um cliente; Email não pode se repetir'
   })
-  createClient(@Args('createClientInput') data: CreateClientInput) {
+  createClient(@Args('data') data: CreateClientInput) {
     return this.clientsService.create(data);
   }
 
