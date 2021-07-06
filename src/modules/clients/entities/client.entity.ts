@@ -1,4 +1,4 @@
-import { ObjectType, Field, Int } from '@nestjs/graphql';
+import { ObjectType, Field, Int, HideField } from '@nestjs/graphql';
 import { User } from 'src/modules/user/entities/user.entity';
 import { Column, CreateDateColumn, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn, RelationId, UpdateDateColumn } from 'typeorm';
 
@@ -32,9 +32,11 @@ export class Client {
   userID: string;
 
   @CreateDateColumn()
+  @HideField()
   created_at: Date;
 
   @UpdateDateColumn()
+  @HideField()
   updated_at: Date;
 
 }

@@ -2,14 +2,18 @@ import { Module } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { AuthResolver } from './auth.resolver';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { User } from '../user/entities/user.entity';
-import { UserService } from '../user/user.service';
 import { JwtModule, JwtService } from '@nestjs/jwt';
 import { JwtStrategy } from './strategies/jwt.strategy';
+import { BrandService } from '../brand/brand.service';
+import { ClientsService } from '../clients/clients.service';
+import { Client } from '../clients/entities/client.entity';
+import { Brand } from '../brand/entities/brand.entity';
+import { UserService } from '../user/user.service';
+import { User } from '../user/entities/user.entity';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([User]),
+    TypeOrmModule.forFeature([Brand, Client, User]),
     JwtModule.registerAsync({
       useFactory: () => ({
         secret: process.env.JWT_SECRET,
@@ -18,6 +22,6 @@ import { JwtStrategy } from './strategies/jwt.strategy';
         },
       })
     })],
-  providers: [AuthResolver, AuthService, UserService, JwtStrategy]
+  providers: [AuthResolver, AuthService, BrandService, ClientsService, UserService, JwtStrategy]
 })
 export class AuthModule { }
