@@ -1,4 +1,4 @@
-import { ObjectType, Field } from '@nestjs/graphql';
+import { ObjectType, Field, HideField } from '@nestjs/graphql';
 import { User } from 'src/modules/user/entities/user.entity';
 import {
   Column,
@@ -33,8 +33,10 @@ export class Brand {
   userID: string;
   
   @CreateDateColumn()
+  @HideField()
   created_at: Date;
 
   @UpdateDateColumn()
+  @HideField()
   updated_at: Date;
 }

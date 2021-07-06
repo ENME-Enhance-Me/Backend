@@ -28,8 +28,10 @@ export class User {
   password: string;
 
   @CreateDateColumn()
+  @HideField()
   created_at: Date;
 
   @UpdateDateColumn()
+  @HideField()
   updated_at: Date;
 }

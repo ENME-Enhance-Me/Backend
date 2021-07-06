@@ -14,45 +14,45 @@ type AuthType {
 
 type Brand {
   CNPJ_CPF: String!
-  Company_name: String!
+  company_name: String!
   id: String!
   user: User!
-  userId: String!
+  userID: String!
 }
 
 type Client {
-  BirthDate: DateTime!
-  FirstName: String!
-  Gender: String!
-  LastName: String!
-  Reputation: Float!
+  birthdate: DateTime!
+  firstname: String!
+  gender: String!
   id: String!
+  lastname: String!
+  reputation: Float!
   user: User!
-  userId: String!
+  userID: String!
 }
 
 input CreateBrandInput {
   CNPJ_CPF: String!
-  Company_name: String!
-  Email: String!
-  Password: String!
-  UserName: String!
+  company_name: String!
+  email: String!
+  password: String!
+  username: String!
 }
 
 input CreateClientInput {
-  BirthDate: DateTime!
-  Email: String!
-  FirstName: String!
-  Gender: String!
-  LastName: String!
-  Password: String!
-  UserName: String!
+  birthdate: DateTime!
+  email: String!
+  firstname: String!
+  gender: String!
+  lastname: String!
+  password: String!
+  username: String!
 }
 
 input CreateUserInput {
-  Email: String!
-  Password: String!
-  UserName: String!
+  email: String!
+  password: String!
+  username: String!
 }
 
 """
@@ -62,65 +62,108 @@ scalar DateTime
 
 input FindBrandInput {
   CNPJ_CPF: String
-  Company_name: String
-  Email: String
-  UserId: String
-  UserName: String
   brandID: String
+  company_name: String
+  email: String
+  userID: String
+  username: String
+}
+
+input FindClientInput {
+  clientID: String
+  email: String
+  firstname: String
+  lastname: String
+  userID: String
+  username: String
 }
 
 type Mutation {
   Login(data: AuthInput!): AuthType!
+
+  """Cria uma marca e um usuário vinculados"""
   createBrand(data: CreateBrandInput!): Brand!
+
+  """Cria um usuário e um cliente; Email não pode se repetir"""
   createClient(createClientInput: CreateClientInput!): Client!
+
+  """Cria um usuário"""
   createUser(data: CreateUserInput!): User!
+
+  """Remove uma marca e o usuário vinculado"""
   removeBrand(id: String!): Boolean!
+
+  """Remove um cliente e o usuário relacionado"""
   removeClient(id: String!): Client!
+
+  """Remove um usuário do banco de dados"""
   removeUser(id: String!): Boolean!
+
+  """Atualiza uma marca e um usuário vinculado a ela"""
   updateBrand(data: UpdateBrandInput!, id: String!): Brand!
+
+  """atualiza um ou mais campos do cliente ou do usuário relacionado"""
   updateClient(id: String!, updateClientInput: UpdateClientInput!): Client!
+
+  """Atualiza um ou mais campos de um usuário"""
   updateUser(id: String!, updateUserInput: UpdateUserInput!): User!
 }
 
 type Query {
+  """Retorna todos os clientes"""
   FindAllClients: [Client!]!
-  FindOneclient(id: String!): Client!
+
+  """
+  encontra um cliente pelos campos de usuario, id de cliente ou firstName e LastName juntos
+  """
+  FindOneclient(data: FindClientInput!): Client!
+
+  """Busca todas as marcas"""
   findAllBrands: [Brand!]!
+
+  """Busca todos os usuários no banco"""
   findAllUser: [User!]!
+
+  """Retorna uma marca pela busca de qualquer campo"""
+  findOneBrand(data: FindBrandInput!): Brand!
+
+  """Retorna uma marca através da busca por um id"""
+  findOneBrandById(id: String!): Brand!
+
+  """Encontra um cliente pelo ID"""
+  findOneClientById(id: String!): Client!
+
+  """Encontra um usuário por qualquer campo dele"""
   findOneUser(id: String!): User!
-  findOnebrand(data: FindBrandInput!): Brand!
-  findOnebrandbyId(id: String!): Brand!
 }
 
 input UpdateBrandInput {
   CNPJ_CPF: String
-  Company_name: String
-  Email: String
-  Password: String
-  UserName: String
+  company_name: String
+  email: String
+  password: String
+  username: String
 }
 
 input UpdateClientInput {
-  BirthDate: DateTime
-  Email: String
-  FirstName: String
-  Gender: String
-  LastName: String
-  Password: String
-  Reputation: Float
-  UserName: String
+  birthdate: DateTime
+  email: String
+  firstname: String
+  gender: String
+  lastname: String
+  password: String
+  reputation: Float
+  username: String
 }
 
 input UpdateUserInput {
-  Email: String
-  Password: String
-  UserName: String
+  email: String
+  password: String
+  username: String
 }
 
 type User {
-  Email: String!
-  UserName: String!
-  created_at: DateTime!
+  email: String!
   id: String!
-  updated_at: DateTime!
+  username: String!
 }
