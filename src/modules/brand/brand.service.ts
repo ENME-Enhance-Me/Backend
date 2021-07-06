@@ -41,11 +41,11 @@ export class BrandService {
 
   async find(data: FindBrandInput): Promise<Brand> {
     let user = undefined;
-    if (data.userID ||data.email || data.username) {
-      user = await this.userService.find({ 
-        userID: data.userID, 
-        email: data.email, 
-        username: data.username 
+    if (data.userID || data.email || data.username) {
+      user = await this.userService.find({
+        userID: data.userID,
+        email: data.email,
+        username: data.username
       });
     }
     return this.BrandRepository.findOne({
@@ -64,7 +64,12 @@ export class BrandService {
 
   async update(id: string, data: UpdateBrandInput): Promise<Brand> {
     const brand = await this.findOne(id);
-
+    const user = await this.userService.find({ userID: brand.userID })
+    await this.userService.update(user.id, {
+      email: data.email,
+      password: data.password,
+      username: data.username
+    });
     this.BrandRepository.merge(brand, { ...data });
     const brandUpdated = this.BrandRepository.save(brand);
     return brandUpdated;
@@ -72,7 +77,7 @@ export class BrandService {
 
   async remove(id: string) {
     const brand = await this.findOne(id);
-    const user = await this.userService.remove(brand.userID);
+    await this.userService.remove(brand.userID);
     return (await this.BrandRepository.remove(brand)) ? true : false;
   }
 }

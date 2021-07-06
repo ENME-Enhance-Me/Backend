@@ -45,8 +45,8 @@ export class UserService {
   async update(id: string, data: UpdateUserInput): Promise<User> {
     const user = await this.findOne(id);
 
-    await this.userRepository.update(user, { ...data });
-    const userUpdated = this.userRepository.create({ ...user, ...data });
+    this.userRepository.merge(user, { ...data });
+    const userUpdated = this.userRepository.save(user);
 
     return userUpdated;
   }
