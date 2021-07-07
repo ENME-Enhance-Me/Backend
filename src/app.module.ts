@@ -20,11 +20,7 @@ import { AuthModule } from './modules/auth/auth.module';
       autoSchemaFile: join(process.cwd(), 'dist/schema.gql'),
       sortSchema: true,
       playground: true,
-      introspection: true,
-      cors: {
-        origin: '*',
-        credentials: false,
-      },
+      introspection: true
     }),
     UserModule,
     BrandModule,

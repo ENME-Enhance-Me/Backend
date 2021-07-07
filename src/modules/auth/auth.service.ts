@@ -24,12 +24,12 @@ export class AuthService {
             brand = await this.brandService.find({ email: data.Email });
         }
         catch (err) {
-            throw new NotFoundException('Email incorreto');
+            throw new NotFoundException('usuário e/ou senha inválidos');
         }
         const validPassword = compareSync(data.Password, brand.user.password);
 
         if (!validPassword) {
-            throw new UnauthorizedException('Senha incorreta');
+            throw new UnauthorizedException('usuário e/ou senha inválidos');
         }
         const token = await this.jwtToken(brand);
         return {
@@ -44,12 +44,12 @@ export class AuthService {
             client = await this.clientService.find({ email: data.Email });
         }
         catch (err) {
-            throw new NotFoundException('Email incorreto');
+            throw new NotFoundException('usuário e/ou senha inválidos');
         }
         const validPassword = compareSync(data.Password, client.user.password);
 
         if (!validPassword) {
-            throw new UnauthorizedException('Senha incorreta');
+            throw new UnauthorizedException('usuário e/ou senha inválidos');
         }
         const token = await this.jwtToken(null, client);
         return {
