@@ -19,10 +19,14 @@ export class Brand {
   id: string;
 
 
-  @Column()
+  @Column({
+    unique: true
+  })
   company_name: string;
 
-  @Column()
+  @Column({
+    unique: true
+  })
   CNPJ_CPF: string;
 
   @OneToOne(() => User, { onUpdate: 'CASCADE', onDelete: 'CASCADE' })
