@@ -22,7 +22,7 @@ import { AuthModule } from './modules/auth/auth.module';
       playground: true,
       introspection: true,
       cors: {
-        origin: 'http://localhost:3000',
+        origin: '*',
         credentials: false,
       },
     }),
