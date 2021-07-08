@@ -2,11 +2,13 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 import { Field, HideField, ObjectType } from '@nestjs/graphql';
 import { hashPasswordTransform } from 'src/helpers/crypto';
+import { Phone } from 'src/modules/phone/entities/phone.entity';
 
 @ObjectType()
 @Entity('user')
@@ -28,6 +30,9 @@ export class User {
   })
   @HideField()
   password: string;
+
+  @OneToMany(() => Phone, phone => phone.user)
+  phones: Phone[];
 
   @CreateDateColumn()
   @HideField()

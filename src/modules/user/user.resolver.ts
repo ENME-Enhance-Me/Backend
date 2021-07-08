@@ -1,12 +1,17 @@
-import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
+import { Resolver, Query, Mutation, Args, ResolveField, Parent } from '@nestjs/graphql';
 import { UserService } from './user.service';
 import { User } from './entities/user.entity';
 import { CreateUserInput } from './dto/create-user.input';
 import { UpdateUserInput } from './dto/update-user.input';
+import { Phone } from '../phone/entities/phone.entity';
+import { PhoneService } from '../phone/phone.service';
 
 @Resolver(() => User)
 export class UserResolver {
-  constructor(private readonly userService: UserService) { }
+  constructor(
+    private readonly userService: UserService,
+    private readonly phoneService: PhoneService
+  ) { }
 
   @Mutation(() => User, {
     description: 'Cria um usuário'
@@ -23,6 +28,12 @@ export class UserResolver {
     return await this.userService.findAll();
   }
 
+  @ResolveField()
+  async phones(@Parent() user: User) {
+    const { id } = user;
+    return await this.phoneService.find({userID: id});
+  }
+
   @Query(() => User, {
     name: 'findOneUser',
     description: 'Encontra um usuário por qualquer campo dele'
@@ -31,7 +42,7 @@ export class UserResolver {
     return this.userService.findOne(id);
   }
 
-  @Mutation(() => User,{
+  @Mutation(() => User, {
     description: 'Atualiza um ou mais campos de um usuário'
   })
   updateUser(
