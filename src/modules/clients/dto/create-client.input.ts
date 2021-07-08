@@ -1,4 +1,4 @@
-import { InputType, Int, Field } from '@nestjs/graphql';
+import { InputType } from '@nestjs/graphql';
 import { IsDate, IsNotEmpty, IsNumber, IsString } from 'class-validator';
 import { CreateUserInput } from 'src/modules/user/dto/create-user.input';
 import { gender } from '../entities/client.entity';
