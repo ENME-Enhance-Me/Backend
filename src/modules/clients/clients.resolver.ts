@@ -28,9 +28,6 @@ export class ClientsResolver {
     return this.clientsService.findAll();
   }
 
-  /*
-  *   encontra um cliente pelos campos de usuario ou id de cliente ou firstName e LastName juntos
-  */
   @Query(() => Client, {
     name: 'FindOneclient',
     description: 'encontra um cliente pelos campos de usuario, id de cliente ou firstName e LastName juntos'
