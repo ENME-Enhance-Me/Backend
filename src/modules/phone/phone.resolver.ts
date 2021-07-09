@@ -10,7 +10,7 @@ export class PhoneResolver {
   constructor(
     private readonly phoneService: PhoneService,
     private readonly userService: UserService
-    ) { }
+  ) { }
 
   @Mutation(() => Phone)
   createPhone(@Args('data') data: CreatePhoneInput) {
@@ -24,7 +24,7 @@ export class PhoneResolver {
 
   @Query(() => Phone, { name: 'findOnePhone' })
   findOne(@Args('id') id: string) {
-    return this.phoneService.find({ id });
+    return this.phoneService.findOne(id);
   }
 
   @ResolveField()
@@ -34,11 +34,14 @@ export class PhoneResolver {
   }
 
   @Mutation(() => Phone)
-  updatePhone(@Args('id') id: string, @Args('data') data: UpdatePhoneInput) {
+  updatePhone(
+    @Args('id') id: string,
+    @Args('data') data: UpdatePhoneInput
+  ) {
     return this.phoneService.update(id, data);
   }
 
-  @Mutation(() => Phone)
+  @Mutation(() => Boolean)
   removePhone(@Args('id') id: string) {
     return this.phoneService.remove(id);
   }
