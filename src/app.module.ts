@@ -10,6 +10,7 @@ import { UserModule } from './modules/user/user.module';
 import { BrandModule } from './modules/brand/brand.module';
 import { ClientsModule } from './modules/clients/clients.module';
 import { AuthModule } from './modules/auth/auth.module';
+import { PhoneModule } from './modules/phone/phone.module';
 
 
 @Module({
@@ -26,6 +27,7 @@ import { AuthModule } from './modules/auth/auth.module';
     BrandModule,
     ClientsModule,
     AuthModule,
+    PhoneModule,
   ],
   controllers: [AppController],
   providers: [AppService],

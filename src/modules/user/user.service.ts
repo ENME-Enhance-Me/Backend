@@ -37,7 +37,7 @@ export class UserService {
   }
 
   async find(data: FindUserInput): Promise<User> {
-    const user = await this.userRepository.findOne({
+    const user = await this.userRepository.findOneOrFail({
       where: [
         {id: data.userID},
         {email: data.email},
