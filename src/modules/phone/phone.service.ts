@@ -1,6 +1,8 @@
 import { Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { BrandService } from '../brand/brand.service';
+import { ClientsService } from '../clients/clients.service';
 import { UserService } from '../user/user.service';
 import { CreatePhoneInput } from './dto/create-phone.input';
 import FindPhoneInput from './dto/find-phone.input';
@@ -13,7 +15,9 @@ export class PhoneService {
   constructor(
     @InjectRepository(Phone)
     private readonly phoneRepository: Repository<Phone>,
-    private readonly userService: UserService
+    private readonly userService: UserService,
+    private readonly brandService: BrandService,
+    private readonly clientService: ClientsService
   ) { }
 
   async create(data: CreatePhoneInput): Promise<Phone> {
@@ -24,7 +28,19 @@ export class PhoneService {
     if(phoneExists){
       throw new InternalServerErrorException('Este telefone já existe');
     }
-    const user = await this.userService.findOne(data.userID);
+    let user = undefined
+    if(data.brandID){
+      const brand = await this.brandService.findOne(data.brandID);
+      user = await this.userService.findOne(brand.userID);
+    }
+    else if(data.clientID){
+      const client = await this.clientService.findOne(data.clientID);
+      user = await this.userService.findOne(client.userID);
+    }
+    else{
+      throw new NotFoundException('Usuário não encontrado')
+    }
+    
 
     const phone = this.phoneRepository.create({
       DDD: data.DDD,

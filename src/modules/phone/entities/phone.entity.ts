@@ -15,7 +15,7 @@ export class Phone {
   @Column()
   number: string;
 
-  @ManyToOne(() => User, user => user.phones)
+  @ManyToOne(() => User, user => user.phones, { onDelete: "CASCADE"})
   user: User;
 
   @RelationId((phone: Phone) => phone.user)
