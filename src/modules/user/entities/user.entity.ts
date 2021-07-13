@@ -26,6 +26,11 @@ export class User {
   email: string;
 
   @Column({
+    nullable: true,
+  })
+  avatar: string;
+
+  @Column({
     transformer: hashPasswordTransform
   })
   @HideField()
