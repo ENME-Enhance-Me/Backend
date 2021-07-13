@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 import "reflect-metadata";
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { join } from 'path';
@@ -11,6 +11,9 @@ import { BrandModule } from './modules/brand/brand.module';
 import { ClientsModule } from './modules/clients/clients.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { PhoneModule } from './modules/phone/phone.module';
+import { FileModule } from './shared/file/file.module';
+import { Cloudinary } from './helpers/Cloudinary/cloudinary';
+import { CloudinaryModule } from './helpers/Cloudinary/cloudinary.module';
 
 
 @Module({
@@ -21,15 +24,19 @@ import { PhoneModule } from './modules/phone/phone.module';
       autoSchemaFile: join(process.cwd(), 'dist/schema.gql'),
       sortSchema: true,
       playground: true,
-      introspection: true
+      introspection: true,
+      uploads: false
     }),
     UserModule,
     BrandModule,
     ClientsModule,
     AuthModule,
     PhoneModule,
+    FileModule,
+    CloudinaryModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, Cloudinary],
 })
-export class AppModule { }
+export class AppModule {
+}
