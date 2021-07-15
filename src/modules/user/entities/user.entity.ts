@@ -17,7 +17,9 @@ export class User {
   @Field()
   id: string;
 
-  @Column()
+  @Column({
+    unique: true
+  })
   username: string;
 
   @Column({
@@ -27,6 +29,9 @@ export class User {
 
   @Column({
     nullable: true,
+  })
+  @Field({
+    nullable:true
   })
   avatar: string;
 
