@@ -1,5 +1,6 @@
 import { Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { FileUpload } from 'graphql-upload';
 import { Repository } from 'typeorm';
 import { UserService } from '../user/user.service';
 import { CreateClientInput } from './dto/create-client.input';
@@ -14,24 +15,32 @@ export class ClientsService {
     private clientRepository: Repository<Client>,
     private readonly userService: UserService,
   ) { }
-  async create(data: CreateClientInput) {
+  async create(data: CreateClientInput, avatar: FileUpload) {
+
     const user = await this.userService.create({
       email: data.email,
       username: data.username,
       password: data.password,
-    });
-
-    const client = this.clientRepository.create({
-      firstname: data.firstname,
-      lastname: data.lastname,
-      birthdate: data.birthdate,
-      gender: data.gender,
-      reputation: 0,
-      user: user,
-    });
+    }, avatar);
+    let client: Client;
+    try {
+      client = this.clientRepository.create({
+        firstname: data.firstname,
+        lastname: data.lastname,
+        birthdate: data.birthdate,
+        gender: data.gender,
+        reputation: 0,
+        user: user,
+      });
+    }
+    catch (err) {
+      await this.userService.remove(user.id);
+      throw new InternalServerErrorException('Problemas ao criar um cliente');
+    }
     const clientCreated = await this.clientRepository.save(client);
 
     if (!clientCreated) {
+      await this.userService.remove(user.id);
       throw new InternalServerErrorException('Problemas ao criar um cliente');
     }
     return clientCreated;
@@ -44,7 +53,7 @@ export class ClientsService {
   async findOne(id: string): Promise<Client> {
     const client = await this.clientRepository.findOne(id,
       {
-       relations: ['user']  
+        relations: ['user']
       });
     if (!client) {
       throw new NotFoundException('cliente não encontrado');

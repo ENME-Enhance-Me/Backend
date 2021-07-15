@@ -10,6 +10,7 @@ import { Client } from '../clients/entities/client.entity';
 import { Brand } from '../brand/entities/brand.entity';
 import { UserService } from '../user/user.service';
 import { User } from '../user/entities/user.entity';
+import { CloudinaryService } from 'src/helpers/Cloudinary/cloudinary.service';
 
 @Module({
   imports: [
@@ -22,6 +23,6 @@ import { User } from '../user/entities/user.entity';
         },
       })
     })],
-  providers: [AuthResolver, AuthService, BrandService, ClientsService, UserService, JwtStrategy]
+  providers: [AuthResolver, AuthService, BrandService, ClientsService, UserService, JwtStrategy, CloudinaryService]
 })
 export class AuthModule { }
