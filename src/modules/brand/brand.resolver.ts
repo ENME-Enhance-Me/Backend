@@ -5,6 +5,7 @@ import { CreateBrandInput } from './dto/create-brand.input';
 import { UpdateBrandInput } from './dto/update-brand.input';
 import { UserService } from 'src/modules/user/user.service';
 import { FindBrandInput } from './dto/find-brand.input';
+import { FileUpload, GraphQLUpload } from 'graphql-upload';
 
 @Resolver(() => Brand)
 export class BrandResolver {
@@ -16,8 +17,11 @@ export class BrandResolver {
   @Mutation(() => Brand, {
     description: 'Cria uma marca e um usuário vinculados'
   })
-  async createBrand(@Args('data') data: CreateBrandInput) {
-    return await this.brandService.create(data);
+  async createBrand(
+    @Args('data') data: CreateBrandInput,
+    @Args({name: 'avatar', nullable: true, type: () => GraphQLUpload}) avatar: FileUpload 
+    ) {
+    return await this.brandService.create(data, avatar);
   }
 
   @Query(() => [Brand], {
@@ -36,7 +40,7 @@ export class BrandResolver {
     return await this.brandService.findOne(id);
   }
 
-  @Query(() => Brand, { 
+  @Query(() => Brand, {
     name: 'findOneBrand',
     description: 'Retorna uma marca pela busca de qualquer campo'
   })

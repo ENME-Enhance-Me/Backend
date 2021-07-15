@@ -17,13 +17,23 @@ export class User {
   @Field()
   id: string;
 
-  @Column()
+  @Column({
+    unique: true
+  })
   username: string;
 
   @Column({
     unique: true
   })
   email: string;
+
+  @Column({
+    nullable: true,
+  })
+  @Field({
+    nullable:true
+  })
+  avatar: string;
 
   @Column({
     transformer: hashPasswordTransform
