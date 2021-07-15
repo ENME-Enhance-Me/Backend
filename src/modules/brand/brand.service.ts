@@ -1,5 +1,6 @@
-import { HttpException, Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
+import { BadRequestException, HttpException, Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { FileUpload } from 'graphql-upload';
 import { UserService } from 'src/modules/user/user.service';
 import { Repository } from 'typeorm';
 import { CreateBrandInput } from './dto/create-brand.input';
@@ -15,24 +16,34 @@ export class BrandService {
     private readonly userService: UserService,
   ) { }
 
-  async create(data: CreateBrandInput): Promise<Brand> {
-    const user = await this.userService.create({
-      email: data.email,
-      username: data.username,
-      password: data.password,
-    });
+  async create(data: CreateBrandInput, avatar: FileUpload): Promise<Brand> {
+    let BrandCreated: Brand;
 
-    const Brand = this.BrandRepository.create({
-      company_name: data.company_name,
-      CNPJ_CPF: data.CNPJ_CPF,
-      user: user,
-    });
-    const BrandCreated = await this.BrandRepository.save(Brand);
+    if (await this.BrandRepository.findOne({ company_name: data.company_name })) {
+      throw new BadRequestException('Nome da companhia já cadastrado');
+    } 
+    else if (await this.BrandRepository.findOne({ CNPJ_CPF: data.CNPJ_CPF })) {
+      throw new BadRequestException('CPF ou CNPJ já cadastrado');
+    } 
+    else {
+      const user = await this.userService.create({
+        email: data.email,
+        username: data.username,
+        password: data.password,
+      }, avatar);
 
-    if (!BrandCreated) {
-      await this.userService.remove(user.id);
-      throw new InternalServerErrorException('Problemas ao criar uma marca');
+      const Brand = this.BrandRepository.create({
+        company_name: data.company_name,
+        CNPJ_CPF: data.CNPJ_CPF,
+        user: user,
+      });
+      BrandCreated = await this.BrandRepository.save(Brand);
+      if (!BrandCreated) {
+        await this.userService.remove(user.id);
+        throw new InternalServerErrorException('Problemas ao criar uma marca');
+      }
     }
+
     return BrandCreated;
   }
 
@@ -67,7 +78,7 @@ export class BrandService {
   async findOne(id: string): Promise<Brand> {
     const brand = await this.BrandRepository.findOne(id,
       {
-       relations: ['user']  
+        relations: ['user']
       });
     if (!brand) {
       throw new NotFoundException('Marca não encontrada');
