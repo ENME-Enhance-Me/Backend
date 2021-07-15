@@ -5,6 +5,7 @@ import { CreateUserInput } from './dto/create-user.input';
 import { UpdateUserInput } from './dto/update-user.input';
 import { Phone } from '../phone/entities/phone.entity';
 import { PhoneService } from '../phone/phone.service';
+import { FileUpload, GraphQLUpload } from 'graphql-upload';
 
 @Resolver(() => User)
 export class UserResolver {
@@ -16,8 +17,11 @@ export class UserResolver {
   @Mutation(() => User, {
     description: 'Cria um usuário'
   })
-  createUser(@Args('data') data: CreateUserInput) {
-    return this.userService.create(data);
+  createUser(
+    @Args('data') data: CreateUserInput,
+    @Args({name: 'avatar', type: () => GraphQLUpload}) avatar: FileUpload 
+    ) {
+    return this.userService.create(data, avatar);
   }
 
   @Query(() => [User], {

@@ -5,6 +5,7 @@ import { CreateClientInput } from './dto/create-client.input';
 import { UpdateClientInput } from './dto/update-client.input';
 import { UserService } from '../user/user.service';
 import { FindClientInput } from './dto/find-client.input';
+import { FileUpload, GraphQLUpload } from 'graphql-upload';
 
 @Resolver(() => Client)
 export class ClientsResolver {
@@ -14,13 +15,15 @@ export class ClientsResolver {
   ) { }
 
   @Mutation(() => Client, {
-    description: 'Cria um usuário e um cliente; Email não pode se repetir'
+    description: 'Cria um usuário e um cliente; Email e username não pode se repetir'
   })
-  createClient(@Args('data') data: CreateClientInput) {
-    return this.clientsService.create(data);
+  createClient(
+    @Args('data') data: CreateClientInput,
+    @Args({ name: 'avatar', nullable: true, type: () => GraphQLUpload }) avatar?: FileUpload) {
+    return this.clientsService.create(data, avatar);
   }
 
-  @Query(() => [Client], { 
+  @Query(() => [Client], {
     name: 'FindAllClients',
     description: 'Retorna todos os clientes'
   })
@@ -36,7 +39,7 @@ export class ClientsResolver {
     return this.clientsService.find(data);
   }
 
-  @Query(() => Client, { 
+  @Query(() => Client, {
     name: 'findOneClientById',
     description: 'Encontra um cliente pelo ID'
   })
@@ -58,7 +61,7 @@ export class ClientsResolver {
   }
 
   @Mutation(() => Boolean, {
-    description:'Remove um cliente e o usuário relacionado'
+    description: 'Remove um cliente e o usuário relacionado'
   })
   removeClient(@Args('id') id: string) {
     return this.clientsService.remove(id);
