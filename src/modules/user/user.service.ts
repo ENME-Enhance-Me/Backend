@@ -1,5 +1,7 @@
-import { Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
+import { BadRequestException, Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { FileUpload } from 'graphql-upload';
+import { CloudinaryService } from 'src/helpers/Cloudinary/cloudinary.service';
 import { Repository } from 'typeorm';
 import { CreateUserInput } from './dto/create-user.input';
 import { FindUserInput } from './dto/find-user.input';
@@ -11,10 +13,24 @@ export class UserService {
   constructor(
     @InjectRepository(User)
     private readonly userRepository: Repository<User>,
-  ) {}
+    private readonly cloudService: CloudinaryService
+  ) { }
 
-  async create(data: CreateUserInput): Promise<User> {
+  async create(data: CreateUserInput, avatar: FileUpload): Promise<User> {
+    if (await this.userRepository.findOne({ email: data.email })) {
+      throw new BadRequestException("E-mail já existente.");
+    }
+    if (await this.userRepository.findOne({ username: data.username })) {
+      throw new BadRequestException("Nome de usuário já existente.");
+    }
     const user = this.userRepository.create(data);
+    try {
+      const file = await this.cloudService.uploadImage(avatar, "enme/avatar");
+      user.avatar = file.url;
+    }
+    catch (err) {
+      user.avatar = "https://res.cloudinary.com/enme/image/upload/v1626374918/avatar/user_buhdn0.png"
+    }
     const userSaved = await this.userRepository.save(user);
 
     if (!userSaved) {
@@ -39,9 +55,9 @@ export class UserService {
   async find(data: FindUserInput): Promise<User> {
     const user = await this.userRepository.findOneOrFail({
       where: [
-        {id: data.userID},
-        {email: data.email},
-        {username: data.username}
+        { id: data.userID },
+        { email: data.email },
+        { username: data.username }
       ]
     });
     if (!user) {
@@ -61,6 +77,20 @@ export class UserService {
 
   async remove(id: string): Promise<boolean> {
     const user = await this.findOne(id);
+    let avatar: string;
+    avatar = this.getIDImage(user.avatar);
+    console.log('enme/avatar/'+avatar);
+    if (!(avatar === "user_buhdn0")) {
+      this.cloudService.deleteImage('enme/avatar/'+avatar);
+    }
     return (await this.userRepository.remove(user)) ? true : false;
+  }
+
+  private getIDImage(link: string): string {
+    const parts = link.split('/');
+    const imageid = parts[parts.length - 1].split('.')[0];
+    console.log("imageid " + imageid)
+    return imageid
+
   }
 }
