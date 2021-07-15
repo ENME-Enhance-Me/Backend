@@ -3,6 +3,7 @@ import { AuthService } from './auth.service';
 import { AuthInput } from './dto/Auth.input';
 import { AuthBrandType } from './dto/auth-brand.type';
 import { AuthClientType } from './dto/auth-Client.type';
+import { BadRequestException } from '@nestjs/common';
 
 @Resolver()
 export class AuthResolver {
@@ -14,6 +15,9 @@ export class AuthResolver {
   public async LoginBrand(
     @Args('data') data: AuthInput
   ): Promise<AuthBrandType> {
+    if(data.Email === "" || data.Password === ""){
+      throw new BadRequestException('Preencha os campos de e-mail e senha.');
+    }
     const response = await this.authService.validateBrand(data);
     return{
       brand: response.brand,
