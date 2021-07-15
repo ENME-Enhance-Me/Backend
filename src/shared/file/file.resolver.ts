@@ -11,4 +11,10 @@ export class FileResolver {
     const response = await this.cloudService.uploadImage(File, "enme")
     return response.url;
   }
+  @Mutation(() => String)
+  async deleteFile(@Args('link')link: string){
+
+    const response = await this.cloudService.deleteImage(link);
+    return response.result;
+  }
 }
