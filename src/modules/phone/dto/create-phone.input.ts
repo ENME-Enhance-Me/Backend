@@ -16,7 +16,7 @@ export class CreatePhoneInput {
   @IsString()
   @IsNotEmpty({ message: 'Campo nome não pode estar vazio' })
   @IsOptional()
-  brandID?: string;
+  userID?: string;
 
   @IsString()
   @IsNotEmpty({ message: 'Campo nome não pode estar vazio' })
