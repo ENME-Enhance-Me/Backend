@@ -24,10 +24,10 @@ export class BrandService {
 
     if (await this.BrandRepository.findOne({ company_name: data.company_name })) {
       throw new BadRequestException('Nome da companhia já cadastrado');
-    } 
+    }
     else if (await this.BrandRepository.findOne({ CNPJ_CPF: data.CNPJ_CPF })) {
       throw new BadRequestException('CPF ou CNPJ já cadastrado');
-    } 
+    }
     else {
       const brand = this.BrandRepository.create({
         company_name: data.company_name,
@@ -39,7 +39,7 @@ export class BrandService {
         username: data.username,
         password: data.password,
       }, avatarUser);
-      
+
       try {
         const file = await this.cloudService.uploadImage(avatarBrand, "enme/avatar");
         brand.logo = file.url;
@@ -47,7 +47,7 @@ export class BrandService {
       catch (err) {
         brand.logo = "https://res.cloudinary.com/enme/image/upload/v1626717618/avatar/user_avatar.png"
       }
-      
+
       brand.users = new Array<User>();
       brand.users.push(user);
       BrandCreated = await this.BrandRepository.save(brand);
@@ -89,7 +89,7 @@ export class BrandService {
   }
 
   async findOne(id: string): Promise<Brand> {
-    const brand = await this.BrandRepository.findOne({where: {id}});
+    const brand = await this.BrandRepository.findOne({ where: { id } });
     if (!brand) {
       throw new NotFoundException('Marca não encontrada');
     }
@@ -103,8 +103,22 @@ export class BrandService {
     return brandUpdated;
   }
 
-  async remove(id: string) {
+  async remove(id: string): Promise<boolean> {
     const brand = await this.findOne(id);
+    let avatar: string;
+    avatar = this.getIDImage(brand.logo);
+    console.log('enme/avatar/' + avatar);
+    if (!(avatar === "user_avatar")) {
+      this.cloudService.deleteImage('enme/avatar/' + avatar);
+    }
     return (await this.BrandRepository.remove(brand)) ? true : false;
+  }
+
+  private getIDImage(link: string): string {
+    const parts = link.split('/');
+    const imageid = parts[parts.length - 1].split('.')[0];
+    console.log("imageid " + imageid)
+    return imageid
+
   }
 }
