@@ -89,7 +89,7 @@ export class BrandService {
   }
 
   async findOne(id: string): Promise<Brand> {
-    const brand = await this.BrandRepository.findOne(id);
+    const brand = await this.BrandRepository.findOne({where: {id}});
     if (!brand) {
       throw new NotFoundException('Marca não encontrada');
     }

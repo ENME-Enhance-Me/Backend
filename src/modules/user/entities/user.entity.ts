@@ -20,14 +20,10 @@ export class User {
   @Field()
   id: string;
 
-  @Column({
-    unique: true
-  })
+  @Column({ unique: true })
   username: string;
 
-  @Column({
-    unique: true
-  })
+  @Column({ unique: true })
   email: string;
 
   @Column({ nullable: true })

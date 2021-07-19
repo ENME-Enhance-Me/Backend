@@ -25,9 +25,7 @@ export class AuthService {
         let user: User;
         try {
             user = await this.userService.find({ email: data.Email });
-            console.log(user);
             brand = await this.brandService.findOne(user.brandId);
-            console.log(brand);
         }
         catch (err) {
             throw new NotFoundException('usuário e/ou senha inválidos');

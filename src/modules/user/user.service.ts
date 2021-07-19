@@ -18,7 +18,7 @@ export class UserService {
     private readonly cloudService: CloudinaryService
   ) { }
 
-  async create(data: CreateUserInput, avatar: FileUpload): Promise<User> {
+  async create(data: CreateUserInput, avatar: FileUpload, brand?:Brand): Promise<User> {
     if (await this.userRepository.findOne({ email: data.email })) {
       throw new BadRequestException("E-mail já existente.");
     }
@@ -33,6 +33,7 @@ export class UserService {
     catch (err) {
       user.avatar = "https://res.cloudinary.com/enme/image/upload/v1626717618/avatar/user_avatar.png"
     }
+    user.brand = brand;
     const userSaved = await this.userRepository.save(user);
 
     if (!userSaved) {
@@ -90,7 +91,7 @@ export class UserService {
     let avatar: string;
     avatar = this.getIDImage(user.avatar);
     console.log('enme/avatar/'+avatar);
-    if (!(avatar === "user_buhdn0")) {
+    if (!(avatar === "user_avatar")) {
       this.cloudService.deleteImage('enme/avatar/'+avatar);
     }
     return (await this.userRepository.remove(user)) ? true : false;
