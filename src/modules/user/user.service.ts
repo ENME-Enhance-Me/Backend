@@ -3,6 +3,8 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { FileUpload } from 'graphql-upload';
 import { CloudinaryService } from 'src/helpers/Cloudinary/cloudinary.service';
 import { Repository } from 'typeorm';
+import { BrandService } from '../brand/brand.service';
+import { Brand } from '../brand/entities/brand.entity';
 import { CreateUserInput } from './dto/create-user.input';
 import { FindUserInput } from './dto/find-user.input';
 import { UpdateUserInput } from './dto/update-user.input';
@@ -29,7 +31,7 @@ export class UserService {
       user.avatar = file.url;
     }
     catch (err) {
-      user.avatar = "https://res.cloudinary.com/enme/image/upload/v1626374918/avatar/user_buhdn0.png"
+      user.avatar = "https://res.cloudinary.com/enme/image/upload/v1626717618/avatar/user_avatar.png"
     }
     const userSaved = await this.userRepository.save(user);
 
@@ -63,6 +65,14 @@ export class UserService {
     if (!user) {
       throw new NotFoundException('Usuário não encontrado');
     }
+    return user;
+  }
+
+  async findMany(brand: Brand): Promise<User[]> {
+    const user = await this.userRepository.find({
+      where: { brand },
+      relations: ['brand']
+    });
     return user;
   }
 

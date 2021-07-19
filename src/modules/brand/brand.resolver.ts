@@ -19,9 +19,10 @@ export class BrandResolver {
   })
   async createBrand(
     @Args('data') data: CreateBrandInput,
-    @Args({name: 'avatar', nullable: true, type: () => GraphQLUpload}) avatar: FileUpload 
-    ) {
-    return await this.brandService.create(data, avatar);
+    @Args({ name: 'avatarBrand', nullable: true, type: () => GraphQLUpload }) avatarBrand: FileUpload,
+    @Args({ name: 'avatarUser', nullable: true, type: () => GraphQLUpload }) avatarUser: FileUpload
+  ) {
+    return await this.brandService.create(data, avatarBrand, avatarUser);
   }
 
   @Query(() => [Brand], {
@@ -49,9 +50,8 @@ export class BrandResolver {
   }
 
   @ResolveField()
-  async user(@Parent() brand: Brand) {
-    const { userID } = brand;
-    return await this.userService.findOne(userID);
+  async users(@Parent() brand: Brand) {
+    return await this.userService.findMany(brand);
   }
 
   @Mutation(() => Brand, {

@@ -29,9 +29,8 @@ export class PhoneService {
       throw new InternalServerErrorException('Este telefone já existe');
     }
     let user = undefined
-    if(data.brandID){
-      const brand = await this.brandService.findOne(data.brandID);
-      user = await this.userService.findOne(brand.userID);
+    if(data.userID){
+      user = await this.userService.findOne(data.userID);
     }
     else if(data.clientID){
       const client = await this.clientService.findOne(data.clientID);

@@ -5,6 +5,8 @@ import {
   CreateDateColumn,
   Entity,
   JoinColumn,
+  ManyToOne,
+  OneToMany,
   OneToOne,
   PrimaryGeneratedColumn,
   RelationId,
@@ -18,23 +20,20 @@ export class Brand {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-
   @Column({
     unique: true
   })
   company_name: string;
 
-  @Column({
-    unique: true
-  })
+  @Column({unique: true})
   CNPJ_CPF: string;
 
-  @OneToOne(() => User, { onUpdate: 'CASCADE', onDelete: 'CASCADE' })
-  @JoinColumn({name: "userID"})
-  user: User;
+  @Column({ nullable: true })
+  @Field({ nullable: true })
+  logo: string;
 
-  @RelationId((brand: Brand) => brand.user)
-  userID: string;
+  @OneToMany(() => User, user => user.brand)
+  users: User[];
   
   @CreateDateColumn()
   @HideField()

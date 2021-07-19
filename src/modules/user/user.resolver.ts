@@ -6,11 +6,13 @@ import { UpdateUserInput } from './dto/update-user.input';
 import { Phone } from '../phone/entities/phone.entity';
 import { PhoneService } from '../phone/phone.service';
 import { FileUpload, GraphQLUpload } from 'graphql-upload';
+import { BrandService } from '../brand/brand.service';
 
 @Resolver(() => User)
 export class UserResolver {
   constructor(
     private readonly userService: UserService,
+    private readonly brandService: BrandService,
     private readonly phoneService: PhoneService
   ) { }
 
@@ -19,7 +21,7 @@ export class UserResolver {
   })
   createUser(
     @Args('data') data: CreateUserInput,
-    @Args({name: 'avatar', type: () => GraphQLUpload}) avatar: FileUpload 
+    @Args({name: 'avatar', nullable: true, type: () => GraphQLUpload}) avatar: FileUpload 
     ) {
     return this.userService.create(data, avatar);
   }
@@ -36,6 +38,12 @@ export class UserResolver {
   async phones(@Parent() user: User) {
     const { id } = user;
     return await this.phoneService.find({userID: id});
+  }
+
+  @ResolveField()
+  async brand(@Parent() user: User) {
+    const { brandId } = user;
+    return await this.brandService.findOne(brandId);
   }
 
   @Query(() => User, {

@@ -12,7 +12,7 @@ import { ClientsService } from '../clients/clients.service';
 import { CloudinaryService } from 'src/helpers/Cloudinary/cloudinary.service';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([User, Phone, Brand, Client])],
-  providers: [UserResolver, UserService, PhoneService, BrandService, ClientsService, CloudinaryService],
+  imports: [TypeOrmModule.forFeature([Brand, User, Phone, Client])],
+  providers: [UserResolver, UserService, BrandService, PhoneService,  ClientsService, CloudinaryService],
 })
 export class UserModule {}
