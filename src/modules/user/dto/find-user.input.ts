@@ -11,6 +11,11 @@ export class FindUserInput {
     @IsString()
     @IsNotEmpty({ message: 'Este campo não pode estar vazio' })
     @IsOptional()
+    brandID?: string;
+
+    @IsString()
+    @IsNotEmpty({ message: 'Este campo não pode estar vazio' })
+    @IsOptional()
     username?: string;
 
     @IsEmail()

@@ -2,13 +2,16 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
+  RelationId,
   UpdateDateColumn,
 } from 'typeorm';
 import { Field, HideField, ObjectType } from '@nestjs/graphql';
 import { hashPasswordTransform } from 'src/helpers/crypto';
 import { Phone } from 'src/modules/phone/entities/phone.entity';
+import { Brand } from 'src/modules/brand/entities/brand.entity';
 
 @ObjectType()
 @Entity('user')
@@ -27,12 +30,8 @@ export class User {
   })
   email: string;
 
-  @Column({
-    nullable: true,
-  })
-  @Field({
-    nullable:true
-  })
+  @Column({ nullable: true })
+  @Field({ nullable: true })
   avatar: string;
 
   @Column({
@@ -43,6 +42,12 @@ export class User {
 
   @OneToMany(() => Phone, phone => phone.user)
   phones: Phone[];
+
+  @ManyToOne(() => Brand, brand => brand.users)
+  brand: Brand;
+
+  @RelationId((user: User) => user.brand)
+  brandId: string;
 
   @CreateDateColumn()
   @HideField()
