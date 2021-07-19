@@ -9,10 +9,12 @@ import { Brand } from '../brand/entities/brand.entity';
 import { Client } from '../clients/entities/client.entity';
 import { AuthClientType } from './dto/auth-Client.type';
 import { ClientsService } from '../clients/clients.service';
+import { UserService } from '../user/user.service';
 
 @Injectable()
 export class AuthService {
     constructor(
+        private userService: UserService,
         private brandService: BrandService,
         private clientService: ClientsService,
         private jwtService: JwtService
@@ -20,13 +22,17 @@ export class AuthService {
 
     async validateBrand(data: AuthInput): Promise<AuthBrandType> {
         let brand: Brand;
+        let user: User;
         try {
-            brand = await this.brandService.find({ email: data.Email });
+            user = await this.userService.find({ email: data.Email });
+            console.log(user);
+            brand = await this.brandService.findOne(user.brandId);
+            console.log(brand);
         }
         catch (err) {
             throw new NotFoundException('usuário e/ou senha inválidos');
         }
-        const validPassword = compareSync(data.Password, brand.user.password);
+        const validPassword = compareSync(data.Password, user.password);
 
         if (!validPassword) {
             throw new UnauthorizedException('usuário e/ou senha inválidos');
