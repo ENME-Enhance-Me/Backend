@@ -1,8 +1,10 @@
 import { BadRequestException, HttpException, Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { FileUpload } from 'graphql-upload';
+import { CloudinaryService } from 'src/helpers/Cloudinary/cloudinary.service';
 import { UserService } from 'src/modules/user/user.service';
 import { Repository } from 'typeorm';
+import { User } from '../user/entities/user.entity';
 import { CreateBrandInput } from './dto/create-brand.input';
 import { FindBrandInput } from './dto/find-brand.input';
 import { UpdateBrandInput } from './dto/update-brand.input';
@@ -14,9 +16,10 @@ export class BrandService {
     @InjectRepository(Brand)
     private BrandRepository: Repository<Brand>,
     private readonly userService: UserService,
+    private readonly cloudService: CloudinaryService
   ) { }
 
-  async create(data: CreateBrandInput, avatar: FileUpload): Promise<Brand> {
+  async create(data: CreateBrandInput, avatarBrand: FileUpload, avatarUser: FileUpload): Promise<Brand> {
     let BrandCreated: Brand;
 
     if (await this.BrandRepository.findOne({ company_name: data.company_name })) {
@@ -26,18 +29,28 @@ export class BrandService {
       throw new BadRequestException('CPF ou CNPJ já cadastrado');
     } 
     else {
+      const brand = this.BrandRepository.create({
+        company_name: data.company_name,
+        CNPJ_CPF: data.CNPJ_CPF
+      });
+
       const user = await this.userService.create({
         email: data.email,
         username: data.username,
         password: data.password,
-      }, avatar);
-
-      const Brand = this.BrandRepository.create({
-        company_name: data.company_name,
-        CNPJ_CPF: data.CNPJ_CPF,
-        user: user,
-      });
-      BrandCreated = await this.BrandRepository.save(Brand);
+      }, avatarUser);
+      
+      try {
+        const file = await this.cloudService.uploadImage(avatarBrand, "enme/avatar");
+        brand.logo = file.url;
+      }
+      catch (err) {
+        brand.logo = "https://res.cloudinary.com/enme/image/upload/v1626717618/avatar/user_avatar.png"
+      }
+      
+      brand.users = new Array<User>();
+      brand.users.push(user);
+      BrandCreated = await this.BrandRepository.save(brand);
       if (!BrandCreated) {
         await this.userService.remove(user.id);
         throw new InternalServerErrorException('Problemas ao criar uma marca');
@@ -63,9 +76,9 @@ export class BrandService {
     const brand = this.BrandRepository.findOne({
       where: [
         { id: data.brandID },
+        { id: user.brandID },
         { CNPJ_CPF: data.CNPJ_CPF },
-        { company_name: data.company_name },
-        { user: user }
+        { company_name: data.company_name }
       ],
       relations: ['user']
     });
@@ -76,10 +89,7 @@ export class BrandService {
   }
 
   async findOne(id: string): Promise<Brand> {
-    const brand = await this.BrandRepository.findOne(id,
-      {
-        relations: ['user']
-      });
+    const brand = await this.BrandRepository.findOne(id);
     if (!brand) {
       throw new NotFoundException('Marca não encontrada');
     }
@@ -88,12 +98,6 @@ export class BrandService {
 
   async update(id: string, data: UpdateBrandInput): Promise<Brand> {
     const brand = await this.findOne(id);
-    const user = await this.userService.find({ userID: brand.userID })
-    await this.userService.update(user.id, {
-      email: data.email,
-      password: data.password,
-      username: data.username
-    });
     this.BrandRepository.merge(brand, { ...data });
     const brandUpdated = this.BrandRepository.save(brand);
     return brandUpdated;
@@ -101,7 +105,6 @@ export class BrandService {
 
   async remove(id: string) {
     const brand = await this.findOne(id);
-    await this.userService.remove(brand.userID);
     return (await this.BrandRepository.remove(brand)) ? true : false;
   }
 }
