@@ -28,8 +28,8 @@ export class Brand {
   @Column({unique: true})
   CNPJ_CPF: string;
 
-  @Column({ nullable: true })
-  @Field({ nullable: true })
+  @Column()
+  @Field()
   logo: string;
 
   @OneToMany(() => User, user => user.brand)
