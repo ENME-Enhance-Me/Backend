@@ -90,7 +90,6 @@ export class UserService {
     const user = await this.findOne(id);
     let avatar: string;
     avatar = this.getIDImage(user.avatar);
-    console.log('enme/avatar/'+avatar);
     if (!(avatar === "user_avatar")) {
       this.cloudService.deleteImage('enme/avatar/'+avatar);
     }
@@ -100,7 +99,6 @@ export class UserService {
   private getIDImage(link: string): string {
     const parts = link.split('/');
     const imageid = parts[parts.length - 1].split('.')[0];
-    console.log("imageid " + imageid)
     return imageid
 
   }

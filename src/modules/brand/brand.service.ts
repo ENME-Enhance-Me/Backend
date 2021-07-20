@@ -89,7 +89,7 @@ export class BrandService {
   }
 
   async findOne(id: string): Promise<Brand> {
-    const brand = await this.BrandRepository.findOne({ where: { id } });
+    const brand = await this.BrandRepository.findOne({ where: { id }});
     if (!brand) {
       throw new NotFoundException('Marca não encontrada');
     }
@@ -107,17 +107,19 @@ export class BrandService {
     const brand = await this.findOne(id);
     let avatar: string;
     avatar = this.getIDImage(brand.logo);
-    console.log('enme/avatar/' + avatar);
     if (!(avatar === "user_avatar")) {
-      this.cloudService.deleteImage('enme/avatar/' + avatar);
+      await this.cloudService.deleteImage('enme/avatar/' + avatar);
     }
+    const users = await this.userService.findMany(brand);
+    users.forEach(async (user) => {
+      await this.userService.remove(user.id);
+    })
     return (await this.BrandRepository.remove(brand)) ? true : false;
   }
 
   private getIDImage(link: string): string {
     const parts = link.split('/');
     const imageid = parts[parts.length - 1].split('.')[0];
-    console.log("imageid " + imageid)
     return imageid
 
   }
