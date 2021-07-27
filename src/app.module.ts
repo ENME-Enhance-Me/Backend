@@ -14,6 +14,7 @@ import { PhoneModule } from './modules/phone/phone.module';
 import { FileModule } from './shared/file/file.module';
 import { Cloudinary } from './helpers/Cloudinary/cloudinary';
 import { CloudinaryModule } from './helpers/Cloudinary/cloudinary.module';
+import { SegmentsModule } from './modules/segments/segments.module';
 
 
 @Module({
@@ -34,6 +35,7 @@ import { CloudinaryModule } from './helpers/Cloudinary/cloudinary.module';
     PhoneModule,
     FileModule,
     CloudinaryModule,
+    SegmentsModule,
   ],
   controllers: [AppController],
   providers: [AppService, Cloudinary],

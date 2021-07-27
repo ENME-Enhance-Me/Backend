@@ -110,4 +110,6 @@ export class ClientsService {
     await this.userService.remove(client.user.id);
     return (await this.clientRepository.remove(client)) ? true : false;
   }
+
+  
 }

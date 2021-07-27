@@ -1,10 +1,13 @@
 import { ObjectType, Field, HideField } from '@nestjs/graphql';
+import { Segment } from 'src/modules/segments/entities/segment.entity';
 import { User } from 'src/modules/user/entities/user.entity';
 import {
   Column,
   CreateDateColumn,
   Entity,
   JoinColumn,
+  JoinTable,
+  ManyToMany,
   ManyToOne,
   OneToMany,
   OneToOne,
@@ -34,6 +37,10 @@ export class Brand {
 
   @OneToMany(() => User, user => user.brand)
   users: User[];
+
+  @ManyToMany(() => Segment, segment => segment.brands)
+  @JoinTable()
+  segments: Segment[];
   
   @CreateDateColumn()
   @HideField()

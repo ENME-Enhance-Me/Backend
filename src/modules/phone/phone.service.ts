@@ -16,7 +16,6 @@ export class PhoneService {
     @InjectRepository(Phone)
     private readonly phoneRepository: Repository<Phone>,
     private readonly userService: UserService,
-    private readonly brandService: BrandService,
     private readonly clientService: ClientsService
   ) { }
 

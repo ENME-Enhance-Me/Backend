@@ -1,6 +1,7 @@
 import { ObjectType, Field, Int, HideField, registerEnumType } from '@nestjs/graphql';
+import { Segment } from 'src/modules/segments/entities/segment.entity';
 import { User } from 'src/modules/user/entities/user.entity';
-import { Column, CreateDateColumn, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn, RelationId, UpdateDateColumn } from 'typeorm';
+import { Column, CreateDateColumn, Entity, JoinColumn, JoinTable, ManyToMany, OneToOne, PrimaryGeneratedColumn, RelationId, UpdateDateColumn } from 'typeorm';
 
 export enum gender{
   Masculino,
@@ -40,6 +41,12 @@ export class Client {
 
   @RelationId((client: Client) => client.user)
   userID: string;
+
+  @ManyToMany(() => Segment, segment => segment.clients, {
+    onDelete: 'CASCADE'
+  })
+  @JoinTable()
+  segments: Segment[]
 
   @CreateDateColumn()
   @HideField()
