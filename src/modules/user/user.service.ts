@@ -3,7 +3,6 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { FileUpload } from 'graphql-upload';
 import { CloudinaryService } from 'src/helpers/Cloudinary/cloudinary.service';
 import { Repository } from 'typeorm';
-import { BrandService } from '../brand/brand.service';
 import { Brand } from '../brand/entities/brand.entity';
 import { CreateUserInput } from './dto/create-user.input';
 import { FindUserInput } from './dto/find-user.input';
