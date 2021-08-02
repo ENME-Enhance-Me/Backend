@@ -24,8 +24,8 @@ else {
     url: process.env.DATABASE_URL,
     logging: true,
     syncronize: true,
-    entities: ["dist/**/entities/*.entity.{ts,js}"],
-    migrations: ["./dist/shared/migration/*.{ts,js}"],
+    entities: ["src/**/entities/*.entity.{ts,js}"],
+    migrations: ["./src/shared/migration/*.{ts,js}"],
     cli: {
       "migrationsDir": "./src/shared/migration"
     }
