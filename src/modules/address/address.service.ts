@@ -33,8 +33,8 @@ export class AddressService {
     const state = await this.createState(data.state);
     const city = await this.createCity(data.city, state);
     const neighbor = await this.createNeighborhood(data.neighborhood, city);
-    
-    const address = await this.createAdress(
+
+    const address = await this.createAddress(
       data.publicPlace,
       data.number,
       data.complement,
@@ -49,14 +49,15 @@ export class AddressService {
     const state = await this.createState(data.state);
     const city = await this.createCity(data.city, state);
     const neighbor = await this.createNeighborhood(data.neighborhood, city);
-    const client = await this.clientService.findOne(data.ownerID);
-    const address = await this.createAdress(
+
+    const address = await this.createAddress(
       data.publicPlace,
       data.number,
       data.complement,
       data.CEP,
       neighbor
     );
+    const client = await this.clientService.connectAddress(data.ownerID, address);
 
     return address;
   }
@@ -120,7 +121,7 @@ export class AddressService {
     }
   }
 
-  async createAdress(
+  async createAddress(
     publicPlace: string,
     number: number,
     complement: string,
@@ -128,12 +129,12 @@ export class AddressService {
     neighborhood: Neighborhood
   ): Promise<Address> {
     const address = this.addressRepository.create({
-        publicPlace,
-        number,
-        complement,
-        CEP,
-        neighborhood
-      });
+      publicPlace,
+      number,
+      complement,
+      CEP,
+      neighborhood
+    });
     const addressCreated = await this.addressRepository.save(address);
 
     if (!addressCreated) {
@@ -156,8 +157,8 @@ export class AddressService {
       brand = await this.brandService.findOne(data.brandID);
     if (data.clientID)
       client = await this.clientService.findOne(data.clientID);
-    // try {
-      address = await this.addressRepository.findOneOrFail({
+    try {
+      address = await this.addressRepository.findOne({
         where: [
           { id: data.addressID },
           { id: brand?.addressID },
@@ -165,19 +166,64 @@ export class AddressService {
         ],
         relations: ['neighborhood', 'neighborhood.city', 'neighborhood.city.state']
       });
-    // }
-    // catch (err) {
-    //   throw new NotFoundException('endereço não encontrado');
-    // }
+    }
+    catch (err) {
+      throw new NotFoundException('endereço não encontrado');
+    }
     return address;
   }
 
 
-  update(id: string, data: UpdateAddressInput) {
-    return `This action updates a #${id} address`;
+  async updateBrand(id: string, data: UpdateAddressInput): Promise<Address> {
+    const brand = await this.brandService.findOne(id);
+    const address = await this.update(brand.addressID, data);
+    return address;
   }
 
-  remove(id: string) {
-    return `This action removes a #${id} address`;
+  async updatedClient(id: string, data: UpdateAddressInput): Promise<Address> {
+    const client = await this.clientService.findOne(id);
+    const address = await this.update(client.addressID, data);
+    return address;
+  }
+
+  async update(id: string, data: UpdateAddressInput): Promise<Address> {
+    let addressUpdated: Address;
+    let address = await this.findOne({ addressID: id });
+    let neighborhood = await this.neighborhoodRepository.findOneOrFail({
+      where: { id: address.neighborhood.id },
+      relations: ['city']
+    });
+    let city = await this.cityRepository.findOneOrFail({
+      where: { id: neighborhood.city.id},
+      relations: ['state']
+    });
+    let state = await this.stateRepository.findOneOrFail({
+      where: {id: city.state.id}
+    });
+    if (data.complement || data.number || data.publicPlace || data.CEP) {
+      this.addressRepository.merge(address, { complement: data.complement, number: data.number, publicPlace: data.publicPlace, CEP: data.CEP });
+      addressUpdated = await this.addressRepository.save(address);
+    }
+    if (data.neighborhood) {
+      this.neighborhoodRepository.merge(neighborhood, { name: data.neighborhood });
+      await this.neighborhoodRepository.save(neighborhood);
+      addressUpdated = await this.findOne({ addressID: id });
+    }
+    if (data.city) {
+      this.cityRepository.merge(city, { name: data.city });
+      await this.neighborhoodRepository.save(city);
+      addressUpdated = await this.findOne({ addressID: id });
+    }
+    if (data.state) {
+      this.stateRepository.merge(state, { name: data.state });
+      await this.neighborhoodRepository.save(state);
+      addressUpdated = await this.findOne({ addressID: id });
+    }
+    return addressUpdated;
+  }
+
+  async remove(id: string) {
+    const address = await this.findOne({ addressID: id });
+    return (await this.addressRepository.remove(address)) ? true : false;
   }
 }

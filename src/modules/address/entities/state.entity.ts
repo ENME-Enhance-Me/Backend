@@ -12,7 +12,7 @@ export class State {
   @Column()
   name: string;
 
-  @OneToMany(() => City, city => city.state, {cascade: true})
+  @OneToMany(() => City, city => city.state, {onDelete: 'CASCADE'})
   cities: City[];
 
   @CreateDateColumn()

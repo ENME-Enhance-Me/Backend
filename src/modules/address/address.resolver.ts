@@ -30,12 +30,17 @@ export class AddressResolver {
   }
 
   @Mutation(() => Address)
-  updateAddress(@Args('data') data: UpdateAddressInput) {
-    return this.addressService.update(data.ownerID, data);
+  async updateAddressToBrand(@Args('data') data: UpdateAddressInput) {
+    return await this.addressService.updateBrand(data.ownerID, data);
+  }
+
+  @Mutation(() => Address)
+  async updateAddressToClient(@Args('data') data: UpdateAddressInput) {
+    return await this.addressService.updatedClient(data.ownerID, data);
   }
 
   @Mutation(() => Boolean)
-  removeAddress(@Args('id') id: string) {
-    return this.addressService.remove(id);
+  async removeAddress(@Args('id') id: string) {
+    return await this.addressService.remove(id);
   }
 }

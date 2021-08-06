@@ -33,7 +33,6 @@ export class Brand {
   CNPJ_CPF: string;
 
   @Column()
-  @Field()
   logo: string;
 
   @OneToMany(() => User, user => user.brand)
@@ -57,5 +56,4 @@ export class Brand {
   @UpdateDateColumn()
   @HideField()
   updated_at: Date;
-  brand: import("cluster").Address;
 }

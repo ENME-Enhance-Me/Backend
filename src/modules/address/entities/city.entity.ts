@@ -14,7 +14,7 @@ export class City {
   @Column()
   name: string;
 
-  @OneToMany(() => Neighborhood, neighborhood => neighborhood.city, {cascade: true})
+  @OneToMany(() => Neighborhood, neighborhood => neighborhood.city, {onDelete: 'CASCADE'})
   Neighborhoods: Neighborhood[];
 
   @ManyToOne(() => State, state => state.cities)

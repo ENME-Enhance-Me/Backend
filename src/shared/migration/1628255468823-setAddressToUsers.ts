@@ -8,8 +8,8 @@ export class setAddressToUsers1628255468823 implements MigrationInterface {
         await queryRunner.query(`ALTER TABLE "client" ADD CONSTRAINT "UQ_6e6c7c79fbf5ab39520cd1723e2" UNIQUE ("addressId")`);
         await queryRunner.query(`ALTER TABLE "brand" ADD "addressId" uuid`);
         await queryRunner.query(`ALTER TABLE "brand" ADD CONSTRAINT "UQ_0f35656e26fda384971f1aa387d" UNIQUE ("addressId")`);
-        await queryRunner.query(`ALTER TABLE "client" ADD CONSTRAINT "FK_6e6c7c79fbf5ab39520cd1723e2" FOREIGN KEY ("addressId") REFERENCES "address"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`);
-        await queryRunner.query(`ALTER TABLE "brand" ADD CONSTRAINT "FK_0f35656e26fda384971f1aa387d" FOREIGN KEY ("addressId") REFERENCES "address"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`);
+        await queryRunner.query(`ALTER TABLE "client" ADD CONSTRAINT "FK_6e6c7c79fbf5ab39520cd1723e2" FOREIGN KEY ("addressId") REFERENCES "address"("id") ON DELETE SET NULL ON UPDATE NO ACTION`);
+        await queryRunner.query(`ALTER TABLE "brand" ADD CONSTRAINT "FK_0f35656e26fda384971f1aa387d" FOREIGN KEY ("addressId") REFERENCES "address"("id") ON DELETE SET NULL ON UPDATE NO ACTION`);
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {

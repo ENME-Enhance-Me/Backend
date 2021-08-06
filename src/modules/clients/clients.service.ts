@@ -2,6 +2,7 @@ import { Injectable, InternalServerErrorException, NotFoundException } from '@ne
 import { InjectRepository } from '@nestjs/typeorm';
 import { FileUpload } from 'graphql-upload';
 import { Repository } from 'typeorm';
+import { Address } from '../address/entities/address.entity';
 import { UserService } from '../user/user.service';
 import { CreateClientInput } from './dto/create-client.input';
 import { FindClientInput } from './dto/find-client.input';
@@ -44,6 +45,13 @@ export class ClientsService {
       throw new InternalServerErrorException('Problemas ao criar um cliente');
     }
     return clientCreated;
+  }
+
+  async connectAddress(id: string, address: Address): Promise<Client> {
+    let client = await this.findOne(id);
+    client.address = address;
+    const clientUpdated = await this.clientRepository.save(client);
+    return clientUpdated;
   }
 
   findAll(): Promise<Client[]> {
