@@ -1,5 +1,7 @@
 import { ObjectType, Field, HideField } from '@nestjs/graphql';
-import { Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import { Brand } from 'src/modules/brand/entities/brand.entity';
+import { Client } from 'src/modules/clients/entities/client.entity';
+import { Column, CreateDateColumn, Entity, ManyToOne, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 import { Neighborhood } from './neighborhood.entity';
 
 @Entity('address')
@@ -20,6 +22,12 @@ export class Address {
 
   @Column()
   CEP: string;
+
+  @OneToOne(() => Brand)
+  brand?: Brand;
+
+  @OneToOne(() => Client)
+  client?: Client;
 
   @ManyToOne(() => Neighborhood, neighborhood => neighborhood.addresses)
   neighborhood: Neighborhood;

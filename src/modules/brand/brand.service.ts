@@ -4,6 +4,7 @@ import { FileUpload } from 'graphql-upload';
 import { CloudinaryService } from 'src/helpers/Cloudinary/cloudinary.service';
 import { UserService } from 'src/modules/user/user.service';
 import { Repository } from 'typeorm';
+import { Address } from '../address/entities/address.entity';
 import { User } from '../user/entities/user.entity';
 import { CreateBrandInput } from './dto/create-brand.input';
 import { FindBrandInput } from './dto/find-brand.input';
@@ -76,11 +77,11 @@ export class BrandService {
     const brand = this.BrandRepository.findOne({
       where: [
         { id: data.brandID },
-        { id: user.brandID },
+        { id: user?.brandID },
         { CNPJ_CPF: data.CNPJ_CPF },
         { company_name: data.company_name }
       ],
-      relations: ['user']
+      relations: ['users']
     });
     if (!brand) {
       throw new NotFoundException('Marca não encontrada');
@@ -89,11 +90,22 @@ export class BrandService {
   }
 
   async findOne(id: string): Promise<Brand> {
-    const brand = await this.BrandRepository.findOne({ where: { id }});
+    const brand = await this.BrandRepository.findOne(
+      {
+        where: { id },
+        relations: ['address']
+      });
     if (!brand) {
       throw new NotFoundException('Marca não encontrada');
     }
     return brand;
+  }
+
+  async connectAddress(id: string, address: Address): Promise<Brand> {
+    let brand = await this.findOne(id);
+    brand.address = address;
+    const brandUpdated = await this.BrandRepository.save(brand);
+    return brandUpdated;
   }
 
   async update(id: string, data: UpdateBrandInput): Promise<Brand> {

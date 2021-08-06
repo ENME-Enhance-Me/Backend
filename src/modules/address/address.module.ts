@@ -6,9 +6,17 @@ import { Address } from './entities/address.entity';
 import { Neighborhood } from './entities/neighborhood.entity';
 import { City } from './entities/city.entity';
 import { State } from './entities/state.entity';
+import { BrandService } from '../brand/brand.service';
+import { ClientsService } from '../clients/clients.service';
+import { Brand } from '../brand/entities/brand.entity';
+import { User } from '../user/entities/user.entity';
+import { Client } from '../clients/entities/client.entity';
+import { Phone } from '../phone/entities/phone.entity';
+import { UserService } from '../user/user.service';
+import { CloudinaryService } from 'src/helpers/Cloudinary/cloudinary.service';
 
 @Module({
-  imports:[TypeOrmModule.forFeature([Address, Neighborhood, City, State])],
-  providers: [AddressResolver, AddressService]
+  imports:[TypeOrmModule.forFeature([Address, Neighborhood, City, State, Brand, User, Phone, Client])],
+  providers: [AddressResolver, AddressService, BrandService, UserService, CloudinaryService, ClientsService]
 })
 export class AddressModule {}

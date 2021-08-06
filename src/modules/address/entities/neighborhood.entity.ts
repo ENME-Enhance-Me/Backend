@@ -13,7 +13,7 @@ export class Neighborhood {
   @Column()
   name: string;
 
-  @OneToMany(() => Address, address => address.neighborhood)
+  @OneToMany(() => Address, address => address.neighborhood, {cascade: true})
   addresses: Address[];
 
   @ManyToOne(() => City, city => city.Neighborhoods)
