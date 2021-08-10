@@ -8,12 +8,14 @@ import { FindBrandInput } from './dto/find-brand.input';
 import { FileUpload, GraphQLUpload } from 'graphql-upload';
 import { CreateUserInput } from '../user/dto/create-user.input';
 import { User } from '../user/entities/user.entity';
+import { AddressService } from '../address/address.service';
 
 @Resolver(() => Brand)
 export class BrandResolver {
   constructor(
     private readonly brandService: BrandService,
     private readonly userService: UserService,
+    private readonly addressService: AddressService
   ) { }
 
   @Mutation(() => Brand, {
@@ -54,6 +56,11 @@ export class BrandResolver {
   @ResolveField()
   async users(@Parent() brand: Brand) {
     return await this.userService.findMany(brand);
+  }
+
+  @ResolveField()
+  async address(@Parent() brand:Brand){
+    return await this.addressService.findOne({brandID: brand.id});
   }
 
   @Mutation(() => User, {

@@ -1,4 +1,5 @@
 import { ObjectType, Field, HideField } from '@nestjs/graphql';
+import { Address } from 'src/modules/address/entities/address.entity';
 import { Segment } from 'src/modules/segments/entities/segment.entity';
 import { User } from 'src/modules/user/entities/user.entity';
 import {
@@ -32,7 +33,6 @@ export class Brand {
   CNPJ_CPF: string;
 
   @Column()
-  @Field()
   logo: string;
 
   @OneToMany(() => User, user => user.brand)
@@ -41,6 +41,13 @@ export class Brand {
   @ManyToMany(() => Segment, segment => segment.brands)
   @JoinTable()
   segments: Segment[];
+
+  @OneToOne(() => Address)
+  @JoinColumn()
+  address: Address;
+
+  @RelationId((brand: Brand) => brand.address)
+  addressID: string;
   
   @CreateDateColumn()
   @HideField()

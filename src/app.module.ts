@@ -15,6 +15,7 @@ import { FileModule } from './shared/file/file.module';
 import { Cloudinary } from './helpers/Cloudinary/cloudinary';
 import { CloudinaryModule } from './helpers/Cloudinary/cloudinary.module';
 import { SegmentsModule } from './modules/segments/segments.module';
+import { AddressModule } from './modules/address/address.module';
 
 
 @Module({
@@ -36,6 +37,7 @@ import { SegmentsModule } from './modules/segments/segments.module';
     FileModule,
     CloudinaryModule,
     SegmentsModule,
+    AddressModule,
   ],
   controllers: [AppController],
   providers: [AppService, Cloudinary],
