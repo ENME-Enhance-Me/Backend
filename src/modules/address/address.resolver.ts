@@ -31,12 +31,12 @@ export class AddressResolver {
 
   @Mutation(() => Address)
   async updateAddressToBrand(@Args('data') data: UpdateAddressInput) {
-    return await this.addressService.updateBrand(data.ownerID, data);
+    return await this.addressService.updateAddressToBrand(data.ownerID, data);
   }
 
   @Mutation(() => Address)
   async updateAddressToClient(@Args('data') data: UpdateAddressInput) {
-    return await this.addressService.updatedClient(data.ownerID, data);
+    return await this.addressService.updatedAddressToClient(data.ownerID, data);
   }
 
   @Mutation(() => Boolean)

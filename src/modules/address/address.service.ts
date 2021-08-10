@@ -174,13 +174,13 @@ export class AddressService {
   }
 
 
-  async updateBrand(id: string, data: UpdateAddressInput): Promise<Address> {
+  async updateAddressToBrand(id: string, data: UpdateAddressInput): Promise<Address> {
     const brand = await this.brandService.findOne(id);
     const address = await this.update(brand.addressID, data);
     return address;
   }
 
-  async updatedClient(id: string, data: UpdateAddressInput): Promise<Address> {
+  async updatedAddressToClient(id: string, data: UpdateAddressInput): Promise<Address> {
     const client = await this.clientService.findOne(id);
     const address = await this.update(client.addressID, data);
     return address;
@@ -189,38 +189,94 @@ export class AddressService {
   async update(id: string, data: UpdateAddressInput): Promise<Address> {
     let addressUpdated: Address;
     let address = await this.findOne({ addressID: id });
-    let neighborhood = await this.neighborhoodRepository.findOneOrFail({
-      where: { id: address.neighborhood.id },
-      relations: ['city']
-    });
-    let city = await this.cityRepository.findOneOrFail({
-      where: { id: neighborhood.city.id},
-      relations: ['state']
-    });
-    let state = await this.stateRepository.findOneOrFail({
-      where: {id: city.state.id}
-    });
+    let cityUpdated: City;
+    let neighborhoodUpdated: Neighborhood;
+
     if (data.complement || data.number || data.publicPlace || data.CEP) {
       this.addressRepository.merge(address, { complement: data.complement, number: data.number, publicPlace: data.publicPlace, CEP: data.CEP });
       addressUpdated = await this.addressRepository.save(address);
     }
-    if (data.neighborhood) {
-      this.neighborhoodRepository.merge(neighborhood, { name: data.neighborhood });
-      await this.neighborhoodRepository.save(neighborhood);
-      addressUpdated = await this.findOne({ addressID: id });
-    }
-    if (data.city) {
-      this.cityRepository.merge(city, { name: data.city });
-      await this.neighborhoodRepository.save(city);
-      addressUpdated = await this.findOne({ addressID: id });
-    }
     if (data.state) {
-      this.stateRepository.merge(state, { name: data.state });
-      await this.neighborhoodRepository.save(state);
-      addressUpdated = await this.findOne({ addressID: id });
+      const stateUpdated = await this.updateState(data.state);
+      if (data.city) {
+        cityUpdated = await this.updateCity(data.city, stateUpdated);
+      }
+      else {
+        cityUpdated = await this.updateCity(address.neighborhood.city.name, stateUpdated);
+      }
+      if (data.neighborhood) {
+        neighborhoodUpdated = await this.updateNeighborhood(data.neighborhood, cityUpdated);
+      }
+      else {
+        neighborhoodUpdated = await this.updateNeighborhood(address.neighborhood.name, cityUpdated);
+      }
     }
+    else if (data.city) {
+      cityUpdated = await this.updateCity(data.city, address.neighborhood.city.state);
+      if (data.neighborhood) {
+        neighborhoodUpdated = await this.updateNeighborhood(data.neighborhood, cityUpdated);
+      }
+      else {
+        neighborhoodUpdated = await this.updateNeighborhood(address.neighborhood.name, cityUpdated);
+      }
+    }
+    else if (data.neighborhood) {
+      neighborhoodUpdated = await this.updateNeighborhood(data.neighborhood, address.neighborhood.city);
+     
+    }
+    this.addressRepository.merge(address, { neighborhood: neighborhoodUpdated });
+    addressUpdated = await this.addressRepository.save(address);
     return addressUpdated;
   }
+
+
+  async updateNeighborhood(name: string, city: City): Promise<Neighborhood> {
+    let neighborhoodUpdated: Neighborhood;
+    try {
+      neighborhoodUpdated = await this.neighborhoodRepository.findOneOrFail({
+        where: {
+          city,
+          name: Like("%" + name + "%")
+        }
+      });
+    }
+    catch {
+      neighborhoodUpdated = await this.createNeighborhood(name, city);
+    }
+    return neighborhoodUpdated;
+  }
+
+  async updateCity(name: string, state: State): Promise<City> {
+    let cityUpdated: City;
+    try {
+      cityUpdated = await this.cityRepository.findOneOrFail({
+        where: {
+          state,
+          name: Like("%" + name + "%")
+        }
+      });
+    }
+    catch {
+      cityUpdated = await this.createCity(name, state);
+    }
+    return cityUpdated;
+  }
+
+  async updateState(name: string): Promise<State> {
+    let stateUpdated: State;
+    try {
+      stateUpdated = await this.stateRepository.findOneOrFail({
+        where: {
+          name: Like("%" + name + "%")
+        }
+      });
+    }
+    catch {
+      stateUpdated = await this.createState(name);
+    }
+    return stateUpdated;
+  }
+
 
   async remove(id: string) {
     const address = await this.findOne({ addressID: id });
