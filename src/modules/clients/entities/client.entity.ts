@@ -1,6 +1,8 @@
 import { ObjectType, Field, Int, HideField, registerEnumType } from '@nestjs/graphql';
+import { Address } from 'src/modules/address/entities/address.entity';
+import { MicroSegment } from 'src/modules/micro-segments/entities/micro-segment.entity';
 import { User } from 'src/modules/user/entities/user.entity';
-import { Column, CreateDateColumn, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn, RelationId, UpdateDateColumn } from 'typeorm';
+import { Column, CreateDateColumn, Entity, JoinColumn, JoinTable, ManyToMany, OneToOne, PrimaryGeneratedColumn, RelationId, UpdateDateColumn } from 'typeorm';
 
 export enum gender{
   Masculino,
@@ -34,12 +36,25 @@ export class Client {
   @Column()
   reputation: number;
 
+  @OneToOne(() => Address)
+  @JoinColumn()
+  address: Address;
+
+  @RelationId((client: Client) => client.address)
+  addressID: string;
+
   @OneToOne(() => User, { onUpdate: 'CASCADE', onDelete: 'CASCADE'})
   @JoinColumn({name: "userID"})
   user: User;
 
   @RelationId((client: Client) => client.user)
   userID: string;
+
+  @ManyToMany(() => MicroSegment, segment => segment.clients, {
+    onDelete: 'CASCADE'
+  })
+  @JoinTable()
+  segments: MicroSegment[]
 
   @CreateDateColumn()
   @HideField()
