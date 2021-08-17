@@ -14,9 +14,10 @@ import { Client } from '../clients/entities/client.entity';
 import { Phone } from '../phone/entities/phone.entity';
 import { UserService } from '../user/user.service';
 import { CloudinaryService } from 'src/helpers/Cloudinary/cloudinary.service';
+import { MicroSegment } from '../micro-segments/entities/micro-segment.entity';
 
 @Module({
-  imports:[TypeOrmModule.forFeature([Address, Neighborhood, City, State, Brand, User, Phone, Client])],
+  imports:[TypeOrmModule.forFeature([Address, Neighborhood, City, State, Brand, User, Phone, Client, MicroSegment])],
   providers: [AddressResolver, AddressService, BrandService, UserService, CloudinaryService, ClientsService]
 })
 export class AddressModule {}

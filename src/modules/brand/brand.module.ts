@@ -13,9 +13,12 @@ import { City } from '../address/entities/city.entity';
 import { State } from '../address/entities/state.entity';
 import { ClientsService } from '../clients/clients.service';
 import { Client } from '../clients/entities/client.entity';
+import { MicroSegmentsService } from '../micro-segments/micro-segments.service';
+import { MicroSegment } from '../micro-segments/entities/micro-segment.entity';
+import { MacroSegment } from '../macro-segments/entities/macro-segment.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Brand, User, Address, Neighborhood, City, State, Client])],
-  providers: [BrandResolver, BrandService, UserService, CloudinaryService, AddressService, ClientsService],
+  imports: [TypeOrmModule.forFeature([Brand, User, Address, Neighborhood, City, State, Client, MicroSegment, MacroSegment])],
+  providers: [BrandResolver, BrandService, UserService, CloudinaryService, AddressService, ClientsService, MicroSegmentsService],
 })
 export class BrandModule {}

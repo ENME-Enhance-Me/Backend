@@ -1,6 +1,6 @@
 import { ObjectType, Field, Int, HideField, registerEnumType } from '@nestjs/graphql';
 import { Address } from 'src/modules/address/entities/address.entity';
-import { Segment } from 'src/modules/segments/entities/segment.entity';
+import { MicroSegment } from 'src/modules/micro-segments/entities/micro-segment.entity';
 import { User } from 'src/modules/user/entities/user.entity';
 import { Column, CreateDateColumn, Entity, JoinColumn, JoinTable, ManyToMany, OneToOne, PrimaryGeneratedColumn, RelationId, UpdateDateColumn } from 'typeorm';
 
@@ -50,11 +50,11 @@ export class Client {
   @RelationId((client: Client) => client.user)
   userID: string;
 
-  @ManyToMany(() => Segment, segment => segment.clients, {
+  @ManyToMany(() => MicroSegment, segment => segment.clients, {
     onDelete: 'CASCADE'
   })
   @JoinTable()
-  segments: Segment[]
+  segments: MicroSegment[]
 
   @CreateDateColumn()
   @HideField()

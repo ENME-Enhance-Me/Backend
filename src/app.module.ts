@@ -14,8 +14,9 @@ import { PhoneModule } from './modules/phone/phone.module';
 import { FileModule } from './shared/file/file.module';
 import { Cloudinary } from './helpers/Cloudinary/cloudinary';
 import { CloudinaryModule } from './helpers/Cloudinary/cloudinary.module';
-import { SegmentsModule } from './modules/segments/segments.module';
 import { AddressModule } from './modules/address/address.module';
+import { MicroSegmentsModule } from './modules/micro-segments/micro-segments.module';
+import { MacroSegmentsModule } from './modules/macro-segments/macro-segments.module';
 
 
 @Module({
@@ -36,8 +37,9 @@ import { AddressModule } from './modules/address/address.module';
     PhoneModule,
     FileModule,
     CloudinaryModule,
-    SegmentsModule,
     AddressModule,
+    MicroSegmentsModule,
+    MacroSegmentsModule,
   ],
   controllers: [AppController],
   providers: [AppService, Cloudinary],

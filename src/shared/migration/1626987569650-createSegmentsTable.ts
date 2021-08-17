@@ -4,33 +4,47 @@ export class createSegmentsTable1626987569650 implements MigrationInterface {
     name = 'createSegmentsTable1626987569650'
 
     public async up(queryRunner: QueryRunner): Promise<void> {
-        await queryRunner.query(`CREATE TABLE "segment" ("id" uuid NOT NULL DEFAULT uuid_generate_v4(), "name" character varying NOT NULL, "created_at" TIMESTAMP NOT NULL DEFAULT now(), "updated_at" TIMESTAMP NOT NULL DEFAULT now(), "macroSegmentId" uuid, CONSTRAINT "UQ_9e0406598d248857fe96f5e929d" UNIQUE ("name"), CONSTRAINT "PK_d648ac58d8e0532689dfb8ad7ef" PRIMARY KEY ("id"))`);
-        await queryRunner.query(`CREATE TABLE "client_segments_segment" ("clientId" uuid NOT NULL, "segmentId" uuid NOT NULL, CONSTRAINT "PK_7750624bb161cd86d9b37bf4d93" PRIMARY KEY ("clientId", "segmentId"))`);
-        await queryRunner.query(`CREATE INDEX "IDX_c71879bd1aad8497ef37e965d6" ON "client_segments_segment" ("clientId") `);
-        await queryRunner.query(`CREATE INDEX "IDX_cf18adb442c1d98e515bbd883f" ON "client_segments_segment" ("segmentId") `);
-        await queryRunner.query(`CREATE TABLE "brand_segments_segment" ("brandId" uuid NOT NULL, "segmentId" uuid NOT NULL, CONSTRAINT "PK_00c12bd575cf7bbdb599bfa643f" PRIMARY KEY ("brandId", "segmentId"))`);
-        await queryRunner.query(`CREATE INDEX "IDX_12a3c075ce1688e68a9345ab89" ON "brand_segments_segment" ("brandId") `);
-        await queryRunner.query(`CREATE INDEX "IDX_6b4830e0032b1ddbc4027bf3f0" ON "brand_segments_segment" ("segmentId") `);
-        await queryRunner.query(`ALTER TABLE "segment" ADD CONSTRAINT "FK_334cf62009e5a449c3b2d0f6a25" FOREIGN KEY ("macroSegmentId") REFERENCES "segment"("id") ON DELETE CASCADE ON UPDATE NO ACTION`);
-        await queryRunner.query(`ALTER TABLE "client_segments_segment" ADD CONSTRAINT "FK_c71879bd1aad8497ef37e965d63" FOREIGN KEY ("clientId") REFERENCES "client"("id") ON DELETE CASCADE ON UPDATE CASCADE`);
-        await queryRunner.query(`ALTER TABLE "client_segments_segment" ADD CONSTRAINT "FK_cf18adb442c1d98e515bbd883f3" FOREIGN KEY ("segmentId") REFERENCES "segment"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`);
-        await queryRunner.query(`ALTER TABLE "brand_segments_segment" ADD CONSTRAINT "FK_12a3c075ce1688e68a9345ab89a" FOREIGN KEY ("brandId") REFERENCES "brand"("id") ON DELETE CASCADE ON UPDATE CASCADE`);
-        await queryRunner.query(`ALTER TABLE "brand_segments_segment" ADD CONSTRAINT "FK_6b4830e0032b1ddbc4027bf3f02" FOREIGN KEY ("segmentId") REFERENCES "segment"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`);
+        await queryRunner.query(`CREATE TABLE "macrosegment" ("id" uuid NOT NULL DEFAULT uuid_generate_v4(), "name" character varying NOT NULL, "created_at" TIMESTAMP NOT NULL DEFAULT now(), "updated_at" TIMESTAMP NOT NULL DEFAULT now(), CONSTRAINT "UQ_f2aedfd86ab2abb8de636ea6702" UNIQUE ("name"), CONSTRAINT "PK_0716120e6729a1b0a6b5607f20e" PRIMARY KEY ("id"))`);
+        await queryRunner.query(`CREATE TABLE "microsegment" ("id" uuid NOT NULL DEFAULT uuid_generate_v4(), "name" character varying NOT NULL, "created_at" TIMESTAMP NOT NULL DEFAULT now(), "updated_at" TIMESTAMP NOT NULL DEFAULT now(), CONSTRAINT "UQ_c9bfd4d93d9cea5db7508fa4fa5" UNIQUE ("name"), CONSTRAINT "PK_d3c36019a17914e7737907a5269" PRIMARY KEY ("id"))`);
+        await queryRunner.query(`CREATE TABLE "client_segments_microsegment" ("clientId" uuid NOT NULL, "microsegmentId" uuid NOT NULL, CONSTRAINT "PK_dab6ed3dbfbd429b0021ff1c186" PRIMARY KEY ("clientId", "microsegmentId"))`);
+        await queryRunner.query(`CREATE INDEX "IDX_9512d26d40a474fb0cfe436ea8" ON "client_segments_microsegment" ("clientId") `);
+        await queryRunner.query(`CREATE INDEX "IDX_3f5d857e18032324baa5f36e74" ON "client_segments_microsegment" ("microsegmentId") `);
+        await queryRunner.query(`CREATE TABLE "microsegment_macro_segments_macrosegment" ("microsegmentId" uuid NOT NULL, "macrosegmentId" uuid NOT NULL, CONSTRAINT "PK_7b6c2226358a25f66b6cb6f6937" PRIMARY KEY ("microsegmentId", "macrosegmentId"))`);
+        await queryRunner.query(`CREATE INDEX "IDX_cea3e8da9502edc3be872611ec" ON "microsegment_macro_segments_macrosegment" ("microsegmentId") `);
+        await queryRunner.query(`CREATE INDEX "IDX_08357f20ec636fda859ae52feb" ON "microsegment_macro_segments_macrosegment" ("macrosegmentId") `);
+        await queryRunner.query(`CREATE TABLE "brand_segments_microsegment" ("brandId" uuid NOT NULL, "microsegmentId" uuid NOT NULL, CONSTRAINT "PK_1dc26e131ee895226522264e536" PRIMARY KEY ("brandId", "microsegmentId"))`);
+        await queryRunner.query(`CREATE INDEX "IDX_da8e3c343aff2dcf73d2353f32" ON "brand_segments_microsegment" ("brandId") `);
+        await queryRunner.query(`CREATE INDEX "IDX_02e9790ea33bc3cc77b4791f61" ON "brand_segments_microsegment" ("microsegmentId") `);
+        await queryRunner.query(`ALTER TABLE "client_segments_microsegment" ADD CONSTRAINT "FK_9512d26d40a474fb0cfe436ea8e" FOREIGN KEY ("clientId") REFERENCES "client"("id") ON DELETE CASCADE ON UPDATE CASCADE`);
+        await queryRunner.query(`ALTER TABLE "client_segments_microsegment" ADD CONSTRAINT "FK_3f5d857e18032324baa5f36e749" FOREIGN KEY ("microsegmentId") REFERENCES "microsegment"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`);
+        await queryRunner.query(`ALTER TABLE "microsegment_macro_segments_macrosegment" ADD CONSTRAINT "FK_cea3e8da9502edc3be872611ec0" FOREIGN KEY ("microsegmentId") REFERENCES "microsegment"("id") ON DELETE CASCADE ON UPDATE CASCADE`);
+        await queryRunner.query(`ALTER TABLE "microsegment_macro_segments_macrosegment" ADD CONSTRAINT "FK_08357f20ec636fda859ae52feb6" FOREIGN KEY ("macrosegmentId") REFERENCES "macrosegment"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`);
+        await queryRunner.query(`ALTER TABLE "brand_segments_microsegment" ADD CONSTRAINT "FK_da8e3c343aff2dcf73d2353f32a" FOREIGN KEY ("brandId") REFERENCES "brand"("id") ON DELETE CASCADE ON UPDATE CASCADE`);
+        await queryRunner.query(`ALTER TABLE "brand_segments_microsegment" ADD CONSTRAINT "FK_02e9790ea33bc3cc77b4791f613" FOREIGN KEY ("microsegmentId") REFERENCES "microsegment"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`);
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {
-        await queryRunner.query(`ALTER TABLE "brand_segments_segment" DROP CONSTRAINT "FK_6b4830e0032b1ddbc4027bf3f02"`);
-        await queryRunner.query(`ALTER TABLE "brand_segments_segment" DROP CONSTRAINT "FK_12a3c075ce1688e68a9345ab89a"`);
-        await queryRunner.query(`ALTER TABLE "client_segments_segment" DROP CONSTRAINT "FK_cf18adb442c1d98e515bbd883f3"`);
-        await queryRunner.query(`ALTER TABLE "client_segments_segment" DROP CONSTRAINT "FK_c71879bd1aad8497ef37e965d63"`);
-        await queryRunner.query(`ALTER TABLE "segment" DROP CONSTRAINT "FK_334cf62009e5a449c3b2d0f6a25"`);
-        await queryRunner.query(`DROP INDEX "IDX_6b4830e0032b1ddbc4027bf3f0"`);
-        await queryRunner.query(`DROP INDEX "IDX_12a3c075ce1688e68a9345ab89"`);
-        await queryRunner.query(`DROP TABLE "brand_segments_segment"`);
-        await queryRunner.query(`DROP INDEX "IDX_cf18adb442c1d98e515bbd883f"`);
-        await queryRunner.query(`DROP INDEX "IDX_c71879bd1aad8497ef37e965d6"`);
-        await queryRunner.query(`DROP TABLE "client_segments_segment"`);
-        await queryRunner.query(`DROP TABLE "segment"`);
+        await queryRunner.query(`ALTER TABLE "brand_segments_microsegment" DROP CONSTRAINT "FK_02e9790ea33bc3cc77b4791f613"`);
+        await queryRunner.query(`ALTER TABLE "brand_segments_microsegment" DROP CONSTRAINT "FK_da8e3c343aff2dcf73d2353f32a"`);
+        await queryRunner.query(`ALTER TABLE "microsegment_macro_segments_macrosegment" DROP CONSTRAINT "FK_08357f20ec636fda859ae52feb6"`);
+        await queryRunner.query(`ALTER TABLE "microsegment_macro_segments_macrosegment" DROP CONSTRAINT "FK_cea3e8da9502edc3be872611ec0"`);
+        await queryRunner.query(`ALTER TABLE "client_segments_microsegment" DROP CONSTRAINT "FK_3f5d857e18032324baa5f36e749"`);
+        await queryRunner.query(`ALTER TABLE "client_segments_microsegment" DROP CONSTRAINT "FK_9512d26d40a474fb0cfe436ea8e"`);
+        await queryRunner.query(`ALTER TABLE "brand" DROP CONSTRAINT "FK_0f35656e26fda384971f1aa387d"`);
+        await queryRunner.query(`ALTER TABLE "client" DROP CONSTRAINT "FK_6e6c7c79fbf5ab39520cd1723e2"`);
+        await queryRunner.query(`DROP INDEX "IDX_02e9790ea33bc3cc77b4791f61"`);
+        await queryRunner.query(`DROP INDEX "IDX_da8e3c343aff2dcf73d2353f32"`);
+        await queryRunner.query(`DROP TABLE "brand_segments_microsegment"`);
+        await queryRunner.query(`DROP INDEX "IDX_08357f20ec636fda859ae52feb"`);
+        await queryRunner.query(`DROP INDEX "IDX_cea3e8da9502edc3be872611ec"`);
+        await queryRunner.query(`DROP TABLE "microsegment_macro_segments_macrosegment"`);
+        await queryRunner.query(`DROP INDEX "IDX_3f5d857e18032324baa5f36e74"`);
+        await queryRunner.query(`DROP INDEX "IDX_9512d26d40a474fb0cfe436ea8"`);
+        await queryRunner.query(`DROP TABLE "client_segments_microsegment"`);
+        await queryRunner.query(`DROP TABLE "microsegment"`);
+        await queryRunner.query(`DROP TABLE "macrosegment"`);
+        await queryRunner.query(`ALTER TABLE "brand" ADD CONSTRAINT "FK_0f35656e26fda384971f1aa387d" FOREIGN KEY ("addressId") REFERENCES "address"("id") ON DELETE SET NULL ON UPDATE NO ACTION`);
+        await queryRunner.query(`ALTER TABLE "client" ADD CONSTRAINT "FK_6e6c7c79fbf5ab39520cd1723e2" FOREIGN KEY ("addressId") REFERENCES "address"("id") ON DELETE SET NULL ON UPDATE NO ACTION`);
     }
 
 }

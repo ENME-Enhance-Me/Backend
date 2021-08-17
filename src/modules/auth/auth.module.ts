@@ -11,10 +11,11 @@ import { Brand } from '../brand/entities/brand.entity';
 import { UserService } from '../user/user.service';
 import { User } from '../user/entities/user.entity';
 import { CloudinaryService } from 'src/helpers/Cloudinary/cloudinary.service';
+import { MicroSegment } from '../micro-segments/entities/micro-segment.entity';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([Brand, Client, User]),
+    TypeOrmModule.forFeature([Brand, Client, User, MicroSegment]),
     JwtModule.registerAsync({
       useFactory: () => ({
         secret: process.env.JWT_SECRET,

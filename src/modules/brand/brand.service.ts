@@ -5,6 +5,7 @@ import { CloudinaryService } from 'src/helpers/Cloudinary/cloudinary.service';
 import { UserService } from 'src/modules/user/user.service';
 import { Repository } from 'typeorm';
 import { Address } from '../address/entities/address.entity';
+import { MicroSegment } from '../micro-segments/entities/micro-segment.entity';
 import { User } from '../user/entities/user.entity';
 import { CreateBrandInput } from './dto/create-brand.input';
 import { FindBrandInput } from './dto/find-brand.input';
@@ -16,6 +17,8 @@ export class BrandService {
   constructor(
     @InjectRepository(Brand)
     private BrandRepository: Repository<Brand>,
+    @InjectRepository(MicroSegment)
+    private microSegmentRepository: Repository<MicroSegment>,
     private readonly userService: UserService,
     private readonly cloudService: CloudinaryService
   ) { }
@@ -93,7 +96,7 @@ export class BrandService {
     const brand = await this.BrandRepository.findOne(
       {
         where: { id },
-        relations: ['address']
+        relations: ['address', 'segments']
       });
     if (!brand) {
       throw new NotFoundException('Marca não encontrada');
@@ -104,6 +107,23 @@ export class BrandService {
   async connectAddress(id: string, address: Address): Promise<Brand> {
     let brand = await this.findOne(id);
     brand.address = address;
+    const brandUpdated = await this.BrandRepository.save(brand);
+    return brandUpdated;
+  }
+
+  async connectSegments(id: string, segmentIDs: string[]){
+
+    const brand = await this.findOne(id);
+
+    segmentIDs.forEach(async (microID) => {
+      try {
+        const microSegment = await this.microSegmentRepository.findOne(microID);
+        brand.segments.push(microSegment);
+      }
+      catch (err) {
+        console.log('erro no microID para marca => ' + microID);
+      }
+    });
     const brandUpdated = await this.BrandRepository.save(brand);
     return brandUpdated;
   }
@@ -134,5 +154,18 @@ export class BrandService {
     const imageid = parts[parts.length - 1].split('.')[0];
     return imageid
 
+  }
+
+  async findAllSegmentsToBrand(brandID: string) {
+    const micros = await this.microSegmentRepository.find({
+      relations: ['brands', 'macroSegments']
+    });
+
+    return micros.filter((micro) => {
+      for (var i = 0; i < micro.brands.length; i++) {
+        if (micro.brands[i].id === brandID)
+          return micro;
+      }
+    })
   }
 }

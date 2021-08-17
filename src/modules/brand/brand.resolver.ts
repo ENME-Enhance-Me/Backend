@@ -9,13 +9,15 @@ import { FileUpload, GraphQLUpload } from 'graphql-upload';
 import { CreateUserInput } from '../user/dto/create-user.input';
 import { User } from '../user/entities/user.entity';
 import { AddressService } from '../address/address.service';
+import { MicroSegmentsService } from '../micro-segments/micro-segments.service';
 
 @Resolver(() => Brand)
 export class BrandResolver {
   constructor(
     private readonly brandService: BrandService,
     private readonly userService: UserService,
-    private readonly addressService: AddressService
+    private readonly addressService: AddressService,
+    private readonly microSegmentService: MicroSegmentsService
   ) { }
 
   @Mutation(() => Brand, {
@@ -63,6 +65,11 @@ export class BrandResolver {
     return await this.addressService.findOne({brandID: brand.id});
   }
 
+  @ResolveField()
+  async segments(@Parent() brand:Brand){
+    return this.brandService.findAllSegmentsToBrand(brand.id);
+  }
+
   @Mutation(() => User, {
     description: 'Cria um novo usuário conectado à uma marca'
   })
@@ -73,6 +80,16 @@ export class BrandResolver {
   ) {
     const brand = await this.brandService.findOne(id);
     return await this.userService.create(data, avatar, brand);
+  }
+
+  @Mutation(() => Brand, {
+    description: 'Conecta um ou mais microsegmentos à uma marca'
+  })
+  async connectMicrosToBrand(
+    @Args('brandID') brandID: string,
+    @Args({ name: 'microIds', type: () => [String] }) microIds: string[]
+    ){
+    return await this.brandService.connectSegments(brandID, microIds);
   }
 
   @Mutation(() => Brand, {

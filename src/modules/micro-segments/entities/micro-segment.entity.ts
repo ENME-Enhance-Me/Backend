@@ -1,11 +1,12 @@
 import { ObjectType, Field, HideField } from '@nestjs/graphql';
 import { Brand } from 'src/modules/brand/entities/brand.entity';
 import { Client } from 'src/modules/clients/entities/client.entity';
-import { Column, CreateDateColumn, Entity, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import { MacroSegment } from 'src/modules/macro-segments/entities/macro-segment.entity';
+import { Column, CreateDateColumn, Entity, JoinTable, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 
-@Entity('segment')
+@Entity('microsegment')
 @ObjectType()
-export class Segment {
+export class MicroSegment {
   @Field()
   @PrimaryGeneratedColumn('uuid')
   id: string;
@@ -13,11 +14,9 @@ export class Segment {
   @Column({ unique: true })
   name: string;
 
-  @OneToMany(() => Segment, segment => segment.macroSegment, { nullable: true })
-  microSegments: Segment[];
-
-  @ManyToOne(() => Segment, segment => segment.microSegments, { nullable: true })
-  macroSegment: Segment;
+  @ManyToMany(() => MacroSegment, segment => segment.microSegments, { nullable: true })
+  @JoinTable()
+  macroSegments: MacroSegment[];
 
   @ManyToMany(() => Client, client => client.segments)
   clients: Client[];
