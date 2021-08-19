@@ -17,7 +17,7 @@ import { MailSenderService } from './mailSender.service';
                     }
                 },
                 defaults: {
-                    from: '"No Reply" <noreply@example.com>',
+                    from: '"No Reply" <'+process.env.EMAIL_ID+'>',
                 },
                 template: {
                     dir: process.cwd() + '/template/',
