@@ -17,7 +17,9 @@ import { CloudinaryModule } from './helpers/Cloudinary/cloudinary.module';
 import { AddressModule } from './modules/address/address.module';
 import { MicroSegmentsModule } from './modules/micro-segments/micro-segments.module';
 import { MacroSegmentsModule } from './modules/macro-segments/macro-segments.module';
-
+import { MailSenderResolver } from './helpers/mailsender/mailSender.resolver';
+import { MailSenderService } from "./helpers/mailsender/mailSender.service";
+import { MailSenderModule } from './helpers/mailsender/mailSender.module';
 
 @Module({
   imports: [
@@ -40,9 +42,10 @@ import { MacroSegmentsModule } from './modules/macro-segments/macro-segments.mod
     AddressModule,
     MicroSegmentsModule,
     MacroSegmentsModule,
+    MailSenderModule,
   ],
   controllers: [AppController],
-  providers: [AppService, Cloudinary],
+  providers: [AppService, Cloudinary, MailSenderService, MailSenderResolver],
 })
 export class AppModule {
 }
