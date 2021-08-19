@@ -6,25 +6,27 @@ import { MailSenderService } from './mailSender.service';
 
 @Module({
     imports: [
-        MailerModule.forRoot({
-            transport: {
-                host: 'smtp.ethereal.email',
-                port: 587,
-                auth: {
-                    user: 'sandrine.connelly25@ethereal.email',
-                    pass: '1H7JsYptt86f3rzaFH'
-                }
-            },
-            defaults: {
-                from: '"No Reply" <noreply@example.com>',
-            },
-            template: {
-                dir: process.cwd() + '/template/',
-                adapter: new HandlebarsAdapter(), // or new PugAdapter() or new EjsAdapter()
-                options: {
-                    strict: true,
+        MailerModule.forRootAsync({
+            useFactory: () => ({
+                transport: {
+                    host: 'smtp.gmail.com',
+                    port: 587,
+                    auth: {
+                        user: process.env.EMAIL_ID,
+                        pass: process.env.EMAIL_PASS
+                    }
                 },
-            },
+                defaults: {
+                    from: '"No Reply" <noreply@example.com>',
+                },
+                template: {
+                    dir: process.cwd() + '/template/',
+                    adapter: new HandlebarsAdapter(), // or new PugAdapter() or new EjsAdapter()
+                    options: {
+                        strict: true,
+                    },
+                },
+            })
         }),
     ],
     providers: [MailSenderResolver, MailSenderService]

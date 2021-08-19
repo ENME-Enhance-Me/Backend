@@ -3,7 +3,7 @@ import { IsNotEmpty, IsOptional, IsString } from 'class-validator';
 import { UpdateUserInput } from 'src/modules/user/dto/update-user.input';
 
 @InputType()
-export class UpdateBrandInput extends UpdateUserInput {
+export class UpdateBrandInput {
   @IsString()
   @IsNotEmpty({ message: 'Este campo não pode estar vazio' })
   @IsOptional()

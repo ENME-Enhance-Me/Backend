@@ -45,7 +45,7 @@ import { MailSenderModule } from './helpers/mailsender/mailSender.module';
     MailSenderModule,
   ],
   controllers: [AppController],
-  providers: [AppService, Cloudinary, MailSenderService, MailSenderResolver],
+  providers: [AppService, Cloudinary],
 })
 export class AppModule {
 }
