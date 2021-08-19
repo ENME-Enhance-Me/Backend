@@ -38,6 +38,7 @@ export class AuthService {
         const token = await this.jwtToken(brand);
         return {
             brand,
+            user,
             token
         }
     }

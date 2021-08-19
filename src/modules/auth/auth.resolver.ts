@@ -21,6 +21,7 @@ export class AuthResolver {
     const response = await this.authService.validateBrand(data);
     return{
       brand: response.brand,
+      user: response.user,
       token: response.token
     }
   }
