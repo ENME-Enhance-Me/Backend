@@ -36,7 +36,7 @@ export class ResearchResolver {
     return this.researchService.update(id, data);
   }
 
-  @Mutation(() => Research)
+  @Mutation(() => Boolean)
   removeResearch(@Args('id') id: string) {
     return this.researchService.remove(id);
   }

@@ -58,16 +58,26 @@ export class ResearchService {
       relations: ['brand']
     });
     if(!research){
-      throw new NotFoundException('pesquisa não encontrada')
+      throw new NotFoundException('pesquisa não encontrada');
     }
     return research;
   }
 
-  update(id: string, data: UpdateResearchInput) {
-    return `This action updates a #${id} research`;
+  async update(id: string, data: UpdateResearchInput) {
+
+    const research = await this.findOne(id);
+    
+    if(!research){
+      throw new NotFoundException('pesquisa não encontrada');
+    }
+    this.researchRepository.merge(research, {...data});
+    const researchUpdated = await this.researchRepository.save(research);
+    return researchUpdated;
   }
 
-  remove(id: string) {
-    return `This action removes a #${id} research`;
+  async remove(id: string) {
+    const research = await this.findOne(id);
+    
+    return (await this.researchRepository.remove(research))? true: false;
   }
 }
