@@ -47,7 +47,7 @@ export class QuestionResolver {
     return this.questionService.update(id, data);
   }
 
-  @Mutation(() => Question)
+  @Mutation(() => Boolean)
   removeQuestion(@Args('id') id: string) {
     return this.questionService.remove(id);
   }

@@ -74,11 +74,11 @@ export class QuestionService {
   }
 
   async findOne(id: string): Promise<Question> {
-    const question = await this.questionRepository.findOneOrFail({
+    const question = await this.questionRepository.findOne({
       where: {
         id
       },
-      relations: ['research', 'questiontype']
+      relations: ['research', 'questionType']
     });
     if(!question){
       throw new NotFoundException('questão não encontrada');
@@ -86,12 +86,33 @@ export class QuestionService {
     return question;
   }
 
-  update(id: string, data: UpdateQuestionInput) {
-    return `This action updates a #${id} question`;
+  async update(id: string, data: UpdateQuestionInput): Promise<Question> {
+    const question = await this.findOne(id);
+    
+    if(!question){
+      throw new NotFoundException('questão não encontrada');
+    }
+    if(data.qtypeID){
+      const questionType = await this.questionType(data.qtypeID);
+      this.questionRepository.merge(question, {
+        description: data.description,
+        questionType
+      });
+    }
+    else{
+      this.questionRepository.merge(question, {
+        description: data.description
+      });
+    }
+    
+    const questionUpdated = await this.questionRepository.save(question);
+    return questionUpdated;
   }
 
-  remove(id: string) {
-    return `This action removes a #${id} question`;
+  async remove(id: string): Promise<Boolean> {
+    const research = await this.findOne(id);
+    
+    return (await this.questionRepository.remove(research))? true: false;
   }
 
   async research(researchID: string): Promise<Research> {
