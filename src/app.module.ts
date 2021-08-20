@@ -20,6 +20,7 @@ import { MacroSegmentsModule } from './modules/macro-segments/macro-segments.mod
 import { MailSenderResolver } from './helpers/mailsender/mailSender.resolver';
 import { MailSenderService } from "./helpers/mailsender/mailSender.service";
 import { MailSenderModule } from './helpers/mailsender/mailSender.module';
+import { ResearchModule } from './modules/research/research.module';
 
 @Module({
   imports: [
@@ -43,6 +44,7 @@ import { MailSenderModule } from './helpers/mailsender/mailSender.module';
     MicroSegmentsModule,
     MacroSegmentsModule,
     MailSenderModule,
+    ResearchModule,
   ],
   controllers: [AppController],
   providers: [AppService, Cloudinary],
