@@ -3,10 +3,14 @@ import { ResearchService } from './research.service';
 import { Research } from './entities/research.entity';
 import { CreateResearchInput } from './dto/create-research.input';
 import { UpdateResearchInput } from './dto/update-research.input';
+import { QuestionService } from '../question/question.service';
 
 @Resolver(() => Research)
 export class ResearchResolver {
-  constructor(private readonly researchService: ResearchService) {}
+  constructor(
+    private readonly researchService: ResearchService,
+    private readonly questionService: QuestionService
+    ) {}
 
   @Mutation(() => Research)
   async createResearch(@Args('data') data: CreateResearchInput) {
@@ -45,5 +49,11 @@ export class ResearchResolver {
   async brand(@Parent() research: Research){
     const { brandID } = research
     return await this.researchService.brand(brandID);
+  }
+
+  @ResolveField() 
+  async questions(@Parent() research: Research){
+    const { id } = research
+    return await this.questionService.findAlltoResearch(id);
   }
 }

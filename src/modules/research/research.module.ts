@@ -11,9 +11,12 @@ import { UserService } from '../user/user.service';
 import { ClientsService } from '../clients/clients.service';
 import { CloudinaryService } from 'src/helpers/Cloudinary/cloudinary.service';
 import { Client } from '../clients/entities/client.entity';
+import { QuestionService } from '../question/question.service';
+import { Question } from '../question/entities/question.entity';
+import { QuestionType } from '../question/entities/question-type.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Research, Brand, MicroSegment, User, Client])],
-  providers: [ResearchResolver, ResearchService, BrandService, UserService, ClientsService, CloudinaryService]
+  imports: [TypeOrmModule.forFeature([Research, Brand, MicroSegment, User, Client, Question, QuestionType])],
+  providers: [ResearchResolver, ResearchService, QuestionService, BrandService, UserService, ClientsService, CloudinaryService]
 })
 export class ResearchModule {}
