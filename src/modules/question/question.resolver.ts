@@ -4,14 +4,17 @@ import { Question } from './entities/question.entity';
 import { CreateQuestionInput } from './dto/create-question.input';
 import { UpdateQuestionInput } from './dto/update-question.input';
 import { QuestionType } from './entities/question-type.entity';
+import { FileUpload, GraphQLUpload } from 'graphql-upload';
 
 @Resolver(() => Question)
 export class QuestionResolver {
   constructor(private readonly questionService: QuestionService) { }
 
   @Mutation(() => Question)
-  createQuestion(@Args('data') data: CreateQuestionInput) {
-    return this.questionService.create(data);
+  createQuestion(
+    @Args('data') data: CreateQuestionInput,
+    @Args({name: 'image', nullable: true, type: () => GraphQLUpload}) image: FileUpload ) {
+    return this.questionService.create(data, image);
   }
 
   @Mutation(() => QuestionType)

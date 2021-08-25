@@ -16,6 +16,9 @@ export class Question {
   @Column()
   description: string;
 
+  @Column({default: 'https://res.cloudinary.com/enme/image/upload/v1629924117/enme/questionImage/padrao/banner-azul.jpg'})
+  image: string;
+
   @ManyToOne(() => Research, research => research.questions, { onDelete: "CASCADE"})
   research: Research;
 

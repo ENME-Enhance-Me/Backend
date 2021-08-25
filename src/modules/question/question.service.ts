@@ -1,5 +1,7 @@
 import { Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { FileUpload } from 'graphql-upload';
+import { CloudinaryService } from 'src/helpers/Cloudinary/cloudinary.service';
 import { Repository } from 'typeorm';
 import { Research } from '../research/entities/research.entity';
 import { ResearchService } from '../research/research.service';
@@ -15,10 +17,11 @@ export class QuestionService {
     private readonly questionRepository: Repository<Question>,
     @InjectRepository(QuestionType)
     private readonly qtypeRepository: Repository<QuestionType>,
-    private readonly researchService: ResearchService
+    private readonly researchService: ResearchService,
+    private readonly cloudService: CloudinaryService
   ) { }
 
-  async create(data: CreateQuestionInput) {
+  async create(data: CreateQuestionInput, image: FileUpload) {
     const research = await this.research(data.researchID);
     const type = await this.questionType(data.qtypeID);
     if(!type){
@@ -31,6 +34,15 @@ export class QuestionService {
       research,
       questionType: type
     });
+
+    try {
+      const file = await this.cloudService.uploadImage(image, "enme/questionImage");
+      question.image = file.url;
+    }
+    catch (err) {
+      question.image = "https://res.cloudinary.com/enme/image/upload/v1629924117/enme/questionImage/padrao/banner-azul.jpg";
+    }
+
     const questionSaved = await this.questionRepository.save(question);
 
     if (!questionSaved) {
@@ -110,9 +122,13 @@ export class QuestionService {
   }
 
   async remove(id: string): Promise<Boolean> {
-    const research = await this.findOne(id);
-    
-    return (await this.questionRepository.remove(research))? true: false;
+    const question = await this.findOne(id);
+    let image: string;
+    image = this.cloudService.getIDImage(question.image);
+    if (!(image === "banner-azul")) {
+      this.cloudService.deleteImage('enme/questionImage/'+image);
+    }
+    return (await this.questionRepository.remove(question))? true: false;
   }
 
   async research(researchID: string): Promise<Research> {

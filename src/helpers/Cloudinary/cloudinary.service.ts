@@ -39,4 +39,11 @@ export class CloudinaryService {
       console.log(result, error) });
     return a;
   }
+
+  public getIDImage(link: string): string {
+    const parts = link.split('/');
+    const imageid = parts[parts.length - 1].split('.')[0];
+    return imageid
+
+  }
 }

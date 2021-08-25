@@ -1,5 +1,5 @@
 import { InputType, Int, Field } from '@nestjs/graphql';
-import { IsNotEmpty, IsString } from 'class-validator';
+import { IsDate, IsNotEmpty, IsOptional, IsString } from 'class-validator';
 
 @InputType()
 export class CreateResearchInput {
@@ -11,6 +11,15 @@ export class CreateResearchInput {
   @IsString()
   @IsNotEmpty({ message: 'Campo nome não pode estar vazio' })
   description: string;
+
+  @IsDate()
+  @IsNotEmpty({ message: 'Campo nome não pode estar vazio' })
+  startDate: Date;
+
+  @IsDate()
+  @IsNotEmpty({ message: 'Campo nome não pode estar vazio' })
+  @IsOptional()
+  finishDate?: Date;
 
   @IsString()
   @IsNotEmpty({ message: 'Campo nome não pode estar vazio' })

@@ -20,6 +20,8 @@ export class ResearchService {
     const research = this.researchRepository.create({
       name: data.name,
       description: data.description,
+      startDate: data.startDate,
+      finishDate: data.finishDate,
       brand: brand
     });
     const researchSaved = await this.researchRepository.save(research);

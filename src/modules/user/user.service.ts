@@ -88,17 +88,12 @@ export class UserService {
   async remove(id: string): Promise<boolean> {
     const user = await this.findOne(id);
     let avatar: string;
-    avatar = this.getIDImage(user.avatar);
+    avatar = this.cloudService.getIDImage(user.avatar);
     if (!(avatar === "user_avatar")) {
       this.cloudService.deleteImage('enme/avatar/'+avatar);
     }
     return (await this.userRepository.remove(user)) ? true : false;
   }
 
-  private getIDImage(link: string): string {
-    const parts = link.split('/');
-    const imageid = parts[parts.length - 1].split('.')[0];
-    return imageid
-
-  }
+  
 }
