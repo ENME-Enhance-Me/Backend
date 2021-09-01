@@ -12,9 +12,11 @@ import { MicroSegment } from '../micro-segments/entities/micro-segment.entity';
 import { UserService } from '../user/user.service';
 import { CloudinaryService } from 'src/helpers/Cloudinary/cloudinary.service';
 import { User } from '../user/entities/user.entity';
+import { QuestionOptionsService } from '../question-options/question-options.service';
+import { QuestionOption } from '../question-options/entities/question-option.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Question, QuestionType, Research, Brand, MicroSegment, User])],
-  providers: [QuestionResolver, QuestionService, ResearchService, BrandService, UserService, CloudinaryService]
+  imports: [TypeOrmModule.forFeature([Question, QuestionType, QuestionOption, Research, Brand, MicroSegment, User])],
+  providers: [QuestionResolver, QuestionService, QuestionOptionsService, ResearchService, BrandService, UserService, CloudinaryService]
 })
 export class QuestionModule {}

@@ -1,7 +1,8 @@
 import { ObjectType, Field, Int, HideField } from '@nestjs/graphql';
+import { QuestionOption } from 'src/modules/question-options/entities/question-option.entity';
 import { QuestionType } from 'src/modules/question/entities/question-type.entity';
 import { Research } from 'src/modules/research/entities/research.entity';
-import { Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn, RelationId, UpdateDateColumn } from 'typeorm';
+import { Column, CreateDateColumn, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn, RelationId, UpdateDateColumn } from 'typeorm';
 
 @Entity('question')
 @ObjectType()
@@ -24,6 +25,9 @@ export class Question {
 
   @RelationId((question: Question) => question.research)
   researchID: string;
+
+  @OneToMany(() => QuestionOption, qOption => qOption.question)
+  options: QuestionOption[];
 
   @ManyToOne(() => QuestionType, { onDelete: "CASCADE"})
   questionType: QuestionType;

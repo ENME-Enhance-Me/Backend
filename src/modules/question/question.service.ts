@@ -76,13 +76,13 @@ export class QuestionService {
   async findAlltoResearch(researchID: string): Promise<Question[]> {
     const research = await this.researchService.findOne(researchID)
 
-    const question = await this.questionRepository.find({
+    const questions = await this.questionRepository.find({
       where: {
         research
       },
     });
 
-    return question;
+    return questions;
   }
 
   async findOne(id: string): Promise<Question> {

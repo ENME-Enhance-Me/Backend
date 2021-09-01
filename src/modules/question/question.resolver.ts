@@ -5,10 +5,13 @@ import { CreateQuestionInput } from './dto/create-question.input';
 import { UpdateQuestionInput } from './dto/update-question.input';
 import { QuestionType } from './entities/question-type.entity';
 import { FileUpload, GraphQLUpload } from 'graphql-upload';
+import { QuestionOptionsService } from '../question-options/question-options.service';
 
 @Resolver(() => Question)
 export class QuestionResolver {
-  constructor(private readonly questionService: QuestionService) { }
+  constructor(
+    private readonly questionService: QuestionService,
+    private readonly qOptionService: QuestionOptionsService) { }
 
   @Mutation(() => Question)
   createQuestion(
@@ -65,5 +68,11 @@ export class QuestionResolver {
   async questionType(@Parent() question: Question){
     const { questionTypeID } = question;
     return await this.questionService.questionType(questionTypeID);
+  }
+
+  @ResolveField()
+  async options(@Parent() question: Question){
+    const { id } = question;
+    return await this.qOptionService.findAllOptionsToQuestion(id);
   }
 }
