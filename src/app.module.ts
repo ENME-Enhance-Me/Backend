@@ -24,6 +24,7 @@ import { ResearchModule } from './modules/research/research.module';
 import { QuestionModule } from './modules/question/question.module';
 import { QuestionOptionsModule } from './modules/question-options/question-options.module';
 import { AnswerModule } from './modules/answer/answer.module';
+import { CommentsModule } from './modules/comments/comments.module';
 
 @Module({
   imports: [
@@ -51,6 +52,7 @@ import { AnswerModule } from './modules/answer/answer.module';
     QuestionModule,
     QuestionOptionsModule,
     AnswerModule,
+    CommentsModule,
   ],
   controllers: [AppController],
   providers: [AppService, Cloudinary],
