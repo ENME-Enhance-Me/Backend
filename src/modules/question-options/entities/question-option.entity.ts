@@ -1,6 +1,7 @@
 import { ObjectType, Field, Int, HideField } from '@nestjs/graphql';
+import { Answer } from 'src/modules/answer/entities/answer.entity';
 import { Question } from 'src/modules/question/entities/question.entity';
-import { Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn, RelationId, UpdateDateColumn } from 'typeorm';
+import { Column, CreateDateColumn, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn, RelationId, UpdateDateColumn } from 'typeorm';
 
 @Entity('questionOptions')
 @ObjectType()
@@ -20,6 +21,9 @@ export class QuestionOption {
 
   @RelationId((option: QuestionOption) => option.question)
   questionID: string;
+
+  @OneToMany(() => Answer, answer => answer.questionOption)
+  answers: Answer[];
 
   @Column()
   @Field((type) => Boolean)

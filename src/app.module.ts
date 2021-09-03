@@ -23,6 +23,7 @@ import { MailSenderModule } from './helpers/mailsender/mailSender.module';
 import { ResearchModule } from './modules/research/research.module';
 import { QuestionModule } from './modules/question/question.module';
 import { QuestionOptionsModule } from './modules/question-options/question-options.module';
+import { AnswerModule } from './modules/answer/answer.module';
 
 @Module({
   imports: [
@@ -49,6 +50,7 @@ import { QuestionOptionsModule } from './modules/question-options/question-optio
     ResearchModule,
     QuestionModule,
     QuestionOptionsModule,
+    AnswerModule,
   ],
   controllers: [AppController],
   providers: [AppService, Cloudinary],
