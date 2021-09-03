@@ -68,10 +68,8 @@ export class AnswerService {
       description: data.description,
       questionOption: questionOption
     });
-
-
-    const optionUpdated = await this.answerRepository.save(answer);
-    return optionUpdated;
+    const answerUpdated = await this.answerRepository.save(answer);
+    return answerUpdated;
   }
 
   async remove(id: string) {

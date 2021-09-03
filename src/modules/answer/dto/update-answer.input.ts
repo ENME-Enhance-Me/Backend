@@ -5,7 +5,6 @@ import { IsNotEmpty, IsOptional, IsString } from 'class-validator';
 export class UpdateAnswerInput {
   @IsString()
   @IsNotEmpty({ message: 'Campo nome não pode estar vazio' })
-  @IsOptional()
   id: string;
 
   @IsString()

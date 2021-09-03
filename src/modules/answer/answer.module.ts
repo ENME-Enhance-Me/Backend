@@ -20,6 +20,6 @@ import { UserService } from '../user/user.service';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Answer, Question, QuestionType, QuestionOption, Research, Brand, MicroSegment, User])],
-  providers: [AnswerService, AnswerResolver, QuestionOptionsResolver, QuestionOptionsService, QuestionService, ResearchService, CloudinaryService, ResearchService, BrandService, UserService]
+  providers: [AnswerService, AnswerResolver, QuestionOptionsService, QuestionService, CloudinaryService, ResearchService, BrandService, UserService]
 })
 export class AnswerModule {}
