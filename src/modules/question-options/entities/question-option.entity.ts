@@ -1,5 +1,6 @@
 import { ObjectType, Field, Int, HideField } from '@nestjs/graphql';
 import { Answer } from 'src/modules/answer/entities/answer.entity';
+import { Mtag } from 'src/modules/mtags/entities/mtag.entity';
 import { Question } from 'src/modules/question/entities/question.entity';
 import { Column, CreateDateColumn, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn, RelationId, UpdateDateColumn } from 'typeorm';
 
@@ -24,6 +25,9 @@ export class QuestionOption {
 
   @OneToMany(() => Answer, answer => answer.questionOption)
   answers: Answer[];
+
+  @ManyToOne(() => Mtag, {onDelete: 'SET NULL'})
+  mTag: Mtag;
 
   @Column()
   @Field((type) => Boolean)
