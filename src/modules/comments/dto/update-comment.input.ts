@@ -16,5 +16,5 @@ export class UpdateCommentInput {
   @IsString()
   @IsNotEmpty({ message: 'Campo nome não pode estar vazio' })
   @IsOptional()
-  answerID?: string;
+  researchID?: string;
 }

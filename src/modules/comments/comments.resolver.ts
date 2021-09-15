@@ -24,8 +24,8 @@ export class CommentsResolver {
   }
 
   @Query(() => [Comment] )
-  findAllCommentsToQuestionOption(@Args('QuestionOptionID') QuestionOptionID: string){
-    return this.commentsService.findAllToQuestionOption(QuestionOptionID);
+  findAllCommentsToResearch(@Args('ResearchID') researchID: string){
+    return this.commentsService.findAllToResearch(researchID);
   }
 
   @Mutation(() => Comment)
@@ -39,14 +39,8 @@ export class CommentsResolver {
   }
 
   @ResolveField()
-  async questionOption(@Parent() comment: Comment){
-    const { questionOptionID } = comment;
-    return await this.commentsService.questionOption(questionOptionID);
-  }
-
-  @ResolveField()
-  async answer(@Parent() comment: Comment){
-    const { answerID } = comment;
-    return await this.commentsService.answer(answerID);
+  async research(@Parent() comment: Comment){
+    const { researchID } = comment;
+    return await this.commentsService.research(researchID);
   }
 }

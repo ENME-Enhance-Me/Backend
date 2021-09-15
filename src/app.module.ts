@@ -25,6 +25,7 @@ import { QuestionModule } from './modules/question/question.module';
 import { QuestionOptionsModule } from './modules/question-options/question-options.module';
 import { AnswerModule } from './modules/answer/answer.module';
 import { CommentsModule } from './modules/comments/comments.module';
+import { MtagsModule } from './modules/mtags/mtags.module';
 
 @Module({
   imports: [
@@ -53,6 +54,7 @@ import { CommentsModule } from './modules/comments/comments.module';
     QuestionOptionsModule,
     AnswerModule,
     CommentsModule,
+    MtagsModule,
   ],
   controllers: [AppController],
   providers: [AppService, Cloudinary],

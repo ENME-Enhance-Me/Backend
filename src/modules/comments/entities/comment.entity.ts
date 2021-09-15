@@ -1,6 +1,5 @@
 import { ObjectType, Field, Int, HideField } from '@nestjs/graphql';
-import { Answer } from 'src/modules/answer/entities/answer.entity';
-import { QuestionOption } from 'src/modules/question-options/entities/question-option.entity';
+import { Research } from 'src/modules/research/entities/research.entity';
 import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToOne, PrimaryGeneratedColumn, RelationId, UpdateDateColumn } from 'typeorm';
 
 @Entity('comments')
@@ -13,18 +12,12 @@ export class Comment {
   @Column()
   text: string;
 
-  @OneToOne(() => Answer)
+  @OneToOne(() => Research)
   @JoinColumn()
-  answer: Answer;
+  research: Research;
 
-  @RelationId((comment: Comment) => comment.answer)
-  answerID: string;
-
-  @ManyToOne(() => QuestionOption, {onDelete: "CASCADE"})
-  questionOption: QuestionOption;
-
-  @RelationId((comment: Comment) => comment.questionOption)
-  questionOptionID: string;
+  @RelationId((comment: Comment) => comment.research)
+  researchID: string;
 
   @CreateDateColumn()
   @HideField()

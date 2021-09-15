@@ -9,5 +9,5 @@ export class CreateCommentInput {
 
   @IsString()
   @IsNotEmpty({ message: 'Campo nome não pode estar vazio' })
-  answerID: string;
+  researchID: string;
 }
