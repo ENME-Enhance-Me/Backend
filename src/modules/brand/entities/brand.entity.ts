@@ -1,6 +1,8 @@
 import { ObjectType, Field, HideField } from '@nestjs/graphql';
 import { Address } from 'src/modules/address/entities/address.entity';
 import { MicroSegment } from 'src/modules/micro-segments/entities/micro-segment.entity';
+import { Mtag } from 'src/modules/mtags/entities/mtag.entity';
+import { Research } from 'src/modules/research/entities/research.entity';
 import { User } from 'src/modules/user/entities/user.entity';
 import {
   Column,
@@ -37,6 +39,12 @@ export class Brand {
 
   @OneToMany(() => User, user => user.brand)
   users: User[];
+
+  @OneToMany(() => Mtag, mtag => mtag.brand)
+  mTags: Mtag[];
+
+  @OneToMany(() => Research, research => research.brand, { nullable: true })
+  researchs: Research[];
 
   @ManyToMany(() => MicroSegment, segment => segment.brands)
   @JoinTable()

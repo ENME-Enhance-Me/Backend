@@ -17,7 +17,15 @@ import { CloudinaryModule } from './helpers/Cloudinary/cloudinary.module';
 import { AddressModule } from './modules/address/address.module';
 import { MicroSegmentsModule } from './modules/micro-segments/micro-segments.module';
 import { MacroSegmentsModule } from './modules/macro-segments/macro-segments.module';
-
+import { MailSenderResolver } from './helpers/mailsender/mailSender.resolver';
+import { MailSenderService } from "./helpers/mailsender/mailSender.service";
+import { MailSenderModule } from './helpers/mailsender/mailSender.module';
+import { ResearchModule } from './modules/research/research.module';
+import { QuestionModule } from './modules/question/question.module';
+import { QuestionOptionsModule } from './modules/question-options/question-options.module';
+import { AnswerModule } from './modules/answer/answer.module';
+import { CommentsModule } from './modules/comments/comments.module';
+import { MtagsModule } from './modules/mtags/mtags.module';
 
 @Module({
   imports: [
@@ -40,6 +48,13 @@ import { MacroSegmentsModule } from './modules/macro-segments/macro-segments.mod
     AddressModule,
     MicroSegmentsModule,
     MacroSegmentsModule,
+    MailSenderModule,
+    ResearchModule,
+    QuestionModule,
+    QuestionOptionsModule,
+    AnswerModule,
+    CommentsModule,
+    MtagsModule,
   ],
   controllers: [AppController],
   providers: [AppService, Cloudinary],

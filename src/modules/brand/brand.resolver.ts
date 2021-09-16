@@ -16,9 +16,7 @@ export class BrandResolver {
   constructor(
     private readonly brandService: BrandService,
     private readonly userService: UserService,
-    private readonly addressService: AddressService,
-    private readonly microSegmentService: MicroSegmentsService
-  ) { }
+    private readonly addressService: AddressService) { }
 
   @Mutation(() => Brand, {
     description: 'Cria uma marca e um usuário vinculados'
@@ -61,12 +59,12 @@ export class BrandResolver {
   }
 
   @ResolveField()
-  async address(@Parent() brand:Brand){
-    return await this.addressService.findOne({brandID: brand.id});
+  async address(@Parent() brand: Brand) {
+    return await this.addressService.findOne({ brandID: brand.id });
   }
 
   @ResolveField()
-  async segments(@Parent() brand:Brand){
+  async segments(@Parent() brand: Brand) {
     return this.brandService.findAllSegmentsToBrand(brand.id);
   }
 
@@ -88,7 +86,7 @@ export class BrandResolver {
   async connectMicrosToBrand(
     @Args('brandID') brandID: string,
     @Args({ name: 'microIds', type: () => [String] }) microIds: string[]
-    ){
+  ) {
     return await this.brandService.connectSegments(brandID, microIds);
   }
 
