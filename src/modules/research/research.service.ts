@@ -57,7 +57,7 @@ export class ResearchService {
       where: {
         id
       },
-      relations: ['brand', 'questions']
+      relations: ['brand', 'questions', 'questions.options', 'questions.options.mTag']
     });
     if(!research){
       throw new NotFoundException('pesquisa não encontrada');

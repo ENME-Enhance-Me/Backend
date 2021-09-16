@@ -18,9 +18,10 @@ import { Research } from '../research/entities/research.entity';
 import { QuestionOption } from '../question-options/entities/question-option.entity';
 import { Question } from '../question/entities/question.entity';
 import { QuestionType } from '../question/entities/question-type.entity';
+import { Mtag } from '../mtags/entities/mtag.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Comment, Answer, Question, QuestionType, QuestionOption, Research, Brand, MicroSegment, User])],
+  imports: [TypeOrmModule.forFeature([Comment, Mtag, Answer, Question, QuestionType, QuestionOption, Research, Brand, MicroSegment, User])],
   providers: [CommentsResolver, CommentsService, AnswerService, QuestionOptionsService, QuestionService, CloudinaryService, ResearchService, BrandService, UserService]
 })
 export class CommentsModule {}

@@ -13,4 +13,9 @@ export class UpdateQuestionOptionInput {
   @IsNotEmpty({ message: 'Campo nome não pode estar vazio' })
   @IsOptional()
   nextQuestion?: boolean;
+
+  @IsString()
+  @IsNotEmpty({ message: 'Campo nome não pode estar vazio' })
+  @IsOptional()
+  mtagID?: string;
 }

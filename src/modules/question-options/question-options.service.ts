@@ -3,6 +3,8 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { FileUpload } from 'graphql-upload';
 import { CloudinaryService } from 'src/helpers/Cloudinary/cloudinary.service';
 import { Repository } from 'typeorm';
+import { Mtag } from '../mtags/entities/mtag.entity';
+import { MtagsService } from '../mtags/mtags.service';
 import { Question } from '../question/entities/question.entity';
 import { QuestionService } from '../question/question.service';
 import { CreateQuestionOptionInput } from './dto/create-question-option.input';
@@ -15,7 +17,9 @@ export class QuestionOptionsService {
     @InjectRepository(QuestionOption)
     private readonly qOptionRepository: Repository<QuestionOption>,
     private readonly questionService: QuestionService,
-    private readonly cloudService: CloudinaryService
+    private readonly cloudService: CloudinaryService,
+    @InjectRepository(Mtag)
+    private readonly mtagService: Repository<Mtag>
   ) { }
 
   async create(data: CreateQuestionOptionInput, image: FileUpload) {
@@ -31,7 +35,7 @@ export class QuestionOptionsService {
       question
     });
 
-    if(image) {
+    if (image) {
       const file = await this.cloudService.uploadImage(image, "enme/questionOptionsImage");
       option.image = file.url;
     }
@@ -71,9 +75,12 @@ export class QuestionOptionsService {
     if (!option) {
       throw new NotFoundException('opção de questão não encontrada');
     }
+    const mTag = await this.mTag(data.mtagID);
+
     this.qOptionRepository.merge(option, {
       description: data.description,
-      nextQuestion: data.nextQuestion
+      nextQuestion: data.nextQuestion,
+      mTag
     });
 
 
@@ -93,5 +100,14 @@ export class QuestionOptionsService {
 
   async question(questionID: string): Promise<Question> {
     return await this.questionService.findOne(questionID);
+  }
+
+  async mTag(mtagID: string): Promise<Mtag> {
+    let mtag: Mtag;
+    if (mtagID) {
+      mtag = await this.mtagService.findOneOrFail(mtagID);
+    }
+
+    return mtag
   }
 }

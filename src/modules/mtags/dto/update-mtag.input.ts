@@ -10,11 +10,5 @@ export class UpdateMtagInput extends PartialType(CreateMtagInput) {
 
   @IsString()
   @IsNotEmpty({ message: 'Campo nome não pode estar vazio' })
-  @IsOptional()
-  tag?: string;
-
-  @IsString()
-  @IsNotEmpty({ message: 'Campo nome não pode estar vazio' })
-  @IsOptional()
-  researchID?: string;
+  tag: string;
 }

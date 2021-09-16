@@ -16,9 +16,11 @@ import { BrandService } from '../brand/brand.service';
 import { UserService } from '../user/user.service';
 import { AnswerService } from '../answer/answer.service';
 import { Answer } from '../answer/entities/answer.entity';
+import { MtagsService } from '../mtags/mtags.service';
+import { Mtag } from '../mtags/entities/mtag.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Question, QuestionType, QuestionOption, Answer, Research, Brand, MicroSegment, User])],
+  imports: [TypeOrmModule.forFeature([Question, QuestionType, QuestionOption, Answer, Research, Brand, MicroSegment, User, Mtag])],
   providers: [QuestionOptionsResolver, QuestionOptionsService, AnswerService, QuestionService, ResearchService, CloudinaryService, ResearchService, BrandService, UserService]
 })
 export class QuestionOptionsModule {}

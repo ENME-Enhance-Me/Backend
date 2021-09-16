@@ -58,4 +58,10 @@ export class QuestionOptionsResolver {
     const { id } = option;
     return await this.answerService.findAllToQuestionOption(id);
   }
+
+  @ResolveField()
+  async mTag(@Parent() option: QuestionOption){
+    const { mTagID } = option;
+    return await this.questionOptionsService.mTag(mTagID);
+  }
 }

@@ -27,7 +27,10 @@ export class QuestionOption {
   answers: Answer[];
 
   @ManyToOne(() => Mtag, {onDelete: 'SET NULL'})
-  mTag: Mtag;
+  mTag?: Mtag;
+
+  @RelationId((option: QuestionOption) => option.mTag)
+  mTagID: string;
 
   @Column()
   @Field((type) => Boolean)
