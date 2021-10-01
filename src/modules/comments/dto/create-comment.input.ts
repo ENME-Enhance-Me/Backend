@@ -10,4 +10,8 @@ export class CreateCommentInput {
   @IsString()
   @IsNotEmpty({ message: 'Campo nome não pode estar vazio' })
   researchID: string;
+
+  @IsString()
+  @IsNotEmpty({ message: 'Campo nome não pode estar vazio' })
+  clientID: string;
 }

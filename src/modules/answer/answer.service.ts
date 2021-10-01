@@ -1,6 +1,8 @@
 import { Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { ClientbrandService } from '../clientbrand/clientbrand.service';
+import { Clientbrand } from '../clientbrand/entities/clientbrand.entity';
 import { QuestionOption } from '../question-options/entities/question-option.entity';
 import { QuestionOptionsService } from '../question-options/question-options.service';
 import { CreateAnswerInput } from './dto/create-answer.input';
@@ -13,7 +15,8 @@ export class AnswerService {
   constructor(
     @InjectRepository(Answer)
     private readonly answerRepository: Repository<Answer>,
-    private readonly qOptionService: QuestionOptionsService
+    private readonly qOptionService: QuestionOptionsService,
+    private readonly clientBrandService: ClientbrandService
   ) { }
 
   async create(data: CreateAnswerInput): Promise<Answer> {
@@ -23,9 +26,16 @@ export class AnswerService {
       throw new NotFoundException('Opção de questão não encontrada');
     }
 
+    const client = await this.client(data.clientID);
+
+    if (!client) {
+      throw new NotFoundException('relação cliente com marca não encontrado');
+    }
+
     const answer = this.answerRepository.create({
       description: data.description,
-      questionOption: qOption
+      questionOption: qOption,
+      client: client
     });
 
     const answerSaved = await this.answerRepository.save(answer);
@@ -79,5 +89,8 @@ export class AnswerService {
 
   async questionOption(questionOptionID: string): Promise<QuestionOption> {
     return await this.qOptionService.findOne(questionOptionID);
+  }
+  async client(clientID: string): Promise<Clientbrand> {
+    return await this.clientBrandService.findOne(clientID);
   }
 }

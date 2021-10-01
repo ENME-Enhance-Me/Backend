@@ -9,27 +9,27 @@ export class ClientbrandResolver {
   constructor(private readonly clientbrandService: ClientbrandService) {}
 
   @Mutation(() => Clientbrand)
-  createClientbrand(@Args('createClientbrandInput') createClientbrandInput: CreateClientbrandInput) {
-    return this.clientbrandService.create(createClientbrandInput);
+  createClientbrand(@Args('data') data: CreateClientbrandInput) {
+    return this.clientbrandService.create(data);
   }
 
-  @Query(() => [Clientbrand], { name: 'clientbrand' })
+  @Query(() => [Clientbrand], { name: 'findAllClientBrand' })
   findAll() {
     return this.clientbrandService.findAll();
   }
 
-  @Query(() => Clientbrand, { name: 'clientbrand' })
-  findOne(@Args('id', { type: () => Int }) id: number) {
+  @Query(() => Clientbrand, { name: 'findOneClientBrand' })
+  findOne(@Args('id') id: string) {
     return this.clientbrandService.findOne(id);
   }
 
   @Mutation(() => Clientbrand)
-  updateClientbrand(@Args('updateClientbrandInput') updateClientbrandInput: UpdateClientbrandInput) {
-    return this.clientbrandService.update(updateClientbrandInput.id, updateClientbrandInput);
+  updateClientbrand(@Args('data') data: UpdateClientbrandInput) {
+    return this.clientbrandService.update(data.id, data);
   }
 
   @Mutation(() => Clientbrand)
-  removeClientbrand(@Args('id', { type: () => Int }) id: number) {
+  removeClientbrand(@Args('id') id: string) {
     return this.clientbrandService.remove(id);
   }
 }

@@ -1,6 +1,7 @@
 import { Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { ClientbrandService } from '../clientbrand/clientbrand.service';
 import { ResearchService } from '../research/research.service';
 import { CreateCommentInput } from './dto/create-comment.input';
 import { UpdateCommentInput } from './dto/update-comment.input';
@@ -11,7 +12,8 @@ export class CommentsService {
   constructor(
     @InjectRepository(Comment)
     private readonly commentRepository: Repository<Comment>,
-    private readonly researchService: ResearchService
+    private readonly researchService: ResearchService,
+    private readonly clientBrandService: ClientbrandService
   ) { }
 
   async create(data: CreateCommentInput) {
@@ -21,9 +23,16 @@ export class CommentsService {
       throw new NotFoundException('pesquisa não encontrada');
     }
 
+    const client = await this.client(data.clientID);
+
+    if (!client) {
+      throw new NotFoundException('relação cliente com marca não encontrada');
+    }
+
     const comment = this.commentRepository.create({
       text: data.text,
       research: research,
+      client
     });
 
     const commentSaved = await this.commentRepository.save(comment);
@@ -84,5 +93,9 @@ export class CommentsService {
 
   async research(researchID: string){
     return await this.researchService.findOne(researchID);
+  }
+
+  async client(clientID: string){
+    return await this.clientBrandService.findOne(clientID);
   }
 }
