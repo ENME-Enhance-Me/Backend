@@ -2,8 +2,9 @@ import { ObjectType, Field, Int, HideField } from '@nestjs/graphql';
 import { Brand } from 'src/modules/brand/entities/brand.entity';
 import { Client } from 'src/modules/clients/entities/client.entity';
 import { Mtag } from 'src/modules/mtags/entities/mtag.entity';
-import { Column, CreateDateColumn, JoinTable, ManyToMany, ManyToOne, PrimaryGeneratedColumn, RelationId, UpdateDateColumn } from 'typeorm';
+import { Column, CreateDateColumn, Entity, JoinTable, ManyToMany, ManyToOne, PrimaryGeneratedColumn, RelationId, UpdateDateColumn } from 'typeorm';
 
+@Entity('clientbrand')
 @ObjectType()
 export class Clientbrand {
   @Field()
@@ -11,16 +12,13 @@ export class Clientbrand {
   id: string;
 
   @Column()
-  name: string;
+  isClient: boolean;
 
   @Column()
-  description: string;
+  isVIP: boolean;
 
   @Column()
-  startDate: Date;
-
-  @Column({ nullable: true })
-  finishDate?: Date;
+  mCoins: number;
 
   @ManyToOne(() => Brand, brand => brand.clients, { onDelete: "CASCADE", nullable: true })
   brand: Brand;

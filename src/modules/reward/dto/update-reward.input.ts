@@ -6,8 +6,7 @@ import { IsNotEmpty, IsOptional, IsString } from 'class-validator';
 export class UpdateRewardInput extends PartialType(CreateRewardInput) {
   @IsString()
   @IsNotEmpty({ message: 'Campo nome não pode estar vazio' })
-  @IsOptional()
-  id?: string;
+  id: string;
   
   @IsString()
   @IsNotEmpty({ message: 'Campo nome não pode estar vazio' })

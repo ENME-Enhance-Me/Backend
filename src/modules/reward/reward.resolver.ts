@@ -21,6 +21,11 @@ export class RewardResolver {
   findAll() {
     return this.rewardService.findAll();
   }
+  
+  @Query(() => [Reward], { name: 'findAllRewardToBrand' })
+  findAllToBrand(@Args('brandID') brandID: string) {
+    return this.rewardService.findAllToBrand(brandID);
+  }
 
   @Query(() => Reward, { name: 'findOneReward' })
   findOne(@Args('id') id: string) {
