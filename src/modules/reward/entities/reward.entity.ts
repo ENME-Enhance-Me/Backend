@@ -1,6 +1,7 @@
 import { ObjectType, Field, Int, HideField } from '@nestjs/graphql';
 import { Brand } from 'src/modules/brand/entities/brand.entity';
-import { Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn, RelationId, UpdateDateColumn } from 'typeorm';
+import { Winner } from 'src/modules/winners/entities/winner.entity';
+import { Column, CreateDateColumn, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn, RelationId, UpdateDateColumn } from 'typeorm';
 
 @Entity('rewards')
 @ObjectType()
@@ -23,6 +24,9 @@ export class Reward {
 
   @RelationId((reward: Reward) => reward.brand)
   brandID: string;
+
+  @OneToMany(() => Winner, winner => winner.reward, { nullable: true })
+  clients: Winner[];
 
   @CreateDateColumn()
   @HideField()
