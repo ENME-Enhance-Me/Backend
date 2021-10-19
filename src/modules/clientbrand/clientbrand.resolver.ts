@@ -1,4 +1,4 @@
-import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
+import { Resolver, Query, Mutation, Args, Int, ResolveField, Parent } from '@nestjs/graphql';
 import { ClientbrandService } from './clientbrand.service';
 import { Clientbrand } from './entities/clientbrand.entity';
 import { CreateClientbrandInput } from './dto/create-clientbrand.input';
@@ -31,5 +31,15 @@ export class ClientbrandResolver {
   @Mutation(() => Clientbrand)
   removeClientbrand(@Args('id') id: string) {
     return this.clientbrandService.remove(id);
+  }
+
+  @ResolveField()
+  brand(@Parent() clientBrand: Clientbrand ){
+    return this.clientbrandService.brand(clientBrand.brandID);
+  }
+
+  @ResolveField()
+  client(@Parent() clientBrand: Clientbrand ){
+    return this.clientbrandService.client(clientBrand.clientID);
   }
 }

@@ -52,7 +52,7 @@ export class ClientbrandService {
   }
 
   async findOne(id: string) {
-    return await this.clientbrandRepository.findOne(id);
+    return await this.clientbrandRepository.findOneOrFail(id);
   }
 
   async findAllToBrand(brandID: string) {

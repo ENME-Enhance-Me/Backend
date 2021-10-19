@@ -18,9 +18,13 @@ import { CloudinaryService } from 'src/helpers/Cloudinary/cloudinary.service';
 import { BrandService } from '../brand/brand.service';
 import { UserService } from '../user/user.service';
 import { Mtag } from '../mtags/entities/mtag.entity';
+import { ClientbrandService } from '../clientbrand/clientbrand.service';
+import { Clientbrand } from '../clientbrand/entities/clientbrand.entity';
+import { ClientsService } from '../clients/clients.service';
+import { Client } from '../clients/entities/client.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Answer, Question, QuestionType, QuestionOption, Research, Brand, MicroSegment, User, Mtag])],
-  providers: [AnswerService, AnswerResolver, QuestionOptionsService, QuestionService, CloudinaryService, ResearchService, BrandService, UserService]
+  imports: [TypeOrmModule.forFeature([Answer, Question, QuestionType, QuestionOption, Research, Brand, MicroSegment, User, Mtag, Clientbrand, Client])],
+  providers: [AnswerService, AnswerResolver, QuestionOptionsService, QuestionService, CloudinaryService, ResearchService, BrandService, UserService, ClientbrandService, ClientsService]
 })
 export class AnswerModule {}

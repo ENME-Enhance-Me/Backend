@@ -43,4 +43,10 @@ export class CommentsResolver {
     const { researchID } = comment;
     return await this.commentsService.research(researchID);
   }
+
+  @ResolveField()
+  async client(@Parent() comment: Comment){
+    const { clientID } = comment;
+    return await this.commentsService.client(clientID);
+  }
 }

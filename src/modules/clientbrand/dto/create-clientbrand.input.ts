@@ -10,10 +10,6 @@ export class CreateClientbrandInput {
   @IsBoolean()
   @IsNotEmpty({ message: 'Campo nome não pode estar vazio' })
   isVIP: boolean;
-  
-  @IsNumber()
-  @IsNotEmpty({ message: 'Campo nome não pode estar vazio' })
-  mCoins: number;
 
   @IsString()
   @IsNotEmpty({ message: 'Campo nome não pode estar vazio' })
