@@ -43,4 +43,10 @@ export class AnswerResolver {
     const { questionOptionID } = answer;
     return await this.answerService.questionOption(questionOptionID);
   }
+
+  @ResolveField()
+  async client(@Parent() answer: Answer){
+    const { clientID } = answer;
+    return await this.answerService.client(clientID);
+  }
 }
