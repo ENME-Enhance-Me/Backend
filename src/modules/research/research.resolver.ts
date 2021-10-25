@@ -4,6 +4,7 @@ import { Research } from './entities/research.entity';
 import { CreateResearchInput } from './dto/create-research.input';
 import { UpdateResearchInput } from './dto/update-research.input';
 import { QuestionService } from '../question/question.service';
+import { CreateCompleteResearchInput } from './dto/create-complete-research.input';
 
 @Resolver(() => Research)
 export class ResearchResolver {
@@ -13,7 +14,7 @@ export class ResearchResolver {
     ) {}
 
   @Mutation(() => Research)
-  async createResearch(@Args('data') data: CreateResearchInput) {
+  async createResearch(@Args('data') data: CreateCompleteResearchInput) {
     return await this.researchService.create(data);
   }
 

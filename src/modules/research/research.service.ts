@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { BrandService } from '../brand/brand.service';
 import { Brand } from '../brand/entities/brand.entity';
+import { CreateCompleteResearchInput } from './dto/create-complete-research.input';
 import { CreateResearchInput } from './dto/create-research.input';
 import { UpdateResearchInput } from './dto/update-research.input';
 import { Research } from './entities/research.entity';
@@ -14,12 +15,12 @@ export class ResearchService {
     private readonly researchRepository: Repository<Research>,
     private readonly brandService: BrandService
     ){}
-  async create(data: CreateResearchInput): Promise<Research> {
+  async create(data: CreateCompleteResearchInput): Promise<Research> {
     const brand = await this.brandService.find({brandID: data.brandID});
 
     const research = this.researchRepository.create({
       name: data.name,
-      description: data.description,
+      description: "data.description",
       startDate: data.startDate,
       finishDate: data.finishDate,
       brand: brand
