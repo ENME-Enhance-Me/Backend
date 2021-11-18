@@ -1,6 +1,9 @@
-import { InputType, } from '@nestjs/graphql';
+import { InputType } from '@nestjs/graphql';
 import { IsDate, IsNotEmpty, IsNumber, IsOptional, IsString } from 'class-validator';
-import { CreateQuestionInput } from 'src/modules/question/dto/create-question.input';
+import { QuestionResearchInput } from 'src/modules/question/dto/question-research.input';
+import { RewardResearchInput } from 'src/modules/reward/dto/reward-research.input';
+import { PeopleGroupEnum } from 'src/modules/user/entities/people-group.entity';
+import { PeopleGroupInput } from './peoplegroup.input';
 
 @InputType()
 export class CreateCompleteResearchInput {
@@ -35,8 +38,14 @@ export class CreateCompleteResearchInput {
     Mtags: string[];
 
     @IsNotEmpty({ message: 'Campo nome não pode estar vazio' })
-    question: CreateQuestionInput[];
+    peopleGroup: PeopleGroupEnum[];
+
+    @IsNotEmpty({ message: 'Campo nome não pode estar vazio' })
+    questions: QuestionResearchInput[];
     
+    @IsNotEmpty({ message: 'Campo nome não pode estar vazio' })
+    reward: RewardResearchInput;
+
     @IsString()
     @IsNotEmpty({ message: 'Campo nome não pode estar vazio' })
     brandID: string;

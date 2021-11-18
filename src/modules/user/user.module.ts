@@ -12,9 +12,11 @@ import { ClientsService } from '../clients/clients.service';
 import { CloudinaryService } from 'src/helpers/Cloudinary/cloudinary.service';
 import { MicroSegmentsService } from '../micro-segments/micro-segments.service';
 import { MicroSegment } from '../micro-segments/entities/micro-segment.entity';
+import { PeopleGroupService } from './peopleGroup.service';
+import PeopleGroup from './entities/people-group.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Brand, User, Phone, Client, MicroSegment])],
-  providers: [UserResolver, UserService, BrandService, PhoneService,  ClientsService, CloudinaryService],
+  imports: [TypeOrmModule.forFeature([Brand, User, Phone, Client, MicroSegment, PeopleGroup])],
+  providers: [UserResolver, UserService, BrandService, PhoneService,  ClientsService, CloudinaryService, PeopleGroupService],
 })
 export class UserModule {}

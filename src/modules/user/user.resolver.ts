@@ -7,11 +7,14 @@ import { Phone } from '../phone/entities/phone.entity';
 import { PhoneService } from '../phone/phone.service';
 import { FileUpload, GraphQLUpload } from 'graphql-upload';
 import { BrandService } from '../brand/brand.service';
+import PeopleGroup from './entities/people-group.entity';
+import { PeopleGroupService } from './peopleGroup.service';
 
 @Resolver(() => User)
 export class UserResolver {
   constructor(
     private readonly userService: UserService,
+    private readonly pgService: PeopleGroupService,
     private readonly brandService: BrandService,
     private readonly phoneService: PhoneService
   ) { }
@@ -24,6 +27,11 @@ export class UserResolver {
     @Args({name: 'avatar', nullable: true, type: () => GraphQLUpload}) avatar: FileUpload 
     ) {
     return this.userService.create(data, avatar);
+  }
+
+  @Mutation(() => PeopleGroup)
+  createPeopleGroup(@Args('name') name: string) {
+    return this.pgService.create(name);
   }
 
   @Query(() => [User], {

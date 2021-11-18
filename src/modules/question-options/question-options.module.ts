@@ -22,9 +22,10 @@ import { ClientbrandService } from '../clientbrand/clientbrand.service';
 import { Clientbrand } from '../clientbrand/entities/clientbrand.entity';
 import { ClientsService } from '../clients/clients.service';
 import { Client } from '../clients/entities/client.entity';
+import PeopleGroup from '../user/entities/people-group.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Question, QuestionType, QuestionOption, Answer, Research, Brand, MicroSegment, User, Mtag, Clientbrand, Client])],
+  imports: [TypeOrmModule.forFeature([Question, QuestionType, QuestionOption,PeopleGroup, Answer, Research, Brand, MicroSegment, User, Mtag, Clientbrand, Client])],
   providers: [QuestionOptionsResolver, QuestionOptionsService, AnswerService, QuestionService, ResearchService, CloudinaryService, ClientsService, ResearchService, BrandService, UserService, ClientbrandService]
 })
 export class QuestionOptionsModule {}
