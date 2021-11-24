@@ -16,13 +16,19 @@ export class Research {
   name: string;
 
   @Column()
-  description: string;
-
-  @Column()
   startDate: Date;
 
   @Column({ nullable: true })
   finishDate?: Date;
+
+  @Column({ default: 18 })
+  ageGroupStart: number;
+
+  @Column({ nullable: true })
+  ageGroupEnd?: number;
+
+  @Column({ default: 10 })
+  locationRange: number;
 
   @ManyToOne(() => Brand, brand => brand.researchs, { onDelete: "CASCADE", nullable: true })
   brand: Brand;

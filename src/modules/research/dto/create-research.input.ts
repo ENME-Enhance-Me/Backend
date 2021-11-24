@@ -1,17 +1,13 @@
 import { InputType, Int, Field } from '@nestjs/graphql';
-import { IsDate, IsNotEmpty, IsOptional, IsString } from 'class-validator';
+import { IsDate, IsNotEmpty, IsNumber, IsOptional, IsString } from 'class-validator';
 import { PeopleGroupEnum } from 'src/modules/user/entities/people-group.entity';
 
 @InputType()
 export class CreateResearchInput {
-  
-  @IsString()
-  @IsNotEmpty({ message: 'Campo nome não pode estar vazio' })
-  name: string;
 
   @IsString()
   @IsNotEmpty({ message: 'Campo nome não pode estar vazio' })
-  description: string;
+  name: string;
 
   @IsNotEmpty({ message: 'Campo nome não pode estar vazio' })
   peopleGroup: PeopleGroupEnum[];
@@ -24,6 +20,18 @@ export class CreateResearchInput {
   @IsNotEmpty({ message: 'Campo nome não pode estar vazio' })
   @IsOptional()
   finishDate?: Date;
+
+  @IsNumber()
+  @IsNotEmpty({ message: 'Campo nome não pode estar vazio' })
+  ageGroupStart: number;
+
+  @IsNumber()
+  @IsNotEmpty({ message: 'Campo nome não pode estar vazio' })
+  ageGroupEnd: number;
+
+  @IsNumber()
+  @IsNotEmpty({ message: 'Campo nome não pode estar vazio' })
+  locationRange: number;
 
   @IsString()
   @IsNotEmpty({ message: 'Campo nome não pode estar vazio' })

@@ -25,9 +25,11 @@ export class CreateResearchService {
     async create(data: CreateCompleteResearchInput): Promise<Research> {
         const research = await this.researchService.create({
             name: data.name,
-            description: "",
             startDate: data.startDate,
             finishDate: data.finishDate,
+            ageGroupStart: data.ageGroupStart,
+            ageGroupEnd: data.ageGroupEnd,
+            locationRange: data.locationRange,
             brandID: data.brandID,
             peopleGroup: data.peopleGroup
         });
