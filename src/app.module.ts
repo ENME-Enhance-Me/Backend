@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 import "reflect-metadata";
-import { MiddlewareConsumer, Module } from '@nestjs/common';
+import { Module } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { join } from 'path';
@@ -26,6 +26,9 @@ import { QuestionOptionsModule } from './modules/question-options/question-optio
 import { AnswerModule } from './modules/answer/answer.module';
 import { CommentsModule } from './modules/comments/comments.module';
 import { MtagsModule } from './modules/mtags/mtags.module';
+import { RewardModule } from './modules/reward/reward.module';
+import { ClientbrandModule } from './modules/clientbrand/clientbrand.module';
+import { WinnersModule } from './modules/winners/winners.module';
 
 @Module({
   imports: [
@@ -55,6 +58,9 @@ import { MtagsModule } from './modules/mtags/mtags.module';
     AnswerModule,
     CommentsModule,
     MtagsModule,
+    RewardModule,
+    ClientbrandModule,
+    WinnersModule,
   ],
   controllers: [AppController],
   providers: [AppService, Cloudinary],

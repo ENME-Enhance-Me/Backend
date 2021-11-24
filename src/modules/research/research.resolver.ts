@@ -4,17 +4,27 @@ import { Research } from './entities/research.entity';
 import { CreateResearchInput } from './dto/create-research.input';
 import { UpdateResearchInput } from './dto/update-research.input';
 import { QuestionService } from '../question/question.service';
+import { CreateCompleteResearchInput } from './dto/create-complete-research.input';
+import { CreateResearchService } from './research-create.service';
+import { PeopleGroupService } from '../user/peopleGroup.service';
 
 @Resolver(() => Research)
 export class ResearchResolver {
   constructor(
     private readonly researchService: ResearchService,
+    private readonly pgService: PeopleGroupService,
+    private readonly compResearchService: CreateResearchService,
     private readonly questionService: QuestionService
     ) {}
 
   @Mutation(() => Research)
   async createResearch(@Args('data') data: CreateResearchInput) {
     return await this.researchService.create(data);
+  }
+
+  @Mutation(() => Research)
+  async createCompleteResearch(@Args('data') data: CreateCompleteResearchInput) {
+    return await this.compResearchService.create(data);
   }
 
   @Query(() => [Research], { name: 'findAllResearchToBrand' })
@@ -53,7 +63,8 @@ export class ResearchResolver {
 
   @ResolveField() 
   async questions(@Parent() research: Research){
-    const { id } = research
+    const { id } = research;
     return await this.questionService.findAlltoResearch(id);
   }
+
 }

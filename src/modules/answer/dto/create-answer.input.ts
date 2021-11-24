@@ -11,4 +11,8 @@ export class CreateAnswerInput {
   @IsString()
   @IsNotEmpty({ message: 'Campo nome não pode estar vazio' })
   questionOptionID: string;
+
+  @IsString()
+  @IsNotEmpty({ message: 'Campo nome não pode estar vazio' })
+  clientID: string;
 }

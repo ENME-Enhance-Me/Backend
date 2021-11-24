@@ -1,6 +1,7 @@
 import { ObjectType, Field, Int, HideField } from '@nestjs/graphql';
 import { Brand } from 'src/modules/brand/entities/brand.entity';
-import { Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn, RelationId, UpdateDateColumn } from 'typeorm';
+import { Clientbrand } from 'src/modules/clientbrand/entities/clientbrand.entity';
+import { Column, CreateDateColumn, Entity, ManyToMany, ManyToOne, PrimaryGeneratedColumn, RelationId, UpdateDateColumn } from 'typeorm';
 
 @Entity('mtags')
 @ObjectType()
@@ -18,6 +19,11 @@ export class Mtag {
 
   @RelationId((mtag: Mtag) => mtag.brand)
   brandID: string;
+
+  @ManyToMany(() => Clientbrand, segment => segment.mtags, {
+    onDelete: 'CASCADE'
+  })
+  clients: Clientbrand[]
 
   @CreateDateColumn()
   @HideField()

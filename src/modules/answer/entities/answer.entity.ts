@@ -1,4 +1,5 @@
 import { ObjectType, Field, Int, HideField } from '@nestjs/graphql';
+import { Clientbrand } from 'src/modules/clientbrand/entities/clientbrand.entity';
 import { QuestionOption } from 'src/modules/question-options/entities/question-option.entity';
 import { Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn, RelationId, UpdateDateColumn } from 'typeorm';
 
@@ -11,6 +12,12 @@ export class Answer {
 
   @Column({nullable:true})
   description?: string;
+
+  @ManyToOne(() => Clientbrand, { onDelete: "CASCADE" })
+  client: Clientbrand;
+
+  @RelationId((answer: Answer) => answer.client)
+  clientID: string;
 
   @ManyToOne(() => QuestionOption, { onDelete: "CASCADE" })
   questionOption: QuestionOption;

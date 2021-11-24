@@ -1,4 +1,5 @@
 import { ObjectType, Field, Int, HideField } from '@nestjs/graphql';
+import { Clientbrand } from 'src/modules/clientbrand/entities/clientbrand.entity';
 import { Research } from 'src/modules/research/entities/research.entity';
 import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToOne, PrimaryGeneratedColumn, RelationId, UpdateDateColumn } from 'typeorm';
 
@@ -18,6 +19,12 @@ export class Comment {
 
   @RelationId((comment: Comment) => comment.research)
   researchID: string;
+
+  @ManyToOne(() => Clientbrand, { onDelete: "CASCADE" })
+  client: Clientbrand;
+
+  @RelationId((comment: Comment) => comment.client)
+  clientID: string;
 
   @CreateDateColumn()
   @HideField()
