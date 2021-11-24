@@ -13,6 +13,11 @@ export class OptionResearchInput {
   @IsOptional()
   mtagID?: string;
 
+  @IsString()
+  @IsNotEmpty({ message: 'Campo nome não pode estar vazio' })
+  @IsOptional()
+  image?: string;
+
   @IsBoolean()
   @IsNotEmpty({ message: 'Campo nome não pode estar vazio' })
   nextQuestion: boolean;

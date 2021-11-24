@@ -42,7 +42,7 @@ export class CreateResearchService {
                 qtypeID: question.qtypeID,
                 researchID: research.id
             },
-                null);
+                null, question.image);
             if(!qs.options){
                 qs.options = new Array<QuestionOption>();
             }
@@ -52,7 +52,7 @@ export class CreateResearchService {
                     nextQuestion: option.nextQuestion,
                     mtagID: option.mtagID,
                     questionID: qs.id
-                }, null);
+                }, null, option.image);
                 
                 qs.options.push(op);
             });
@@ -62,9 +62,9 @@ export class CreateResearchService {
         const reward = await this.rewardService.create({
             brandID: data.brandID,
             name: data.reward.name,
-            description: data.reward.description,  
-        }, null)
-        //research.brand.rewards.push(reward);
+            description: data.reward.description, 
+            type: data.reward.type 
+        }, null, data.reward.image)
         return research;
     }
 }

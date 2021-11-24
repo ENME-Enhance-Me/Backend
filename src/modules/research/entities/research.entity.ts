@@ -36,10 +36,10 @@ export class Research {
   @RelationId((research: Research) => research.brand)
   brandID: string;
 
-  @OneToMany(() => Question, question => question.research)
+  @OneToMany(() => Question, question => question.research, { onDelete: "CASCADE"})
   questions: Question[];
 
-  @ManyToMany(() => PeopleGroup, peopleGroup => peopleGroup.researchs)
+  @ManyToMany(() => PeopleGroup, peopleGroup => peopleGroup.researchs, { onDelete: "CASCADE"})
   @JoinTable()
   peopleGroups: PeopleGroup[];
 
