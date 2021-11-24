@@ -21,10 +21,10 @@ export class QuestionService {
     private readonly cloudService: CloudinaryService
   ) { }
 
-  async create(data: CreateQuestionInput, image: FileUpload) {
+  async create(data: CreateQuestionInput, image?: FileUpload, imageString?: string) {
     const research = await this.research(data.researchID);
     const type = await this.questionType(data.qtypeID);
-    if(!type){
+    if (!type) {
       throw new NotFoundException('tipo de questão não encontrada');
     }
 
@@ -34,13 +34,17 @@ export class QuestionService {
       research,
       questionType: type
     });
-
-    try {
-      const file = await this.cloudService.uploadImage(image, "enme/questionImage");
-      question.image = file.url;
+    if (image) {
+      try {
+        const file = await this.cloudService.uploadImage(image, "enme/questionImage");
+        question.image = file.url;
+      }
+      catch (err) {
+        question.image = "https://res.cloudinary.com/enme/image/upload/v1629924117/enme/questionImage/padrao/banner-azul.jpg";
+      }
     }
-    catch (err) {
-      question.image = "https://res.cloudinary.com/enme/image/upload/v1629924117/enme/questionImage/padrao/banner-azul.jpg";
+    else if (imageString) {
+      question.image = imageString;
     }
 
     const questionSaved = await this.questionRepository.save(question);
@@ -53,7 +57,7 @@ export class QuestionService {
   }
 
 
-  async createQuestionType(type: string){
+  async createQuestionType(type: string) {
     const questionType = this.qtypeRepository.create({
       type
     });
@@ -92,7 +96,7 @@ export class QuestionService {
       },
       relations: ['research', 'questionType']
     });
-    if(!question){
+    if (!question) {
       throw new NotFoundException('questão não encontrada');
     }
     return question;
@@ -100,23 +104,23 @@ export class QuestionService {
 
   async update(id: string, data: UpdateQuestionInput): Promise<Question> {
     const question = await this.findOne(id);
-    
-    if(!question){
+
+    if (!question) {
       throw new NotFoundException('questão não encontrada');
     }
-    if(data.qtypeID){
+    if (data.qtypeID) {
       const questionType = await this.questionType(data.qtypeID);
       this.questionRepository.merge(question, {
         description: data.description,
         questionType
       });
     }
-    else{
+    else {
       this.questionRepository.merge(question, {
         description: data.description
       });
     }
-    
+
     const questionUpdated = await this.questionRepository.save(question);
     return questionUpdated;
   }
@@ -126,9 +130,9 @@ export class QuestionService {
     let image: string;
     image = this.cloudService.getIDImage(question.image);
     if (!(image === "banner-azul")) {
-      this.cloudService.deleteImage('enme/questionImage/'+image);
+      this.cloudService.deleteImage('enme/questionImage/' + image);
     }
-    return (await this.questionRepository.remove(question))? true: false;
+    return (await this.questionRepository.remove(question)) ? true : false;
   }
 
   async research(researchID: string): Promise<Research> {

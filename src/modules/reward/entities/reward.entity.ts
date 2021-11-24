@@ -1,7 +1,16 @@
-import { ObjectType, Field, Int, HideField } from '@nestjs/graphql';
+import { ObjectType, Field, Int, HideField, registerEnumType } from '@nestjs/graphql';
 import { Brand } from 'src/modules/brand/entities/brand.entity';
 import { Winner } from 'src/modules/winners/entities/winner.entity';
 import { Column, CreateDateColumn, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn, RelationId, UpdateDateColumn } from 'typeorm';
+
+export enum RewardTypeEnum {
+  Cupom = 'CUPOM',
+  Desconto = 'DESCONTO',
+  Premio = 'PREMIO',
+}
+registerEnumType(RewardTypeEnum, {
+  name: 'RewardTypeEnum',
+});
 
 @Entity('rewards')
 @ObjectType()
@@ -15,6 +24,9 @@ export class Reward {
 
   @Column()
   description: string;
+
+  @Column()
+  type: RewardTypeEnum;
 
   @Column({ nullable: true })
   image?: string;

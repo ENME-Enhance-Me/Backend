@@ -22,7 +22,7 @@ export class QuestionOptionsService {
     private readonly mtagService: Repository<Mtag>
   ) { }
 
-  async create(data: CreateQuestionOptionInput, image: FileUpload) {
+  async create(data: CreateQuestionOptionInput, image?: FileUpload, imageString?: string) {
     const question = await this.question(data.questionID);
 
     if (!question) {
@@ -38,6 +38,9 @@ export class QuestionOptionsService {
     if (image) {
       const file = await this.cloudService.uploadImage(image, "enme/questionOptionsImage");
       option.image = file.url;
+    }
+    else if (imageString) {
+      option.image = imageString;
     }
 
     const optionSaved = await this.qOptionRepository.save(option);

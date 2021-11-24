@@ -19,19 +19,23 @@ export class RewardService {
     private readonly cloudService: CloudinaryService,
   ) { }
 
-  async create(data: CreateRewardInput, image: FileUpload) {
+  async create(data: CreateRewardInput, image?: FileUpload, imageString?: string) {
     const brand = await this.brand(data.brandID);
 
     const reward = this.rewardRepository.create({
       name: data.name,
       description: data.description,
-      brand: brand
+      brand: brand,
+      type: data.type
     });
 
     
     if (image) {
       const file = await this.cloudService.uploadImage(image, "enme/rewards");
       reward.image = file.url;
+    }
+    else if (imageString){
+      reward.image = imageString;
     }
 
     const rewardSaved = await this.rewardRepository.save(reward);
