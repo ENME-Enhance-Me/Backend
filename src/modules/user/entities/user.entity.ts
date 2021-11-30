@@ -12,7 +12,7 @@ import { Field, HideField, ObjectType } from '@nestjs/graphql';
 import { hashPasswordTransform } from 'src/helpers/crypto';
 import { Phone } from 'src/modules/phone/entities/phone.entity';
 import { Brand } from 'src/modules/brand/entities/brand.entity';
-import PeopleGroup from './people-group.entity';
+import PeopleGenre from './people-genre.entity';
 
 @ObjectType()
 @Entity('user')
@@ -46,11 +46,11 @@ export class User {
   @RelationId((user: User) => user.brand)
   brandId: string;
 
-  @ManyToOne(() => PeopleGroup, peopleGroup => peopleGroup.users)
-  peopleGroup: PeopleGroup;
+  @ManyToOne(() => PeopleGenre, peopleGroup => peopleGroup.users)
+  peopleGenre: PeopleGenre;
 
   @RelationId((user: User) => user.brand)
-  peopleGroupId: string;
+  peopleGenreId: string;
 
   @CreateDateColumn()
   @HideField()

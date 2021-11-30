@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { BrandService } from '../brand/brand.service';
 import { Brand } from '../brand/entities/brand.entity';
-import PeopleGroup, { PeopleGroupEnum } from '../user/entities/people-group.entity';
+import PeopleGenre, { PeopleGenreEnum } from '../user/entities/people-genre.entity';
 import { CreateResearchInput } from './dto/create-research.input';
 import { UpdateResearchInput } from './dto/update-research.input';
 import { Research } from './entities/research.entity';
@@ -13,8 +13,8 @@ export class ResearchService {
   constructor(
     @InjectRepository(Research)
     private readonly researchRepository: Repository<Research>,
-    @InjectRepository(PeopleGroup)
-    private readonly pgRepository: Repository<PeopleGroup>,
+    @InjectRepository(PeopleGenre)
+    private readonly pgRepository: Repository<PeopleGenre>,
     private readonly brandService: BrandService
   ) { }
   async create(data: CreateResearchInput): Promise<Research> {
@@ -33,7 +33,7 @@ export class ResearchService {
     if (!researchSaved) {
       throw new InternalServerErrorException('Problema ao criar uma pesquisa');
     }
-    let researchWithPG = await this.linkPeopleGroup(researchSaved, data.peopleGroup);
+    let researchWithPG = await this.linkPeopleGroup(researchSaved, data.peopleGenre);
 
 
     return researchWithPG;
@@ -55,7 +55,7 @@ export class ResearchService {
 
   async findAll(): Promise<Research[]> {
     return await this.researchRepository.find({
-      relations: ['peopleGroups', 'brand', 'questions', 'questions.options', 'questions.options.mTag']
+      relations: ['peopleGenres', 'brand', 'questions', 'questions.options', 'questions.options.mTag']
     });
   }
 
@@ -67,7 +67,7 @@ export class ResearchService {
       where: {
         id
       },
-      relations: ['peopleGroups', 'brand', 'questions', 'questions.options', 'questions.options.mTag']
+      relations: ['peopleGenres', 'brand', 'questions', 'questions.options', 'questions.options.mTag']
     });
     if (!research) {
       throw new NotFoundException('pesquisa não encontrada');
@@ -93,13 +93,13 @@ export class ResearchService {
     return (await this.researchRepository.remove(research)) ? true : false;
   }
 
-  async linkPeopleGroup(research: Research, data: PeopleGroupEnum[]) {
-    research.peopleGroups = new Array<PeopleGroup>();
+  async linkPeopleGroup(research: Research, data: PeopleGenreEnum[]) {
+    research.peopleGenres = new Array<PeopleGenre>();
 
     data.forEach(async (pg) => {
       try {
         const newpg = await this.pgRepository.findOne(pg);
-        research.peopleGroups.push(newpg);
+        research.peopleGenres.push(newpg);
       }
       catch (err) {
         console.log('erro no peopleGroupID para a pesquisa => ' + pg);

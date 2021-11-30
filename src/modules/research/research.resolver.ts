@@ -6,13 +6,13 @@ import { UpdateResearchInput } from './dto/update-research.input';
 import { QuestionService } from '../question/question.service';
 import { CreateCompleteResearchInput } from './dto/create-complete-research.input';
 import { CreateResearchService } from './research-create.service';
-import { PeopleGroupService } from '../user/peopleGroup.service';
+import { PeopleGenreService } from '../user/peopleGenre.service';
 
 @Resolver(() => Research)
 export class ResearchResolver {
   constructor(
     private readonly researchService: ResearchService,
-    private readonly pgService: PeopleGroupService,
+    private readonly pgService: PeopleGenreService,
     private readonly compResearchService: CreateResearchService,
     private readonly questionService: QuestionService
     ) {}
