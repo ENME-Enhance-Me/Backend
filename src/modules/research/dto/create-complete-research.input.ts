@@ -3,7 +3,7 @@ import { IsBoolean, IsDate, IsNotEmpty, IsNumber, IsOptional, IsString } from 'c
 import { QuestionResearchInput } from 'src/modules/question/dto/question-research.input';
 import { RewardResearchInput } from 'src/modules/reward/dto/reward-research.input';
 import { PeopleGenreEnum } from 'src/modules/user/entities/people-genre.entity';
-import { PeopleGroupEnum } from './peopleGroup.input';
+import { PeopleGroupEnum } from './peoplegroup.input';
 
 @InputType()
 export class CreateCompleteResearchInput {
