@@ -22,10 +22,10 @@ import { Clientbrand } from '../clientbrand/entities/clientbrand.entity';
 import { Client } from '../clients/entities/client.entity';
 import { ClientbrandService } from '../clientbrand/clientbrand.service';
 import { ClientsService } from '../clients/clients.service';
-import PeopleGroup from '../user/entities/people-group.entity';
+import PeopleGenre from '../user/entities/people-group.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Mtag, Question, QuestionType, QuestionOption, Answer, Research, Brand, MicroSegment, User, Clientbrand, Client,PeopleGroup])],
+  imports: [TypeOrmModule.forFeature([Mtag, Question, QuestionType, QuestionOption, Answer, Research, Brand, MicroSegment, User, Clientbrand, Client,PeopleGenre])],
   providers: [MtagsResolver, MtagsService, QuestionOptionsService, AnswerService, QuestionService, ResearchService, CloudinaryService, ResearchService, BrandService, UserService, ClientbrandService, ClientsService]
 })
 export class MtagsModule {}

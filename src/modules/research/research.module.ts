@@ -21,11 +21,11 @@ import { QuestionOption } from '../question-options/entities/question-option.ent
 import { Mtag } from '../mtags/entities/mtag.entity';
 import { RewardService } from '../reward/reward.service';
 import { Reward } from '../reward/entities/reward.entity';
-import PeopleGroup from '../user/entities/people-group.entity';
-import { PeopleGroupService } from '../user/peopleGroup.service';
+import PeopleGenre from '../user/entities/people-group.entity';
+import { PeopleGenreService } from '../user/peopleGenre.service';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Research, PeopleGroup, Reward, Brand, MicroSegment, User, Client, Question, QuestionOption, Mtag, QuestionType])],
-  providers: [ResearchResolver, ResearchService, CreateResearchService, PeopleGroupService, QuestionOptionsService, QuestionService, BrandService, MtagsService, RewardService, UserService, ClientsService, CloudinaryService]
+  imports: [TypeOrmModule.forFeature([Research, PeopleGenre, Reward, Brand, MicroSegment, User, Client, Question, QuestionOption, Mtag, QuestionType])],
+  providers: [ResearchResolver, ResearchService, CreateResearchService, PeopleGenreService, QuestionOptionsService, QuestionService, BrandService, MtagsService, RewardService, UserService, ClientsService, CloudinaryService]
 })
 export class ResearchModule {}

@@ -2,7 +2,7 @@ import { ObjectType, Field, HideField } from '@nestjs/graphql';
 import { O_NOFOLLOW } from 'constants';
 import { Brand } from 'src/modules/brand/entities/brand.entity';
 import { Question } from 'src/modules/question/entities/question.entity';
-import PeopleGroup from 'src/modules/user/entities/people-group.entity';
+import PeopleGenre from 'src/modules/user/entities/people-group.entity';
 import { Column, CreateDateColumn, Entity, JoinTable, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn, RelationId, UpdateDateColumn } from 'typeorm';
 
 @Entity('research')
@@ -29,6 +29,15 @@ export class Research {
 
   @Column({ default: 10 })
   locationRange: number;
+  
+  @Column({ default: false })
+  forLead: boolean;
+
+  @Column({ default: false })
+  forClient: boolean;
+
+  @Column({ default: 'ALL'})
+  peoplegroup: string;
 
   @ManyToOne(() => Brand, brand => brand.researchs, { onDelete: "CASCADE", nullable: true })
   brand: Brand;
@@ -39,9 +48,9 @@ export class Research {
   @OneToMany(() => Question, question => question.research, { onDelete: "CASCADE"})
   questions: Question[];
 
-  @ManyToMany(() => PeopleGroup, peopleGroup => peopleGroup.researchs, { onDelete: "CASCADE"})
+  @ManyToMany(() => PeopleGenre, peopleGroup => peopleGroup.researchs, { onDelete: "CASCADE"})
   @JoinTable()
-  peopleGroups: PeopleGroup[];
+  peopleGenres: PeopleGenre[];
 
   @CreateDateColumn()
   @HideField()

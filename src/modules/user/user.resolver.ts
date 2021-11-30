@@ -3,18 +3,17 @@ import { UserService } from './user.service';
 import { User } from './entities/user.entity';
 import { CreateUserInput } from './dto/create-user.input';
 import { UpdateUserInput } from './dto/update-user.input';
-import { Phone } from '../phone/entities/phone.entity';
 import { PhoneService } from '../phone/phone.service';
 import { FileUpload, GraphQLUpload } from 'graphql-upload';
 import { BrandService } from '../brand/brand.service';
-import PeopleGroup from './entities/people-group.entity';
-import { PeopleGroupService } from './peopleGroup.service';
+import PeopleGenre from './entities/people-group.entity';
+import { PeopleGenreService } from './peopleGenre.service';
 
 @Resolver(() => User)
 export class UserResolver {
   constructor(
     private readonly userService: UserService,
-    private readonly pgService: PeopleGroupService,
+    private readonly pgService: PeopleGenreService,
     private readonly brandService: BrandService,
     private readonly phoneService: PhoneService
   ) { }
@@ -29,7 +28,7 @@ export class UserResolver {
     return this.userService.create(data, avatar);
   }
 
-  @Mutation(() => PeopleGroup)
+  @Mutation(() => PeopleGenre)
   createPeopleGroup(@Args('name') name: string) {
     return this.pgService.create(name);
   }

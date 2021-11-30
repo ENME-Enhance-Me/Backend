@@ -29,9 +29,12 @@ export class CreateResearchService {
             finishDate: data.finishDate,
             ageGroupStart: data.ageGroupStart,
             ageGroupEnd: data.ageGroupEnd,
+            forLead: data.forLead,
+            forClient: data.forClient,
             locationRange: data.locationRange,
             brandID: data.brandID,
-            peopleGroup: data.peopleGroup
+            peopleGroup: data.peopleGroup,
+            peopleGenre: data.peopleGenre
         });
         if (!research.questions) {
             research.questions = new Array<Question>();

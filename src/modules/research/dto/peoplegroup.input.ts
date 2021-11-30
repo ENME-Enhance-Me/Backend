@@ -1,13 +1,12 @@
-import { InputType, Int, Field } from '@nestjs/graphql';
-import { IsNotEmpty, IsString } from 'class-validator';
+import { registerEnumType } from "@nestjs/graphql";
 
-@InputType()
-export class PeopleGroupInput {
-  @IsString()
-  @IsNotEmpty({ message: 'Campo nome não pode estar vazio' })
-  name: string;
-
-  @IsString()
-  @IsNotEmpty({ message: 'Campo nome não pode estar vazio' })
-  researchID: string;
-}
+export enum PeopleGroupEnum {
+    All = 'ALL',
+    Vips = 'VIPS',
+    Top10all = 'TOP10ALL',
+    Top10month = 'TOP10MONTH',
+    Top10week = 'TOP10WEEK'
+  }
+  registerEnumType(PeopleGroupEnum, {
+    name: 'PeopleGroupEnum',
+  });
