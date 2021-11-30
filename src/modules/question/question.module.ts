@@ -15,7 +15,7 @@ import { User } from '../user/entities/user.entity';
 import { QuestionOptionsService } from '../question-options/question-options.service';
 import { QuestionOption } from '../question-options/entities/question-option.entity';
 import { Mtag } from '../mtags/entities/mtag.entity';
-import PeopleGenre from '../user/entities/people-group.entity';
+import PeopleGenre from '../user/entities/people-genre.entity';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Question, QuestionType,PeopleGenre, QuestionOption, Research, Brand, MicroSegment, User, Mtag])],

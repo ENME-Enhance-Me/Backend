@@ -6,7 +6,7 @@ import { UpdateUserInput } from './dto/update-user.input';
 import { PhoneService } from '../phone/phone.service';
 import { FileUpload, GraphQLUpload } from 'graphql-upload';
 import { BrandService } from '../brand/brand.service';
-import PeopleGenre from './entities/people-group.entity';
+import PeopleGenre from './entities/people-genre.entity';
 import { PeopleGenreService } from './peopleGenre.service';
 
 @Resolver(() => User)

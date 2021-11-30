@@ -21,7 +21,7 @@ import { QuestionOption } from '../question-options/entities/question-option.ent
 import { Mtag } from '../mtags/entities/mtag.entity';
 import { RewardService } from '../reward/reward.service';
 import { Reward } from '../reward/entities/reward.entity';
-import PeopleGenre from '../user/entities/people-group.entity';
+import PeopleGenre from '../user/entities/people-genre.entity';
 import { PeopleGenreService } from '../user/peopleGenre.service';
 
 @Module({

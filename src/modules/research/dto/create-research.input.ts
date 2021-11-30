@@ -1,6 +1,6 @@
 import { InputType, Int, Field } from '@nestjs/graphql';
 import { IsBoolean, IsDate, IsNotEmpty, IsNumber, IsOptional, IsString } from 'class-validator';
-import { PeopleGenreEnum } from 'src/modules/user/entities/people-group.entity';
+import { PeopleGenreEnum } from 'src/modules/user/entities/people-genre.entity';
 import { PeopleGroupEnum } from './peopleGroup.input';
 
 @InputType()

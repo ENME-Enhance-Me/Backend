@@ -2,7 +2,7 @@ import { InputType } from '@nestjs/graphql';
 import { IsBoolean, IsDate, IsNotEmpty, IsNumber, IsOptional, IsString } from 'class-validator';
 import { QuestionResearchInput } from 'src/modules/question/dto/question-research.input';
 import { RewardResearchInput } from 'src/modules/reward/dto/reward-research.input';
-import { PeopleGenreEnum } from 'src/modules/user/entities/people-group.entity';
+import { PeopleGenreEnum } from 'src/modules/user/entities/people-genre.entity';
 import { PeopleGroupEnum } from './peopleGroup.input';
 
 @InputType()

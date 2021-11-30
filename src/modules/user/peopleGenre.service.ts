@@ -1,7 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
-import PeopleGenre from "./entities/people-group.entity";
+import PeopleGenre from "./entities/people-genre.entity";
 
 @Injectable()
 export class PeopleGenreService {

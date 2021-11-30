@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { BrandService } from '../brand/brand.service';
 import { Brand } from '../brand/entities/brand.entity';
-import PeopleGenre, { PeopleGenreEnum } from '../user/entities/people-group.entity';
+import PeopleGenre, { PeopleGenreEnum } from '../user/entities/people-genre.entity';
 import { CreateResearchInput } from './dto/create-research.input';
 import { UpdateResearchInput } from './dto/update-research.input';
 import { Research } from './entities/research.entity';

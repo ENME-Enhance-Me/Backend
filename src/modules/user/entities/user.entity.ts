@@ -12,7 +12,7 @@ import { Field, HideField, ObjectType } from '@nestjs/graphql';
 import { hashPasswordTransform } from 'src/helpers/crypto';
 import { Phone } from 'src/modules/phone/entities/phone.entity';
 import { Brand } from 'src/modules/brand/entities/brand.entity';
-import PeopleGenre from './people-group.entity';
+import PeopleGenre from './people-genre.entity';
 
 @ObjectType()
 @Entity('user')
