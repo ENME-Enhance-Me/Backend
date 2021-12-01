@@ -13,7 +13,7 @@ export class WinnersResolver {
     return this.winnersService.create(data);
   }
 
-  @Query(() => [Winner], { name: 'findAllWinners' })
+  // @Query(() => [Winner], { name: 'findAllWinners' })
   findAll() {
     return this.winnersService.findAll();
   }
@@ -23,7 +23,7 @@ export class WinnersResolver {
     return this.winnersService.findOne(id);
   }
 
-  @Mutation(() => Winner)
+  // @Mutation(() => Winner)
   updateWinner(@Args('data') data: UpdateWinnerInput) {
     return this.winnersService.update(data.id, data);
   }

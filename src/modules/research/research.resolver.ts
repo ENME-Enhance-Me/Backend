@@ -17,22 +17,22 @@ export class ResearchResolver {
     private readonly questionService: QuestionService
     ) {}
 
-  @Mutation(() => Research)
+  //@Mutation(() => Research,)
   async createResearch(@Args('data') data: CreateResearchInput) {
     return await this.researchService.create(data);
   }
 
-  @Mutation(() => Research)
+  @Mutation(() => Research, { name: 'createResearch', description: 'Cria uma pesquisa com perguntas e opções de resposta' })
   async createCompleteResearch(@Args('data') data: CreateCompleteResearchInput) {
     return await this.compResearchService.create(data);
   }
 
-  @Query(() => [Research], { name: 'findAllResearchToBrand' })
+  @Query(() => [Research], { name: 'findAllResearchToBrand', description: 'Retorna todas as pesquisas de uma marca' })
   findAlltoBrand(@Args('brandID') brandID: string) {
     return this.researchService.findAllToBrand(brandID);
   }
 
-  @Query(() => [Research], { name: 'findAllResearch' })
+  //@Query(() => [Research], { name: 'findAllResearch' })
   findAll() {
     return this.researchService.findAll();
   }
@@ -42,7 +42,7 @@ export class ResearchResolver {
     return this.researchService.findOne(id);
   }
 
-  @Mutation(() => Research)
+  // @Mutation(() => Research)
   updateResearch(
     @Args('id') id: string,
     @Args('data') data: UpdateResearchInput

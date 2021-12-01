@@ -12,7 +12,7 @@ export class MacroSegmentsResolver {
     private readonly microSegmentsService: MicroSegmentsService
     ) {}
 
-  @Mutation(() => MacroSegment)
+  //@Mutation(() => MacroSegment)
   async createMacroSegment(@Args('data') data: CreateMacroSegmentInput) {
     return await this.macroSegmentsService.create(data);
   }
@@ -22,11 +22,11 @@ export class MacroSegmentsResolver {
     return this.macroSegmentsService.findAll();
   }
 
-  @Query(() => MacroSegment, { name: 'findOneMacroSegment' })
+  // @Query(() => MacroSegment, { name: 'findOneMacroSegment' })
   findOne(@Args('id') id: string) {
     return this.macroSegmentsService.findOne(id);
   }
-  @Mutation(() => MacroSegment)
+  //@Mutation(() => MacroSegment)
   updateMacroSegment(@Args('data') data: UpdateMacroSegmentInput) {
     return this.macroSegmentsService.update(data.id, data);
   }
@@ -36,12 +36,12 @@ export class MacroSegmentsResolver {
     const { id } = macro;
     return await this.microSegmentsService.findAlltoMacro(id);
   }
-  @Mutation(() => Boolean)
+  //@Mutation(() => Boolean)
   removeMacroSegment(@Args('id') id: string) {
     return this.macroSegmentsService.remove(id);
   }
 
-  @Mutation(() => MacroSegment)
+  // @Mutation(() => MacroSegment)
   async connectMicrosToMacro(
     @Args('macroID') macroID: string,
     @Args({ name: 'microIds', type: () => [String] }) microIds: string[]

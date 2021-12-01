@@ -13,24 +13,24 @@ export class QuestionResolver {
     private readonly questionService: QuestionService,
     private readonly qOptionService: QuestionOptionsService) { }
 
-  @Mutation(() => Question)
+  //@Mutation(() => Question)
   createQuestion(
     @Args('data') data: CreateQuestionInput,
     @Args({name: 'image', nullable: true, type: () => GraphQLUpload}) image: FileUpload ) {
     return this.questionService.create(data, image);
   }
 
-  @Mutation(() => QuestionType)
+  //@Mutation(() => QuestionType)
   createQuestionType(@Args('type') type: string) {
     return this.questionService.createQuestionType(type);
   }
 
-  @Query(() => [QuestionType], { name: 'findAllQuestionType' })
+  // @Query(() => [QuestionType], { name: 'findAllQuestionType' })
   findAllQuestionType() {
     return this.questionService.findAllTipos();
   }
 
-  @Query(() => [Question], { name: 'findAllQuestion' })
+  //@Query(() => [Question], { name: 'findAllQuestion' })
   findAll() {
     return this.questionService.findAll();
   }
@@ -40,12 +40,12 @@ export class QuestionResolver {
     return this.questionService.findAlltoResearch(researchID);
   }
 
-  @Query(() => Question, { name: 'findOneQuestion' })
+  // @Query(() => Question, { name: 'findOneQuestion' })
   findOne(@Args('id') id: string) {
     return this.questionService.findOne(id);
   }
 
-  @Mutation(() => Question)
+  // @Mutation(() => Question)
   updateQuestion(
     @Args('id') id: string,
     @Args('data') data: UpdateQuestionInput
@@ -53,7 +53,7 @@ export class QuestionResolver {
     return this.questionService.update(id, data);
   }
 
-  @Mutation(() => Boolean)
+  // @Mutation(() => Boolean)
   removeQuestion(@Args('id') id: string) {
     return this.questionService.remove(id);
   }

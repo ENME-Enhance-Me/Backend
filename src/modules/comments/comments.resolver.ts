@@ -13,12 +13,12 @@ export class CommentsResolver {
     return this.commentsService.create(data);
   }
 
-  @Query(() => [Comment], { name: 'findAllComments' })
+  //@Query(() => [Comment], { name: 'findAllComments' })
   findAll() {
     return this.commentsService.findAll();
   }
 
-  @Query(() => Comment, { name: 'findOneComment' })
+  // @Query(() => Comment, { name: 'findOneComment' })
   findOne(@Args('id') id: string) {
     return this.commentsService.findOne(id);
   }
@@ -28,12 +28,12 @@ export class CommentsResolver {
     return this.commentsService.findAllToResearch(researchID);
   }
 
-  @Mutation(() => Comment)
+  // @Mutation(() => Comment)
   updateComment(@Args('data') data: UpdateCommentInput) {
     return this.commentsService.update(data.id, data);
   }
 
-  @Mutation(() => Boolean)
+  // @Mutation(() => Boolean)
   removeComment(@Args('id') id: string) {
     return this.commentsService.remove(id);
   }

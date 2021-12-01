@@ -25,10 +25,10 @@ export class AddressResolver {
     return await this.addressService.createToClient(data);
   }
 
-  @Query(() => [Address], {
+  /*@Query(() => [Address], {
     name: 'findAllAddress',
     description: 'retorna todos os endereços'
-  })
+  })*/
   async findAll() {
     return await this.addressService.findAll();
   }
@@ -41,26 +41,26 @@ export class AddressResolver {
     return await this.addressService.findOne(data);
   }
 
-  @Mutation(() => Address, {
+  /*@Mutation(() => Address, {
     name: 'updateAddressToBrand',
     description: 'Atualiza um endereço vinculado à uma marca'
-  })
+  })*/
   async updateAddressToBrand(@Args('data') data: UpdateAddressInput) {
     return await this.addressService.updateAddressToBrand(data.ownerID, data);
   }
 
-  @Mutation(() => Address, {
+  /*@Mutation(() => Address, {
     name: 'updateAddressToClient',
     description: 'Atualiza um endereço vinculado à um cliente'
-  })
+  })*/
   async updateAddressToClient(@Args('data') data: UpdateAddressInput) {
     return await this.addressService.updatedAddressToClient(data.ownerID, data);
   }
 
-  @Mutation(() => Boolean, {
+  /*@Mutation(() => Boolean, {
     name: 'removeAddress',
     description: 'Apaga um endereço'
-  })
+  })*/
   async removeAddress(@Args('id') id: string) {
     return await this.addressService.remove(id);
   }

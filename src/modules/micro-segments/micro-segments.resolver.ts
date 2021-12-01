@@ -8,7 +8,7 @@ import { UpdateMicroSegmentInput } from './dto/update-micro-segment.input';
 export class MicroSegmentsResolver {
   constructor(private readonly microSegmentsService: MicroSegmentsService) {}
 
-  @Mutation(() => MicroSegment)
+  //@Mutation(() => MicroSegment)
   createMicroSegment(@Args('data') data: CreateMicroSegmentInput) {
     return this.microSegmentsService.create(data);
   }
@@ -18,17 +18,17 @@ export class MicroSegmentsResolver {
     return this.microSegmentsService.findAll();
   }
 
-  @Query(() => MicroSegment, { name: 'findOneMicroSegment' })
+  // @Query(() => MicroSegment, { name: 'findOneMicroSegment' })
   findOne(@Args('id') id: string) {
     return this.microSegmentsService.findOne(id);
   }
 
-  @Mutation(() => MicroSegment)
+  //@Mutation(() => MicroSegment)
   updateMicroSegment(@Args('data') data: UpdateMicroSegmentInput) {
     return this.microSegmentsService.update(data.id, data);
   }
 
-  @Mutation(() => Boolean)
+  //@Mutation(() => Boolean)
   removeMicroSegment(@Args('id') id: string) {
     return this.microSegmentsService.remove(id);
   }

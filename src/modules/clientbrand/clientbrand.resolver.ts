@@ -8,7 +8,7 @@ import { UpdateClientbrandInput } from './dto/update-clientbrand.input';
 export class ClientbrandResolver {
   constructor(private readonly clientbrandService: ClientbrandService) {}
 
-  @Mutation(() => Clientbrand)
+  // @Mutation(() => Clientbrand)
   createClientbrand(@Args('data') data: CreateClientbrandInput) {
     return this.clientbrandService.create(data);
   }
@@ -18,17 +18,17 @@ export class ClientbrandResolver {
     return this.clientbrandService.findAll();
   }
 
-  @Query(() => Clientbrand, { name: 'findOneClientBrand' })
+  // @Query(() => Clientbrand, { name: 'findOneClientBrand' })
   findOne(@Args('id') id: string) {
     return this.clientbrandService.findOne(id);
   }
 
-  @Mutation(() => Clientbrand)
+  // @Mutation(() => Clientbrand)
   updateClientbrand(@Args('data') data: UpdateClientbrandInput) {
     return this.clientbrandService.update(data.id, data);
   }
 
-  @Mutation(() => Clientbrand)
+  // @Mutation(() => Clientbrand)
   removeClientbrand(@Args('id') id: string) {
     return this.clientbrandService.remove(id);
   }

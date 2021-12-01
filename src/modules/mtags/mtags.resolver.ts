@@ -13,12 +13,12 @@ export class MtagsResolver {
     return this.mtagsService.create(data);
   }
 
-  @Query(() => [Mtag], { name: 'FindAllMTags' })
+  // @Query(() => [Mtag], { name: 'FindAllMTags' })
   findAll() {
     return this.mtagsService.findAll();
   }
 
-  @Query(() => [Mtag], { name: 'FindAllMTagsToBrand' })
+  @Query(() => [Mtag], { name: 'FindMTagsToBrand' })
   findAlltoBrand(@Args('brandID') brandID: string) {
     return this.mtagsService.findAllToBrand(brandID);
   }
@@ -28,17 +28,17 @@ export class MtagsResolver {
     return this.mtagsService.findAllToResearch(researchID);
   }
 
-  @Query(() => Mtag, { name: 'FindOneMTag' })
+  // @Query(() => Mtag, { name: 'FindOneMTag' })
   findOne(@Args('id') id: string) {
     return this.mtagsService.findOne(id);
   }
 
-  @Mutation(() => Mtag)
+  // @Mutation(() => Mtag)
   updateMtag(@Args('data') data: UpdateMtagInput) {
     return this.mtagsService.update(data.id, data);
   }
 
-  @Mutation(() => Mtag)
+  // @Mutation(() => Mtag)
   removeMtag(@Args('id') id: string) {
     return this.mtagsService.remove(id);
   }

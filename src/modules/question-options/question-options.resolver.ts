@@ -13,18 +13,18 @@ export class QuestionOptionsResolver {
     private readonly answerService: AnswerService
     ) { }
 
-  @Mutation(() => QuestionOption)
+  //@Mutation(() => QuestionOption)
   createQuestionOption(@Args('data') data: CreateQuestionOptionInput,
   @Args({name: 'image', nullable: true, type: () => GraphQLUpload}) image: FileUpload ) {
     return this.questionOptionsService.create(data, image);
   }
 
-  @Query(() => [QuestionOption], { name: 'FindAllQuestionOptions' })
+  //@Query(() => [QuestionOption], { name: 'FindAllQuestionOptions' })
   findAll() {
     return this.questionOptionsService.findAll();
   }
 
-  @Query(() => QuestionOption, { name: 'FindOneQuestionOption' })
+  //@Query(() => QuestionOption, { name: 'FindOneQuestionOption' })
   findOne(@Args('id') id: string) {
     return this.questionOptionsService.findOne(id);
   }
@@ -34,7 +34,7 @@ export class QuestionOptionsResolver {
     return this.questionOptionsService.findAllOptionsToQuestion(questionID);
   }
 
-  @Mutation(() => QuestionOption)
+  // @Mutation(() => QuestionOption)
   updateQuestionOption(
     @Args('id') id: string,
     @Args('data') data: UpdateQuestionOptionInput
@@ -42,7 +42,7 @@ export class QuestionOptionsResolver {
     return this.questionOptionsService.update(id, data);
   }
 
-  @Mutation(() => Boolean)
+  // @Mutation(() => Boolean)
   removeQuestionOption(@Args('id') id: string) {
     return this.questionOptionsService.remove(id);
   }

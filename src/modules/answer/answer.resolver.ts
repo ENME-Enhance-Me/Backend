@@ -13,12 +13,12 @@ export class AnswerResolver {
     return this.answerService.create(data);
   }
 
-  @Query(() => [Answer], { name: 'findAllAnswer' })
+  //@Query(() => [Answer], { name: 'findAllAnswer' })
   findAll() {
     return this.answerService.findAll();
   }
 
-  @Query(() => Answer, { name: 'findOneAnswer' })
+  //@Query(() => Answer, { name: 'findOneAnswer' })
   findOne(@Args('id') id: string) {
     return this.answerService.findOne(id);
   }
@@ -28,12 +28,12 @@ export class AnswerResolver {
     return this.answerService.findAllToQuestionOption(QuestionOptionID);
   }
 
-  @Mutation(() => Answer)
+  //@Mutation(() => Answer)
   updateAnswer(@Args('data') data: UpdateAnswerInput) {
     return this.answerService.update(data.id, data);
   }
 
-  @Mutation(() => Boolean)
+  //@Mutation(() => Boolean)
   removeAnswer(@Args('id') id: string) {
     return this.answerService.remove(id);
   }

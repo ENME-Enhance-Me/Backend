@@ -80,9 +80,9 @@ export class BrandResolver {
     return await this.userService.create(data, avatar, brand);
   }
 
-  @Mutation(() => Brand, {
-    description: 'Conecta um ou mais microsegmentos à uma marca'
-  })
+  // @Mutation(() => Brand, {
+  //   description: 'Conecta um ou mais microsegmentos à uma marca'
+  // })
   async connectMicrosToBrand(
     @Args('brandID') brandID: string,
     @Args({ name: 'microIds', type: () => [String] }) microIds: string[]

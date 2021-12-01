@@ -39,10 +39,10 @@ export class ClientsResolver {
     return this.clientsService.find(data);
   }
 
-  @Query(() => Client, {
-    name: 'findOneClientById',
-    description: 'Encontra um cliente pelo ID'
-  })
+  // @Query(() => Client, {
+  //   name: 'findOneClientById',
+  //   description: 'Encontra um cliente pelo ID'
+  // })
   async findOnebyId(@Args('id') id: string) {
     return await this.clientsService.findOne(id);
   }
@@ -53,16 +53,16 @@ export class ClientsResolver {
     return await this.userService.findOne(userID);
   }
 
-  @Mutation(() => Client, {
-    description: 'atualiza um ou mais campos do cliente ou do usuário relacionado'
-  })
+  // @Mutation(() => Client, {
+  //   description: 'atualiza um ou mais campos do cliente ou do usuário relacionado'
+  // })
   updateClient(@Args('id') id: string, @Args('updateClientInput') data: UpdateClientInput) {
     return this.clientsService.update(id, data);
   }
 
-  @Mutation(() => Boolean, {
-    description: 'Remove um cliente e o usuário relacionado'
-  })
+  // @Mutation(() => Boolean, {
+  //   description: 'Remove um cliente e o usuário relacionado'
+  // })
   removeClient(@Args('id') id: string) {
     return this.clientsService.remove(id);
   }

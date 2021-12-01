@@ -28,8 +28,8 @@ export class UserResolver {
     return this.userService.create(data, avatar);
   }
 
-  @Mutation(() => PeopleGenre)
-  createPeopleGroup(@Args('name') name: string) {
+  //@Mutation(() => PeopleGenre)
+  createPeopleGenre(@Args('name') name: string) {
     return this.pgService.create(name);
   }
 

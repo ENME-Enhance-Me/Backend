@@ -9,7 +9,7 @@ import { FileUpload, GraphQLUpload } from 'graphql-upload';
 export class RewardResolver {
   constructor(private readonly rewardService: RewardService) { }
 
-  @Mutation(() => Reward)
+  //@Mutation(() => Reward)
   createReward(
     @Args('data') data: CreateRewardInput,
     @Args({ name: 'file', nullable: true, type: () => GraphQLUpload }) file: FileUpload
@@ -17,7 +17,7 @@ export class RewardResolver {
     return this.rewardService.create(data, file);
   }
 
-  @Query(() => [Reward], { name: 'findAllReward' })
+  //@Query(() => [Reward], { name: 'findAllReward' })
   findAll() {
     return this.rewardService.findAll();
   }
@@ -32,12 +32,12 @@ export class RewardResolver {
     return this.rewardService.findOne(id);
   }
 
-  @Mutation(() => Reward)
+  // @Mutation(() => Reward)
   updateReward(@Args('data') data: UpdateRewardInput) {
     return this.rewardService.update(data.id, data);
   }
 
-  @Mutation(() => Reward)
+  // @Mutation(() => Reward)
   removeReward(@Args('id') id: string) {
     return this.rewardService.remove(id);
   }
